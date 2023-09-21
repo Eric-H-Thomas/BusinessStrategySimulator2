@@ -1,0 +1,3 @@
+/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir
