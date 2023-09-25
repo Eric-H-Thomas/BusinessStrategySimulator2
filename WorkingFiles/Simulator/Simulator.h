@@ -21,19 +21,23 @@ class Simulator {
 public:
     Simulator();
     int load_json_configs(const string& strConfigFilePath);
+    void init_simulation_history();
     int prepare_to_run();
     int run();
     int getNumSims() const;
-    int get_agent_to_firm_map(map<int,int>& rMapAgentToFirm);
     int perform_micro_step(int iActingAgentID);
 
+    // TODO: remove later if not needed
+//    ControlAgent get_control_agent_by_ID(int iControlAgentID);
+//    Firm get_firm_agent_by_ID(int iFirmID);
+
 private:
-    nlohmann::json       simulatorConfigs;
-    vector<ControlAgent> vecControlAgents;
-    vector<Firm>         vecFirms;
-    Economy              economy;
-    MasterHistory        masterHistory;
-    vector<int>          vecAgentTurnOrder;
+    nlohmann::json        simulatorConfigs;
+    map<int,ControlAgent> mapIDToControlAgents;
+    map<int,Firm>         mapIDToFirm;
+    Economy               economy;
+    MasterHistory         masterHistory;
+    vector<int>           vecAgentTurnOrder;
 
     // Simulation parameters
     string      strRunName;
@@ -53,4 +57,6 @@ private:
     vector<int> create_market_capability_vector(double dbMean, double dbSD);
     void set_agent_turn_order();
     Action get_agent_action(ControlAgent agent);
+    ActionType get_action_type(ControlAgent agent);
+    Action get_entry_action(ControlAgent agent);
 };

@@ -33,6 +33,8 @@ public:
     double getDbExitActionLikelihood() const;
     double getDbNoneActionLikelihood() const;
     std::vector<double> get_action_likelihood_vector() const;
+    EntryPolicy getEnumEntryPolicy() const;
+    ExitPolicy getEnumExitPolicy() const;
 
 private:
     int iAgentID;

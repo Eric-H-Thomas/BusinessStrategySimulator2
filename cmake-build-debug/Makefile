@@ -297,29 +297,29 @@ WorkingFiles/Market/Market.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.s
 .PHONY : WorkingFiles/Market/Market.cpp.s
 
-WorkingFiles/Simulator.o: WorkingFiles/Simulator.cpp.o
-.PHONY : WorkingFiles/Simulator.o
+WorkingFiles/Simulator/Simulator.o: WorkingFiles/Simulator/Simulator.cpp.o
+.PHONY : WorkingFiles/Simulator/Simulator.o
 
 # target to build an object file
-WorkingFiles/Simulator.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.o
-.PHONY : WorkingFiles/Simulator.cpp.o
+WorkingFiles/Simulator/Simulator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o
+.PHONY : WorkingFiles/Simulator/Simulator.cpp.o
 
-WorkingFiles/Simulator.i: WorkingFiles/Simulator.cpp.i
-.PHONY : WorkingFiles/Simulator.i
+WorkingFiles/Simulator/Simulator.i: WorkingFiles/Simulator/Simulator.cpp.i
+.PHONY : WorkingFiles/Simulator/Simulator.i
 
 # target to preprocess a source file
-WorkingFiles/Simulator.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.i
-.PHONY : WorkingFiles/Simulator.cpp.i
+WorkingFiles/Simulator/Simulator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.i
+.PHONY : WorkingFiles/Simulator/Simulator.cpp.i
 
-WorkingFiles/Simulator.s: WorkingFiles/Simulator.cpp.s
-.PHONY : WorkingFiles/Simulator.s
+WorkingFiles/Simulator/Simulator.s: WorkingFiles/Simulator/Simulator.cpp.s
+.PHONY : WorkingFiles/Simulator/Simulator.s
 
 # target to generate assembly for a file
-WorkingFiles/Simulator.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.s
-.PHONY : WorkingFiles/Simulator.cpp.s
+WorkingFiles/Simulator/Simulator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.s
+.PHONY : WorkingFiles/Simulator/Simulator.cpp.s
 
 WorkingFiles/Utils/MathUtils.o: WorkingFiles/Utils/MathUtils.cpp.o
 .PHONY : WorkingFiles/Utils/MathUtils.o
@@ -423,9 +423,9 @@ help:
 	@echo "... WorkingFiles/Market/Market.o"
 	@echo "... WorkingFiles/Market/Market.i"
 	@echo "... WorkingFiles/Market/Market.s"
-	@echo "... WorkingFiles/Simulator.o"
-	@echo "... WorkingFiles/Simulator.i"
-	@echo "... WorkingFiles/Simulator.s"
+	@echo "... WorkingFiles/Simulator/Simulator.o"
+	@echo "... WorkingFiles/Simulator/Simulator.i"
+	@echo "... WorkingFiles/Simulator/Simulator.s"
 	@echo "... WorkingFiles/Utils/MathUtils.o"
 	@echo "... WorkingFiles/Utils/MathUtils.i"
 	@echo "... WorkingFiles/Utils/MathUtils.s"

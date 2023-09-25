@@ -65,3 +65,11 @@ double ControlAgent::getDbExitActionLikelihood() const {
 double ControlAgent::getDbNoneActionLikelihood() const {
     return dbNoneActionLikelihood;
 }
+
+EntryPolicy ControlAgent::getEnumEntryPolicy() const {
+    return enumEntryPolicy;
+}
+
+ExitPolicy ControlAgent::getEnumExitPolicy() const {
+    return enumExitPolicy;
+}

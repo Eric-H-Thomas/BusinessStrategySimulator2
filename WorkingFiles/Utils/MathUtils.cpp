@@ -39,7 +39,7 @@ int MathUtils::choose_index_given_probabilities(const std::vector<double>& proba
 
     // In case something goes wrong (shouldn't happen)
     std::cerr << "Error: Unable to choose an index." << std::endl;
-    return -1; // Return an error code
+    throw std::exception();
 }
 
 

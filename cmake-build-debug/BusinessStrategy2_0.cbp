@@ -125,10 +125,10 @@
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
-		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator.cpp">
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
-		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator.h">
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MathUtils.cpp">

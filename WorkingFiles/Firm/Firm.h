@@ -18,5 +18,5 @@ private:
     int         iFirmID;
     double      dbCapital;
     set<int>    setCapabilities;
-    set<int>    setMarkets;
+    set<int>    setMarketIDs;
 };

@@ -25,29 +25,7 @@ int Simulator::run() {
 
     // TODO: make sure the agent to firm assignments get properly reset if they are not supposed to be the same for each
     //  round of simulation
-
-    // Generate map of agents to firms
-    map<int,int> mapAgentToFirm;
-    for (auto agent : this->vecControlAgents) {
-        mapAgentToFirm[agent.getAgentId()] = agent.iFirmAssignment;
-    }
-
-    // Generate map of firms' starting capital amounts
-    map<int,double> mapFirmStartingCapital;
-    for (auto firm : this->vecFirms) {
-        mapFirmStartingCapital[firm.getIFirmId()] = firm.getDbCapital();
-    }
-
-    // Generate map of market maximum entry costs
-    map<int,double> mapMarketMaximumEntryCosts;
-    for (auto market : this->economy.get_vec_markets()){
-        vector<int> vecMarketCapabilities = market.get_vec_capabilities();
-        double dbMaxEntryCost = MathUtils::dot_product(vecMarketCapabilities, this->economy.get_vec_capability_costs());
-        mapMarketMaximumEntryCosts[market.get_market_id()] = dbMaxEntryCost;
-    }
-
-    // Initialize the simulation history using the above three maps
-    SimulationHistory simulationHistory = SimulationHistory(mapAgentToFirm, mapFirmStartingCapital, mapMarketMaximumEntryCosts);
+    init_simulation_history();
 
     // Loop through the macro steps
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
@@ -62,25 +40,9 @@ int Simulator::run() {
     return 0;
 }
 
-
 Simulator::Simulator() = default;
 
-
-// Getters
 int Simulator::getNumSims() const {return iNumSims;}
-
-
-int Simulator::get_agent_to_firm_map(map<int,int>& rMapAgentToFirm) {
-    for (auto agent : this->vecControlAgents){
-        rMapAgentToFirm[agent.getAgentId()] = agent.iFirmAssignment;
-    }
-    if (rMapAgentToFirm.size() != this->vecControlAgents.size()){
-        cerr << "Error getting agent_to_firm map" << endl;
-        return 1;
-    }
-    return 0;
-};
-
 
 int Simulator::load_json_configs(const string& strConfigFilePath) {
 
@@ -189,11 +151,16 @@ int Simulator::init_economy() {
 int Simulator::init_control_agents() {
     try {
         for (const auto& agentData : this->simulatorConfigs["agents"]) {
-            ControlAgent control_agent(agentData["agent_id"],
+            ControlAgent controlAgent(agentData["agent_id"],
                                        agentData["entry_policy"],
                                        agentData["exit_policy"],
-                                       agentData["include_none_action"]);
-            this->vecControlAgents.push_back(control_agent);
+                                       agentData["entry_action_likelihood"],
+                                       agentData["exit_action_likelihood"],
+                                       agentData["none_action_likelihood"],
+                                       agentData["percent_threshold_for_loss_exit_policy"],
+                                       agentData["num_macro_steps_for_loss_exit_policy"]);
+
+            this->mapIDToControlAgents.insert(std::make_pair(agentData["agent_id"],controlAgent));
         }
     }
 
@@ -211,7 +178,7 @@ int Simulator::init_firms_for_control_agents() {
     //    - no presence in any markets
     //    - the default starting capital
 
-    if (vecControlAgents.empty()) {
+    if (mapIDToControlAgents.empty()){
         cerr << "Tried to initialize firms for control agents before creating the control agents." << endl;
         return 1;
     }
@@ -219,9 +186,15 @@ int Simulator::init_firms_for_control_agents() {
     const auto& firm_parameters = this->simulatorConfigs["default_firm_parameters"];
     double dbDefaultStartingCapital = firm_parameters["default_starting_capital"];
 
-    for (int i = 0; i < vecControlAgents.size(); i++) {
-        vecFirms.emplace_back(Firm(i, dbDefaultStartingCapital));
-        vecControlAgents.at(i).iFirmAssignment = i;
+    for (auto pair : mapIDToControlAgents) {
+        // Get the ID number of the agent
+        int iID = pair.first;
+
+        // Create a firm with the same ID number and place it in the map of firms
+        mapIDToFirm.insert(std::make_pair(iID, Firm(iID, dbDefaultStartingCapital)));
+
+        // Set the agent's firm assignment number
+        pair.second.iFirmAssignment = iID;
     }
 
     return 0;
@@ -333,7 +306,7 @@ void Simulator::set_agent_turn_order() {
 
     // TODO: edit this later for when there are non-control agents
     // Get the total number of turns
-    double dbTotalTurns = vecControlAgents.size() * dbSkippedTurnsPerRegularTurn;
+    double dbTotalTurns = mapIDToControlAgents.size() * dbSkippedTurnsPerRegularTurn;
     int iTotalTurns = static_cast<int>(std::ceil(dbTotalTurns));
 
     // Generate a vector for the new turn order
@@ -359,7 +332,9 @@ int Simulator::perform_micro_step(int iActingAgentID) {
 
     // TODO: get actions
     vector<Action> vecActions;
-    for (auto agent : vecControlAgents){
+    for (const auto& pair : mapIDToControlAgents) {
+        ControlAgent agent = pair.second;
+
         // Create none actions for the agents not currently acting
         if (agent.getAgentId() != iActingAgentID)
             vecActions.emplace_back(Action::generate_none_action(agent.getAgentId()));
@@ -375,21 +350,102 @@ int Simulator::perform_micro_step(int iActingAgentID) {
    return 0;
 };
 
-// TODO: consider a cleaner way to write this code rather than using hard-coded action type indices
 Action Simulator::get_agent_action(ControlAgent agent) {
-    // TODO: get action type
-    int iActionTypeIndex = MathUtils::choose_index_given_probabilities(agent.get_action_likelihood_vector());
+    ActionType actionType = get_action_type(agent);
 
-    if (iActionTypeIndex == 0) {
+    if (actionType == ActionType::enumEntryAction) {
         // TODO: if entry, *code to determine which market to enter*
         //  If no action is selected (no entry was possible), recurse on this method with an updated decision probability vector
     }
-    else if (iActionTypeIndex == 1) {
+    else if (actionType == ActionType::enumExitAction) {
         // TODO: if exit, *code to determine which market to exit*
         //  If no action is selected (no exit was possible), recurse on this method with an updated decision probability vector
     }
-    else if (iActionTypeIndex == 2) {
+    else if (actionType == ActionType::enumNoneAction) {
         // TODO: if none, create a none action
     }
-    // TODO: throw an error if we reach this part of the code
+
+    // Should never reach this part of the code
+    cerr << "Error getting control agent action" << endl;
+    throw std::exception();
+}
+
+ActionType Simulator::get_action_type(ControlAgent agent) {
+    int iActionTypeIndex = MathUtils::choose_index_given_probabilities(agent.get_action_likelihood_vector());
+    if (iActionTypeIndex == 0) {
+        return ActionType::enumEntryAction;
+    }
+    if (iActionTypeIndex == 1) {
+        return ActionType::enumExitAction;
+    }
+    if (iActionTypeIndex == 2) {
+        return ActionType::enumNoneAction;
+    }
+
+    // Should never reach this part of the code
+    cerr << "Error getting action_type" << endl;
+    throw std::exception();
+}
+
+Action Simulator::get_entry_action(ControlAgent agent) {
+    // TODO: factor these two lines of code into their own method
+    int iFirmID = agent.iFirmAssignment;
+    Firm firm = mapIDToFirm.at(iFirmID);
+
+    // Iterate through all markets, adding each one to the decision set if the firm is not already in that market
+    for (const auto& market : economy.get_vec_markets()) {
+
+    }
+
+    if (agent.getEnumEntryPolicy() == EntryPolicy::All) {
+        // TODO: fill in code
+
+        // Randomly choose a market from the decision set
+    }
+    else if (agent.getEnumEntryPolicy() == EntryPolicy::HighestOverlap){
+        // TODO: fill in code
+        // Iterate through the decision set to find the market(s) with the highest overlap
+
+        // Randomly choose a market from those that have the highest overlap
+    }
+
+    // Should never reach this part of the code
+    cerr << "Error getting action_type" << endl;
+    throw std::exception();
+}
+
+// TODO: remove later if not needed
+//ControlAgent Simulator::get_control_agent_by_ID(int iControlAgentID) {
+//    return mapIDToControlAgents.at(iControlAgentID);
+//}
+//
+//Firm Simulator::get_firm_agent_by_ID(int iFirmID) {
+//    return mapIDToFirm.at(iFirmID);
+//}
+
+void Simulator::init_simulation_history() {
+    // Generate map of agents to firms
+    map<int,int> mapAgentToFirm;
+    for (const auto& pair : this->mapIDToControlAgents) {
+        const ControlAgent& agent = pair.second;
+        mapAgentToFirm[agent.getAgentId()] = agent.iFirmAssignment;
+    }
+
+    // Generate map of firms' starting capital amounts
+    map<int,double> mapFirmStartingCapital;
+    for (const auto& pair : this->mapIDToFirm) {
+        const Firm& firm = pair.second;
+        mapFirmStartingCapital[firm.getIFirmId()] = firm.getDbCapital();
+    }
+
+    // Generate map of market maximum entry costs
+    map<int,double> mapMarketMaximumEntryCosts;
+    for (auto market : this->economy.get_vec_markets()){
+        vector<int> vecMarketCapabilities = market.get_vec_capabilities();
+        double dbMaxEntryCost = MathUtils::dot_product(vecMarketCapabilities, this->economy.get_vec_capability_costs());
+        mapMarketMaximumEntryCosts[market.get_market_id()] = dbMaxEntryCost;
+    }
+
+    // Initialize the simulation history using the above three maps
+    SimulationHistory simulationHistory = SimulationHistory(mapAgentToFirm, mapFirmStartingCapital, mapMarketMaximumEntryCosts);
 }

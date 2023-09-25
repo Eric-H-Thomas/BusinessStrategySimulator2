@@ -79,18 +79,18 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.s
 
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.o: ../WorkingFiles/Simulator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator.cpp
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o: ../WorkingFiles/Simulator/Simulator.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp
 
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator.cpp > CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.i
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp > CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.i
 
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.s
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.s
 
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.o: ../WorkingFiles/Agent/ControlAgent.cpp
@@ -212,7 +212,7 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.s: cmake_f
 # Object files for target BusinessStrategy2_0
 BusinessStrategy2_0_OBJECTS = \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o" \
-"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.o" \
+"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Economy/Economy.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Firm/Firm.cpp.o" \
@@ -227,7 +227,7 @@ BusinessStrategy2_0_OBJECTS = \
 BusinessStrategy2_0_EXTERNAL_OBJECTS =
 
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o
-BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator.cpp.o
+BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Economy/Economy.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Firm/Firm.cpp.o
