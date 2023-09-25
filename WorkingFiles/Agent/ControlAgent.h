@@ -26,11 +26,13 @@ public:
                  const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
                  const double &dbPercentThresholdForLossExitPolicy = 0.0,
                  const int &iNumMicroStepsForLossExitPolicy = 0);
-
-    Action getAgentAction();
     int iFirmAssignment;
     friend std::ostream &operator<<(std::ostream &os, const ControlAgent &agent);
     int getAgentId() const;
+    double getDbEntryActionLikelihood() const;
+    double getDbExitActionLikelihood() const;
+    double getDbNoneActionLikelihood() const;
+    std::vector<double> get_action_likelihood_vector() const;
 
 private:
     int iAgentID;
@@ -40,7 +42,7 @@ private:
     double dbExitActionLikelihood;
     double dbNoneActionLikelihood;
     double dbPercentThresholdForLossExitPolicy;
-    int iNumMicroStepsForLossExitPolicy;
+    int iNumMacroStepsForLossExitPolicy;
 };
 
 

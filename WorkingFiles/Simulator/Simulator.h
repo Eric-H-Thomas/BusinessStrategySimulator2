@@ -8,11 +8,11 @@
 #include <map>
 #include <vector>
 #include <string>
-#include "../JSON/json.h"
-#include "Agent/ControlAgent.h"
-#include "Economy/Economy.h"
-#include "Firm/Firm.h"
-#include "History/MasterHistory.h"
+#include "../Agent/ControlAgent.h"
+#include "../Economy/Economy.h"
+#include "../Firm/Firm.h"
+#include "../History/MasterHistory.h"
+#include "../../JSONReader/json.h"
 
 using std::map;
 using std::vector;
@@ -52,4 +52,5 @@ private:
     int init_firms_for_control_agents();
     vector<int> create_market_capability_vector(double dbMean, double dbSD);
     void set_agent_turn_order();
+    Action get_agent_action(ControlAgent agent);
 };

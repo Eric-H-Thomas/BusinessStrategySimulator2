@@ -26,7 +26,7 @@ ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
     if (StringUtils::equalsIgnoreCase(strExitPolicy, "loss")) {
         this->enumExitPolicy = ExitPolicy::Loss;
         this->dbPercentThresholdForLossExitPolicy = dbPercentThresholdForLossExitPolicy;
-        this->iNumMicroStepsForLossExitPolicy = iNumMicroStepsForLossExitPolicy;
+        this->iNumMacroStepsForLossExitPolicy = iNumMicroStepsForLossExitPolicy;
     }
 
     // Set the remaining agent hyperparameters
@@ -50,17 +50,18 @@ std::ostream &operator<<(std::ostream &os, const ControlAgent &agent) {
 
 int ControlAgent::getAgentId() const {return iAgentID;}
 
-// TODO: delete this when done brainstorming:
-//  to get an agent's decision, we'll need to know
-//  - all the agent decision-making params (this is easy because the decision function will be tied to the agent)
-//  - the markets that the agent's firm is present in; we'll access this through the agent-to-firm ids
-//  - the capability vector for each market we could enter (we'll pass in the economy, which contains all the market data)
-//  - the simulator history, in order to calculate loss
+std::vector<double> ControlAgent::get_action_likelihood_vector() const {
+    return {dbEntryActionLikelihood, dbExitActionLikelihood, dbNoneActionLikelihood};
+}
 
-Action ControlAgent::getAgentAction() {
+double ControlAgent::getDbEntryActionLikelihood() const {
+    return dbEntryActionLikelihood;
+}
 
+double ControlAgent::getDbExitActionLikelihood() const {
+    return dbExitActionLikelihood;
+}
 
-
-
-
+double ControlAgent::getDbNoneActionLikelihood() const {
+    return dbNoneActionLikelihood;
 }

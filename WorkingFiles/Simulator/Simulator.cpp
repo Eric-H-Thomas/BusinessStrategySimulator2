@@ -3,12 +3,12 @@
 //
 
 #include "Simulator.h"
-#include "Agent/ControlAgent.h"
+#include "../Agent/ControlAgent.h"
 #include <map>
 #include <iostream>
-#include "../JSON/json.h"
-#include "Utils/MathUtils.h"
-#include "Action/Action.h"
+#include "../../JSONReader/json.h"
+#include "../Utils/MathUtils.h"
+#include "../Action/Action.h"
 #include <fstream>
 #include <iostream>
 #include <random>
@@ -42,7 +42,7 @@ int Simulator::run() {
     map<int,double> mapMarketMaximumEntryCosts;
     for (auto market : this->economy.get_vec_markets()){
         vector<int> vecMarketCapabilities = market.get_vec_capabilities();
-        double dbMaxEntryCost = MathUtils::dotProduct(vecMarketCapabilities,this->economy.get_vec_capability_costs());
+        double dbMaxEntryCost = MathUtils::dot_product(vecMarketCapabilities, this->economy.get_vec_capability_costs());
         mapMarketMaximumEntryCosts[market.get_market_id()] = dbMaxEntryCost;
     }
 
@@ -374,3 +374,22 @@ int Simulator::perform_micro_step(int iActingAgentID) {
 
    return 0;
 };
+
+// TODO: consider a cleaner way to write this code rather than using hard-coded action type indices
+Action Simulator::get_agent_action(ControlAgent agent) {
+    // TODO: get action type
+    int iActionTypeIndex = MathUtils::choose_index_given_probabilities(agent.get_action_likelihood_vector());
+
+    if (iActionTypeIndex == 0) {
+        // TODO: if entry, *code to determine which market to enter*
+        //  If no action is selected (no entry was possible), recurse on this method with an updated decision probability vector
+    }
+    else if (iActionTypeIndex == 1) {
+        // TODO: if exit, *code to determine which market to exit*
+        //  If no action is selected (no exit was possible), recurse on this method with an updated decision probability vector
+    }
+    else if (iActionTypeIndex == 2) {
+        // TODO: if none, create a none action
+    }
+    // TODO: throw an error if we reach this part of the code
+}

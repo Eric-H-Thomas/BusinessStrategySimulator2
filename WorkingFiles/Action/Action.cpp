@@ -4,7 +4,7 @@
 
 #include "Action.h"
 
-static Action generate_none_action(int iAgentID) {
+Action Action::generate_none_action(int iAgentID) {
     Action action;
     action.iAgentID = iAgentID;
     action.enumActionType = ActionType::enumNoneAction;

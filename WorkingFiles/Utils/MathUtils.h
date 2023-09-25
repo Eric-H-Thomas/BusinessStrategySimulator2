@@ -8,8 +8,9 @@
 
 class MathUtils {
 public:
-    static double dotProduct(const std::vector<double>& vector1, const std::vector<double>& vector2);
-    static int dotProduct(const std::vector<int>& vector1, const std::vector<int>& vector2);
-    static double dotProduct(const std::vector<int>& vector1, const std::vector<double>& vector2);
-    static double dotProduct(const std::vector<double>& vector1, const std::vector<int>& vector2);
+    static int choose_index_given_probabilities(const std::vector<double>& probabilities);
+    static double dot_product(const std::vector<double>& vector1, const std::vector<double>& vector2);
+    static int dot_product(const std::vector<int>& vector1, const std::vector<int>& vector2);
+    static double dot_product(const std::vector<int>& vector1, const std::vector<double>& vector2);
+    static double dot_product(const std::vector<double>& vector1, const std::vector<int>& vector2);
 };
