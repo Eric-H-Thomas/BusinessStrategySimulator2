@@ -131,10 +131,10 @@
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
-		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MathUtils.cpp">
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.cpp">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
-		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MathUtils.h">
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.h">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/StringUtils.cpp">

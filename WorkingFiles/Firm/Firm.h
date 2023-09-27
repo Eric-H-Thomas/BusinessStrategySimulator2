@@ -4,6 +4,7 @@
 
 #pragma once
 #include <set>
+#include "../Market/Market.h"
 
 using std::set;
 
@@ -11,12 +12,15 @@ class Firm {
 public:
     Firm();
     Firm(int iFirmID, double dbStartingCapital);
-    int getIFirmId() const;
+    int getFirmID() const;
     double getDbCapital() const;
+    bool is_in_market(Market market);
+    Market choose_market_with_highest_overlap(set<Market> setMarkets);
+    const set<int> &getSetMarketIDs() const;
 
 private:
     int         iFirmID;
     double      dbCapital;
-    set<int>    setCapabilities;
+    vector<int> vecCapabilities;
     set<int>    setMarketIDs;
 };

@@ -321,29 +321,29 @@ WorkingFiles/Simulator/Simulator.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.s
 .PHONY : WorkingFiles/Simulator/Simulator.cpp.s
 
-WorkingFiles/Utils/MathUtils.o: WorkingFiles/Utils/MathUtils.cpp.o
-.PHONY : WorkingFiles/Utils/MathUtils.o
+WorkingFiles/Utils/MiscUtils.o: WorkingFiles/Utils/MiscUtils.cpp.o
+.PHONY : WorkingFiles/Utils/MiscUtils.o
 
 # target to build an object file
-WorkingFiles/Utils/MathUtils.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.o
-.PHONY : WorkingFiles/Utils/MathUtils.cpp.o
+WorkingFiles/Utils/MiscUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o
+.PHONY : WorkingFiles/Utils/MiscUtils.cpp.o
 
-WorkingFiles/Utils/MathUtils.i: WorkingFiles/Utils/MathUtils.cpp.i
-.PHONY : WorkingFiles/Utils/MathUtils.i
+WorkingFiles/Utils/MiscUtils.i: WorkingFiles/Utils/MiscUtils.cpp.i
+.PHONY : WorkingFiles/Utils/MiscUtils.i
 
 # target to preprocess a source file
-WorkingFiles/Utils/MathUtils.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.i
-.PHONY : WorkingFiles/Utils/MathUtils.cpp.i
+WorkingFiles/Utils/MiscUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.i
+.PHONY : WorkingFiles/Utils/MiscUtils.cpp.i
 
-WorkingFiles/Utils/MathUtils.s: WorkingFiles/Utils/MathUtils.cpp.s
-.PHONY : WorkingFiles/Utils/MathUtils.s
+WorkingFiles/Utils/MiscUtils.s: WorkingFiles/Utils/MiscUtils.cpp.s
+.PHONY : WorkingFiles/Utils/MiscUtils.s
 
 # target to generate assembly for a file
-WorkingFiles/Utils/MathUtils.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.s
-.PHONY : WorkingFiles/Utils/MathUtils.cpp.s
+WorkingFiles/Utils/MiscUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.s
+.PHONY : WorkingFiles/Utils/MiscUtils.cpp.s
 
 WorkingFiles/Utils/StringUtils.o: WorkingFiles/Utils/StringUtils.cpp.o
 .PHONY : WorkingFiles/Utils/StringUtils.o
@@ -426,9 +426,9 @@ help:
 	@echo "... WorkingFiles/Simulator/Simulator.o"
 	@echo "... WorkingFiles/Simulator/Simulator.i"
 	@echo "... WorkingFiles/Simulator/Simulator.s"
-	@echo "... WorkingFiles/Utils/MathUtils.o"
-	@echo "... WorkingFiles/Utils/MathUtils.i"
-	@echo "... WorkingFiles/Utils/MathUtils.s"
+	@echo "... WorkingFiles/Utils/MiscUtils.o"
+	@echo "... WorkingFiles/Utils/MiscUtils.i"
+	@echo "... WorkingFiles/Utils/MiscUtils.s"
 	@echo "... WorkingFiles/Utils/StringUtils.o"
 	@echo "... WorkingFiles/Utils/StringUtils.i"
 	@echo "... WorkingFiles/Utils/StringUtils.s"

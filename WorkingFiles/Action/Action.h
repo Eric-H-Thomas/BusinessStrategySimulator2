@@ -15,5 +15,9 @@ public:
     ActionType enumActionType;
     int iMarketID;
 
+    // Constructors
+    Action();
+    Action(int iAgentId, ActionType enumActionType, int iMarketId);
+
     static Action generate_none_action(int iAgentID);
 };

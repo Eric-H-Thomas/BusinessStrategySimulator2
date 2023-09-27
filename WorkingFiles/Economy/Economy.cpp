@@ -54,6 +54,15 @@ const vector<int> &Economy::get_vec_markets_per_cluster()   const {return vecMar
 const vector<Market> &Economy::get_vec_markets()            const {return vecMarkets;}
 const vector<double> &Economy::get_vec_capability_costs()   const {return vecCapabilityCosts;}
 
+const Market &Economy::get_market_by_ID(int iMarketID)      const {
+    for (const Market& market : vecMarkets){
+        if (market.get_market_id() == iMarketID) {
+            return market;
+        }
+    }
+    std::cerr<< "Error getting market by ID" << std::endl;
+    throw std::exception();
+}
 
 void Economy::add_market(Market market) {
     this->vecMarkets.push_back(market);

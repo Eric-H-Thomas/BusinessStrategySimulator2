@@ -10,3 +10,9 @@ Action Action::generate_none_action(int iAgentID) {
     action.enumActionType = ActionType::enumNoneAction;
     return action;
 };
+
+// Constructors
+Action::Action() {}
+Action::Action(int iAgentId, ActionType enumActionType, int iMarketId) : iAgentID(iAgentId),
+                                                                         enumActionType(enumActionType),
+                                                                         iMarketID(iMarketId) {}

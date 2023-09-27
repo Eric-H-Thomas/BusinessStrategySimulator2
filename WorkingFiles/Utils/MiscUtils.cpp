@@ -2,13 +2,13 @@
 // Created by Eric Thomas on 9/14/23.
 //
 
-#include "MathUtils.h"
+#include "MiscUtils.h"
 
 #include <iostream>
 #include <vector>
 #include <random>
 
-int MathUtils::choose_index_given_probabilities(const std::vector<double>& probabilities) {
+int MiscUtils::choose_index_given_probabilities(const std::vector<double>& probabilities) {
     // TODO: need to test this method
 
     // Check if the probabilities vector is empty
@@ -44,7 +44,7 @@ int MathUtils::choose_index_given_probabilities(const std::vector<double>& proba
 
 
 // Dot product of two vectors of doubles
-double MathUtils::dot_product(const std::vector<double>& vector1, const std::vector<double>& vector2) {
+double MiscUtils::dot_product(const std::vector<double>& vector1, const std::vector<double>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
         throw std::invalid_argument("Vectors must have the same dimension");
@@ -60,7 +60,7 @@ double MathUtils::dot_product(const std::vector<double>& vector1, const std::vec
 }
 
 // Dot product of two vectors of ints
-int MathUtils::dot_product(const std::vector<int>& vector1, const std::vector<int>& vector2) {
+int MiscUtils::dot_product(const std::vector<int>& vector1, const std::vector<int>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
         throw std::invalid_argument("Vectors must have the same dimension");
@@ -76,7 +76,7 @@ int MathUtils::dot_product(const std::vector<int>& vector1, const std::vector<in
 }
 
 // Dot product of a vector of ints with a vector of doubles
-double MathUtils::dot_product(const std::vector<int>& vector1, const std::vector<double>& vector2) {
+double MiscUtils::dot_product(const std::vector<int>& vector1, const std::vector<double>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
         throw std::invalid_argument("Vectors must have the same dimension");
@@ -92,7 +92,7 @@ double MathUtils::dot_product(const std::vector<int>& vector1, const std::vector
 }
 
 // Dot product of a vector of doubles with a vector of ints
-double MathUtils::dot_product(const std::vector<double>& vector1, const std::vector<int>& vector2) {
+double MiscUtils::dot_product(const std::vector<double>& vector1, const std::vector<int>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
         throw std::invalid_argument("Vectors must have the same dimension");
@@ -105,4 +105,42 @@ double MathUtils::dot_product(const std::vector<double>& vector1, const std::vec
     }
 
     return result;
+}
+
+template <typename T> T MiscUtils::choose_random_from_set(const std::set<T>& inputSet) {
+    // Convert the set to a vector
+    std::vector<T> myVector(inputSet.begin(), inputSet.end());
+
+    // Seed the random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // Generate a random index within the bounds of the vector
+    std::uniform_int_distribution<> dis(0, myVector.size() - 1);
+    int randomIndex = dis(gen);
+
+    // Return the randomly chosen element
+    return myVector[randomIndex];
+}
+
+double MiscUtils::get_percentage_overlap(const std::vector<int>& vector1, const std::vector<int>& vector2) {
+    // Check if the vectors have the same size
+    if (vector1.size() != vector2.size()) {
+        throw std::invalid_argument("Input vectors must have the same size.");
+    }
+
+    // Initialize a counter for the overlap
+    int overlapCount = 0;
+
+    // Iterate through the vectors and count the overlap
+    for (size_t i = 0; i < vector1.size(); ++i) {
+        if (vector1[i] == 1 && vector2[i] == 1) {
+            overlapCount++;
+        }
+    }
+
+    // Calculate the percentage overlap
+    double percentageOverlap = (static_cast<double>(overlapCount) / vector1.size());
+
+    return percentageOverlap;
 }

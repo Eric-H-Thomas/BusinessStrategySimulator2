@@ -170,18 +170,18 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.s: cma
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.s
 
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.o: ../WorkingFiles/Utils/MathUtils.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MathUtils.cpp
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o: ../WorkingFiles/Utils/MiscUtils.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.cpp
 
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MathUtils.cpp > CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.i
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.cpp > CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.i
 
-CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MathUtils.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.s
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.s
 
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.o: ../WorkingFiles/Action/Action.cpp
@@ -219,7 +219,7 @@ BusinessStrategy2_0_OBJECTS = \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/SimulationHistory.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.o" \
-"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.o" \
+"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.o"
 
@@ -234,7 +234,7 @@ BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Firm/Firm.c
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/SimulationHistory.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.o
-BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MathUtils.cpp.o
+BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/build.make

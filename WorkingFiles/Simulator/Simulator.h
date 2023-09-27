@@ -13,6 +13,8 @@
 #include "../Firm/Firm.h"
 #include "../History/MasterHistory.h"
 #include "../../JSONReader/json.h"
+#include "../Utils/MiscUtils.h"
+#include "../Market/Market.h"
 
 using std::map;
 using std::vector;
@@ -26,10 +28,6 @@ public:
     int run();
     int getNumSims() const;
     int perform_micro_step(int iActingAgentID);
-
-    // TODO: remove later if not needed
-//    ControlAgent get_control_agent_by_ID(int iControlAgentID);
-//    Firm get_firm_agent_by_ID(int iFirmID);
 
 private:
     nlohmann::json        simulatorConfigs;
@@ -56,7 +54,10 @@ private:
     int init_firms_for_control_agents();
     vector<int> create_market_capability_vector(double dbMean, double dbSD);
     void set_agent_turn_order();
+    vector<Action> get_actions_for_all_control_agents(int iActingAgentID);
     Action get_agent_action(ControlAgent agent);
     ActionType get_action_type(ControlAgent agent);
     Action get_entry_action(ControlAgent agent);
+    Action get_exit_action(ControlAgent agent);
+    Firm get_firm_from_agent(ControlAgent agent);
 };

@@ -7,7 +7,7 @@
 #include <map>
 #include <iostream>
 #include "../../JSONReader/json.h"
-#include "../Utils/MathUtils.h"
+#include "../Utils/MiscUtils.h"
 #include "../Action/Action.h"
 #include <fstream>
 #include <iostream>
@@ -329,19 +329,7 @@ int Simulator::perform_micro_step(int iActingAgentID) {
     // TODO: edit this method to work for the simultaneous model as well (or create an overload with no parameters)
     // TODO: make sure this method returns error codes as necessary
 
-
-    // TODO: get actions
-    vector<Action> vecActions;
-    for (const auto& pair : mapIDToControlAgents) {
-        ControlAgent agent = pair.second;
-
-        // Create none actions for the agents not currently acting
-        if (agent.getAgentId() != iActingAgentID)
-            vecActions.emplace_back(Action::generate_none_action(agent.getAgentId()));
-
-        // TODO: get action for acting agent
-    }
-
+    vector<Action> vecActions = get_actions_for_all_control_agents(iActingAgentID);
 
     // TODO: execute actions
     // TODO: dist profits
@@ -350,19 +338,32 @@ int Simulator::perform_micro_step(int iActingAgentID) {
    return 0;
 };
 
+vector<Action> Simulator::get_actions_for_all_control_agents(int iActingAgentID) {
+    vector<Action> vecActions;
+    for (const auto& pair : mapIDToControlAgents) {
+        ControlAgent agent = pair.second;
+        // Get action for the acting agent
+        if (agent.getAgentId() == iActingAgentID){
+            vecActions.emplace_back(get_agent_action(agent));
+        }
+        else { // Create none actions for the agents not currently acting
+            vecActions.emplace_back(Action::generate_none_action(agent.getAgentId()));
+        }
+    }
+    return vecActions;
+}
+
 Action Simulator::get_agent_action(ControlAgent agent) {
     ActionType actionType = get_action_type(agent);
 
     if (actionType == ActionType::enumEntryAction) {
-        // TODO: if entry, *code to determine which market to enter*
-        //  If no action is selected (no entry was possible), recurse on this method with an updated decision probability vector
+        return get_entry_action(agent);
     }
     else if (actionType == ActionType::enumExitAction) {
-        // TODO: if exit, *code to determine which market to exit*
-        //  If no action is selected (no exit was possible), recurse on this method with an updated decision probability vector
+        return get_exit_action(agent);
     }
     else if (actionType == ActionType::enumNoneAction) {
-        // TODO: if none, create a none action
+        return Action::generate_none_action(agent.getAgentId());
     }
 
     // Should never reach this part of the code
@@ -371,7 +372,7 @@ Action Simulator::get_agent_action(ControlAgent agent) {
 }
 
 ActionType Simulator::get_action_type(ControlAgent agent) {
-    int iActionTypeIndex = MathUtils::choose_index_given_probabilities(agent.get_action_likelihood_vector());
+    int iActionTypeIndex = MiscUtils::choose_index_given_probabilities(agent.get_action_likelihood_vector());
     if (iActionTypeIndex == 0) {
         return ActionType::enumEntryAction;
     }
@@ -388,40 +389,66 @@ ActionType Simulator::get_action_type(ControlAgent agent) {
 }
 
 Action Simulator::get_entry_action(ControlAgent agent) {
-    // TODO: factor these two lines of code into their own method
-    int iFirmID = agent.iFirmAssignment;
-    Firm firm = mapIDToFirm.at(iFirmID);
+    Firm firm = get_firm_from_agent(agent);
+    set<Market> setPossibleMarketsToEnter;
+    Market finalChoiceMarket;
 
     // Iterate through all markets, adding each one to the decision set if the firm is not already in that market
     for (const auto& market : economy.get_vec_markets()) {
-
+        if (!firm.is_in_market(market))
+            setPossibleMarketsToEnter.insert(market);
     }
 
+    // Check for the case that there are no markets to enter (extremely rare)
+    if (setPossibleMarketsToEnter.empty()){
+        return Action::generate_none_action(agent.getAgentId());
+    }
+
+    // Choose a market to enter based on the entry policy
     if (agent.getEnumEntryPolicy() == EntryPolicy::All) {
-        // TODO: fill in code
-
-        // Randomly choose a market from the decision set
+        finalChoiceMarket = MiscUtils::choose_random_from_set(setPossibleMarketsToEnter);
     }
-    else if (agent.getEnumEntryPolicy() == EntryPolicy::HighestOverlap){
-        // TODO: fill in code
-        // Iterate through the decision set to find the market(s) with the highest overlap
-
-        // Randomly choose a market from those that have the highest overlap
+    else if (agent.getEnumEntryPolicy() == EntryPolicy::HighestOverlap) {
+        finalChoiceMarket = firm.choose_market_with_highest_overlap(setPossibleMarketsToEnter);
+    }
+    else {
+        // Should never reach this part of the code
+        cerr << "Error getting action_type" << endl;
+        throw std::exception();
     }
 
-    // Should never reach this part of the code
-    cerr << "Error getting action_type" << endl;
-    throw std::exception();
+    // Construct and return the action object
+    return Action(agent.getAgentId(), ActionType::enumEntryAction, finalChoiceMarket.get_market_id());
 }
 
-// TODO: remove later if not needed
-//ControlAgent Simulator::get_control_agent_by_ID(int iControlAgentID) {
-//    return mapIDToControlAgents.at(iControlAgentID);
-//}
+Action Simulator::get_exit_action(ControlAgent agent) {
+    Firm firm = get_firm_from_agent(agent);
+    int iFinalChoiceMarketID;
+
+    // Check for the case that there are no markets to exit
+    if (firm.getSetMarketIDs().empty()) {
+        return Action::generate_none_action(agent.getAgentId());
+    }
+
+    // Choose a market to exit based on the exit policy
+    if (agent.getEnumExitPolicy() == ExitPolicy::All) {
+        iFinalChoiceMarketID = MiscUtils::choose_random_from_set(firm.getSetMarketIDs());
+    }
+
+    // TODO: Add functionality for ExitPolicy::Loss
+//    else if (agent.getEnumExitPolicy() == ExitPolicy::Loss) {
 //
-//Firm Simulator::get_firm_agent_by_ID(int iFirmID) {
-//    return mapIDToFirm.at(iFirmID);
-//}
+//    }
+
+    else {
+        // Should never reach this part of the code
+        cerr << "Error getting action_type" << endl;
+        throw std::exception();
+    }
+
+    // Construct and return the action object
+    return Action(agent.getAgentId(), ActionType::enumExitAction, iFinalChoiceMarketID);
+}
 
 void Simulator::init_simulation_history() {
     // Generate map of agents to firms
@@ -435,17 +462,22 @@ void Simulator::init_simulation_history() {
     map<int,double> mapFirmStartingCapital;
     for (const auto& pair : this->mapIDToFirm) {
         const Firm& firm = pair.second;
-        mapFirmStartingCapital[firm.getIFirmId()] = firm.getDbCapital();
+        mapFirmStartingCapital[firm.getFirmID()] = firm.getDbCapital();
     }
 
     // Generate map of market maximum entry costs
     map<int,double> mapMarketMaximumEntryCosts;
     for (auto market : this->economy.get_vec_markets()){
         vector<int> vecMarketCapabilities = market.get_vec_capabilities();
-        double dbMaxEntryCost = MathUtils::dot_product(vecMarketCapabilities, this->economy.get_vec_capability_costs());
+        double dbMaxEntryCost = MiscUtils::dot_product(vecMarketCapabilities, this->economy.get_vec_capability_costs());
         mapMarketMaximumEntryCosts[market.get_market_id()] = dbMaxEntryCost;
     }
 
     // Initialize the simulation history using the above three maps
     SimulationHistory simulationHistory = SimulationHistory(mapAgentToFirm, mapFirmStartingCapital, mapMarketMaximumEntryCosts);
+}
+
+Firm Simulator::get_firm_from_agent(ControlAgent agent) {
+    int iFirmID = agent.iFirmAssignment;
+    return mapIDToFirm.at(iFirmID);
 }

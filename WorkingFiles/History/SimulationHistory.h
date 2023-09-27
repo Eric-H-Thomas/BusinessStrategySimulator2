@@ -25,16 +25,15 @@ public:
     map<int,double>                 mapFirmStartingCapital;
     map<int,double>                 mapMarketMaximumEntryCost;
     vector<CapitalChange>           vecCapitalChanges;
-
-    SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,double> &mapFirmStartingCapital,
-                      const map<int,double> &mapMarketMaximumEntryCost);
-
     vector<RevenueChange>           vecRevenueChanges;
     vector<FixedCostChange>         vecFixedCostChanges;
     vector<VarCostChange>           vecVarCostChanges;
     vector<EntryCostChange>         vecEntryCostChanges;
     vector<QuantityProducedChange>  vecQtyProducedChanges;
     vector<MarketPresenceChange>    vecMarketPresenceChanges;
+
+    SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,double> &mapFirmStartingCapital,
+                      const map<int,double> &mapMarketMaximumEntryCost);
 };
 
 struct CapitalChange {

@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <iostream>
 #include <ostream>
 #include "../Market/Market.h"
 
@@ -20,6 +21,7 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Economy &economy);
 
     // Getters
+    const Market&           get_market_by_ID(int iMarketID)   const;
     const vector<Market>&   get_vec_markets()                 const;
     const vector<double>&   get_vec_capability_costs()        const;
     const vector<int>&      get_vec_cluster_means()           const;
