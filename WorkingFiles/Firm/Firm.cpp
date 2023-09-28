@@ -27,6 +27,20 @@ bool Firm::is_in_market(Market market){
    return false;
 }
 
+void Firm::enter_market(const int& iMarketID) {
+    if (!this->setMarketIDs.insert(iMarketID).second) {
+        std::cerr << "Unsuccessful market entry" << std::endl;
+        throw std::exception();
+    }
+}
+
+void Firm::exit_market(const int& iMarketID) {
+    if (this->setMarketIDs.erase(iMarketID) == 0){
+        std::cerr << "Unsuccessful market exit" << std::endl;
+        throw std::exception();
+    }
+}
+
 Market Firm::choose_market_with_highest_overlap(set<Market> setMarkets){
     double dbHighestOverlapValue = 0.0;
     set<Market> setMarketsWithHighestOverlap;

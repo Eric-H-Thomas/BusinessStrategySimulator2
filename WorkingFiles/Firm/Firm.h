@@ -14,6 +14,8 @@ public:
     Firm(int iFirmID, double dbStartingCapital);
     int getFirmID() const;
     double getDbCapital() const;
+    void enter_market(const int& iMarketID);
+    void exit_market(const int& iMarketID);
     bool is_in_market(Market market);
     Market choose_market_with_highest_overlap(set<Market> setMarkets);
     const set<int> &getSetMarketIDs() const;
