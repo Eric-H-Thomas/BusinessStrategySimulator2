@@ -34,6 +34,8 @@ public:
 
     SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,double> &mapFirmStartingCapital,
                       const map<int,double> &mapMarketMaximumEntryCost);
+
+    void record_market_presence_change(int iMicroTimeStep, bool bPresent, int iFirmID, int iMarketID);
 };
 
 struct CapitalChange {

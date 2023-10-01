@@ -30,13 +30,12 @@ int Simulator::run() {
     // Loop through the macro steps
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
         set_agent_turn_order();
-        for (int iAgentIndex : vecAgentTurnOrder){
+        for (int iAgentIndex : vecAgentTurnOrder) {
             if (perform_micro_step(iAgentIndex))
                 return 1;
         }
     }
 
-    // TODO: push the current simulation history onto the master history
     return 0;
 }
 
@@ -326,6 +325,8 @@ void Simulator::set_agent_turn_order() {
 };
 
 int Simulator::perform_micro_step(const int& iActingAgentID) {
+    iCurrentMicroTimeStep++;
+
     // TODO: edit this method to make it compatible with non-control agents
     // TODO: edit this method to work for the simultaneous model as well (or create an overload with no parameters)
     // TODO: make sure this method returns error codes as necessary
@@ -378,12 +379,14 @@ void Simulator::execute_entry_action(const Action& action) {
     auto agentPtr = mapAgentIDToAgentPtr.at(action.iAgentID);
     auto firmPtr = get_firm_ptr_from_agent_ptr(agentPtr);
     firmPtr->enter_market(action.iMarketID);
+    currentSimulationHistoryPtr->record_market_presence_change(action.iMicroTimeStep, true, firmPtr->getFirmID(), action.iMarketID);
 }
 
 void Simulator::execute_exit_action(const Action& action) {
     auto agentPtr = mapAgentIDToAgentPtr.at(action.iAgentID);
     auto firmPtr = get_firm_ptr_from_agent_ptr(agentPtr);
     firmPtr->exit_market(action.iMarketID);
+    currentSimulationHistoryPtr->record_market_presence_change(action.iMicroTimeStep, false, firmPtr->getFirmID(), action.iMarketID);
 }
 
 Action Simulator::get_agent_action(const ControlAgent& agent) {
@@ -451,7 +454,7 @@ Action Simulator::get_entry_action(const ControlAgent& agent) {
     }
 
     // Construct and return the action object
-    return Action(agent.getAgentId(), ActionType::enumEntryAction, finalChoiceMarket.get_market_id());
+    return Action(agent.getAgentId(), ActionType::enumEntryAction, finalChoiceMarket.get_market_id(), iCurrentMicroTimeStep);
 }
 
 Action Simulator::get_exit_action(const ControlAgent& agent) {
@@ -480,7 +483,7 @@ Action Simulator::get_exit_action(const ControlAgent& agent) {
     }
 
     // Construct and return the action object
-    return Action(agent.getAgentId(), ActionType::enumExitAction, iFinalChoiceMarketID);
+    return Action(agent.getAgentId(), ActionType::enumExitAction, iFinalChoiceMarketID, iCurrentMicroTimeStep);
 }
 
 void Simulator::init_simulation_history() {
@@ -507,7 +510,8 @@ void Simulator::init_simulation_history() {
     }
 
     // Initialize the simulation history using the above three maps
-    SimulationHistory simulationHistory = SimulationHistory(mapAgentToFirm, mapFirmStartingCapital, mapMarketMaximumEntryCosts);
+    currentSimulationHistoryPtr = new SimulationHistory(mapAgentToFirm, mapFirmStartingCapital, mapMarketMaximumEntryCosts);
+    masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
 }
 
 Firm* Simulator::get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr) {
@@ -523,4 +527,12 @@ Firm* Simulator::get_firm_ptr_from_agent(const ControlAgent& agent) {
 Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
     ControlAgent* agentPtr = mapAgentIDToAgentPtr.at(iAgentID);
     return get_firm_ptr_from_agent_ptr(agentPtr);
+}
+
+void Simulator::distribute_profits() {
+    // TODO:
+    
+
+
+
 }

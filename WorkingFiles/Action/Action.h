@@ -14,10 +14,11 @@ public:
     int iAgentID;
     ActionType enumActionType;
     int iMarketID;
+    int iMicroTimeStep;
 
     // Constructors
     Action();
-    Action(int iAgentId, ActionType enumActionType, int iMarketId);
+    Action(int iAgentId, ActionType enumActionType, int iMarketId, int iMicroTimeStep);
 
     static Action generate_none_action(int iAgentID);
 };

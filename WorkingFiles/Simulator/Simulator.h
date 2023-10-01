@@ -33,6 +33,7 @@ private:
     map<int, ControlAgent*> mapAgentIDToAgentPtr;
     map<int, Firm*> mapFirmIDToFirmPtr;
     Economy economy;
+    SimulationHistory* currentSimulationHistoryPtr;
     MasterHistory masterHistory;
     vector<int> vecAgentTurnOrder;
 
@@ -41,6 +42,7 @@ private:
     string strResultsDir;
     int iNumSims;
     int iMacroStepsPerSim;
+    int iCurrentMicroTimeStep = 0;
     double dbSkippedTurnsPerRegularTurn;
     bool bVerbose;
     bool bRandomizeTurnOrderWithinEachMacroStep;
@@ -62,6 +64,7 @@ private:
     ActionType get_action_type(const ControlAgent &agent);
     Action get_entry_action(const ControlAgent &agent);
     Action get_exit_action(const ControlAgent &agent);
+    void distribute_profits();
     Firm* get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr);
     Firm* get_firm_ptr_from_agent(const ControlAgent& agent);
     Firm* get_firm_ptr_from_agent_id(const int& iAgentID);

@@ -13,6 +13,7 @@ Action Action::generate_none_action(int iAgentID) {
 
 // Constructors
 Action::Action() {}
-Action::Action(int iAgentId, ActionType enumActionType, int iMarketId) : iAgentID(iAgentId),
+Action::Action(int iAgentId, ActionType enumActionType, int iMarketId, int iMicroTimeStep) : iAgentID(iAgentId),
                                                                          enumActionType(enumActionType),
-                                                                         iMarketID(iMarketId) {}
+                                                                         iMarketID(iMarketId),
+                                                                         iMicroTimeStep(iMicroTimeStep){}

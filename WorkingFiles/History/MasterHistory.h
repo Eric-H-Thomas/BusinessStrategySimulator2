@@ -8,5 +8,5 @@
 
 class MasterHistory {
 public:
-    vector<SimulationHistory> vecSimulationHistories;
+    vector<SimulationHistory*> vecSimulationHistoryPtrs;
 };
