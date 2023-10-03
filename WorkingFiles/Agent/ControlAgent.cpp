@@ -11,6 +11,7 @@ using std::endl;
 
 ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
                            const string &strExitPolicy, const double &dbEntryActionLikelihood,
+                           const string &strProductionPolicy,
                            const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
                            const double &dbPercentThresholdForLossExitPolicy,
                            const int &iNumMicroStepsForLossExitPolicy) {
@@ -27,6 +28,11 @@ ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
         this->enumExitPolicy = ExitPolicy::Loss;
         this->dbPercentThresholdForLossExitPolicy = dbPercentThresholdForLossExitPolicy;
         this->iNumMacroStepsForLossExitPolicy = iNumMicroStepsForLossExitPolicy;
+    }
+
+    // Set the production policy
+    if (StringUtils::equalsIgnoreCase(strProductionPolicy, "cournot")) {
+        this->enumProductionPolicy = ProductionPolicy::Cournot;
     }
 
     // Set the remaining agent hyperparameters
@@ -72,4 +78,8 @@ EntryPolicy ControlAgent::getEnumEntryPolicy() const {
 
 ExitPolicy ControlAgent::getEnumExitPolicy() const {
     return enumExitPolicy;
+}
+
+ProductionPolicy ControlAgent::getEnumProductionPolicy() const {
+    return enumProductionPolicy;
 }

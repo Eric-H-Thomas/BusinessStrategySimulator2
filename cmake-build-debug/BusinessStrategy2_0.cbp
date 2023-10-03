@@ -95,6 +95,12 @@
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/ControlAgent.h">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/DataCache/DataCache.cpp">
+			<Option target="BusinessStrategy2_0"/>
+		</Unit>
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/DataCache/DataCache.h">
+			<Option target="BusinessStrategy2_0"/>
+		</Unit>
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Economy/Economy.cpp">
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>

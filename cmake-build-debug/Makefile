@@ -177,6 +177,30 @@ WorkingFiles/Agent/ControlAgent.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.s
 .PHONY : WorkingFiles/Agent/ControlAgent.cpp.s
 
+WorkingFiles/DataCache/DataCache.o: WorkingFiles/DataCache/DataCache.cpp.o
+.PHONY : WorkingFiles/DataCache/DataCache.o
+
+# target to build an object file
+WorkingFiles/DataCache/DataCache.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.o
+.PHONY : WorkingFiles/DataCache/DataCache.cpp.o
+
+WorkingFiles/DataCache/DataCache.i: WorkingFiles/DataCache/DataCache.cpp.i
+.PHONY : WorkingFiles/DataCache/DataCache.i
+
+# target to preprocess a source file
+WorkingFiles/DataCache/DataCache.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.i
+.PHONY : WorkingFiles/DataCache/DataCache.cpp.i
+
+WorkingFiles/DataCache/DataCache.s: WorkingFiles/DataCache/DataCache.cpp.s
+.PHONY : WorkingFiles/DataCache/DataCache.s
+
+# target to generate assembly for a file
+WorkingFiles/DataCache/DataCache.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.s
+.PHONY : WorkingFiles/DataCache/DataCache.cpp.s
+
 WorkingFiles/Economy/Economy.o: WorkingFiles/Economy/Economy.cpp.o
 .PHONY : WorkingFiles/Economy/Economy.o
 
@@ -408,6 +432,9 @@ help:
 	@echo "... WorkingFiles/Agent/ControlAgent.o"
 	@echo "... WorkingFiles/Agent/ControlAgent.i"
 	@echo "... WorkingFiles/Agent/ControlAgent.s"
+	@echo "... WorkingFiles/DataCache/DataCache.o"
+	@echo "... WorkingFiles/DataCache/DataCache.i"
+	@echo "... WorkingFiles/DataCache/DataCache.s"
 	@echo "... WorkingFiles/Economy/Economy.o"
 	@echo "... WorkingFiles/Economy/Economy.i"
 	@echo "... WorkingFiles/Economy/Economy.s"

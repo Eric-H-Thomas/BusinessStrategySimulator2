@@ -31,15 +31,17 @@ int Simulator::run() {
     if (bVerbose) cout << "Initializing simulation history" << endl;
     init_simulation_history();
 
+    if (bVerbose) cout << "Initializing data cache" << endl;
+    init_data_cache();
+
     // Loop through the macro steps
     if (bVerbose) cout << "Beginning loop through macro steps" << endl;
 
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
+        if (bVerbose) cout << "Beginning macro step " << iMacroStep + 1 << " of " << iMacroStepsPerSim << endl;
         if (bVerbose) cout << "Setting the agent turn order" << endl;
+
         set_agent_turn_order();
-        if (bVerbose) {
-            cout << "Beginning the loop through the micro steps for macro step " << iMacroStep + 1 << " of " << iMacroStepsPerSim << endl;
-        }
         for (int iAgentIndex : vecAgentTurnOrder) {
             if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iAgentIndex << endl;
             if (perform_micro_step(iAgentIndex))
@@ -355,10 +357,7 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
     if (bVerbose) cout << "Distributing profits" << endl;
     if (bVerbose) cout << "(Note: Profit distribution not yet implemented)" << endl;
     // TODO: dist profits
-
-    if (bVerbose) cout << "Updating the history" << endl;
-    if (bVerbose) cout << "(Note: History update not yet implemented)" << endl;
-    // TODO: update history
+    distribute_profits();
 
    return 0;
 };
@@ -537,6 +536,18 @@ void Simulator::init_simulation_history() {
     masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
 }
 
+void Simulator::init_data_cache() {
+    // TODO: Initialize capital amounts
+    
+
+
+    // TODO: Initialize revenues
+    // TODO: Initialize fixed costs
+    // TODO: Initialize variable costs
+    // TODO: Initialize entry costs
+    // TODO: Initialize quantities produced
+}
+
 Firm* Simulator::get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr) {
     int iFirmID = agentPtr->iFirmAssignment;
     return mapFirmIDToFirmPtr.at(iFirmID);
@@ -553,7 +564,7 @@ Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
 }
 
 void Simulator::distribute_profits() {
-    // TODO:
+    // TODO: loop through each market, calculating the production level for each firm in the market
 
 
 

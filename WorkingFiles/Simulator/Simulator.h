@@ -24,6 +24,7 @@ public:
     Simulator();
     int load_json_configs(const string &strConfigFilePath);
     void init_simulation_history();
+    void init_data_cache();
     int prepare_to_run();
     int run();
     int getNumSims() const;

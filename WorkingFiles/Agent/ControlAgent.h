@@ -19,10 +19,15 @@ enum class ExitPolicy {
     Loss
 };
 
+enum class ProductionPolicy {
+    Cournot
+};
+
 class ControlAgent {
 public:
     ControlAgent(const int &iAgentID, const string &strEntryPolicy,
                  const string &strExitPolicy, const double &dbEntryActionLikelihood,
+                 const string &strProductionPolicy,
                  const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
                  const double &dbPercentThresholdForLossExitPolicy = 0.0,
                  const int &iNumMicroStepsForLossExitPolicy = 0);
@@ -35,11 +40,13 @@ public:
     std::vector<double> get_action_likelihood_vector() const;
     EntryPolicy getEnumEntryPolicy() const;
     ExitPolicy getEnumExitPolicy() const;
+    ProductionPolicy getEnumProductionPolicy() const;
 
 private:
     int iAgentID;
     EntryPolicy enumEntryPolicy;
     ExitPolicy enumExitPolicy;
+    ProductionPolicy enumProductionPolicy;
     double dbEntryActionLikelihood;
     double dbExitActionLikelihood;
     double dbNoneActionLikelihood;
