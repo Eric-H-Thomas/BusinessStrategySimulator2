@@ -38,15 +38,15 @@ ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
 }
 
 // This method allows you to print the agent's details via cout << agent;
-std::ostream &operator<<(std::ostream &os, const ControlAgent &agent) {
-    os << "iAgentID: " << agent.iAgentID << endl
-       << "enumEntryPolicy: " << agent.enumEntryPolicy << endl
-       << "enumExitPolicy: " << agent.enumExitPolicy << endl
-        << "dbEntryActionLikelihood: " << agent.dbEntryActionLikelihood << endl
-        << "dbExitActionLikelihood: " << agent.dbExitActionLikelihood << endl
-        << "dbNoneActionLikelihood: " << agent.dbNoneActionLikelihood << endl << endl;
-    return os;
-}
+//std::ostream &operator<<(std::ostream &os, const ControlAgent &agent) {
+//    os << "iAgentID: " << agent.iAgentID << endl
+//       << "enumEntryPolicy: " << agent.enumEntryPolicy << endl
+//       << "enumExitPolicy: " << agent.enumExitPolicy << endl
+//        << "dbEntryActionLikelihood: " << agent.dbEntryActionLikelihood << endl
+//        << "dbExitActionLikelihood: " << agent.dbExitActionLikelihood << endl
+//        << "dbNoneActionLikelihood: " << agent.dbNoneActionLikelihood << endl << endl;
+//    return os;
+//}
 
 int ControlAgent::getAgentId() const {return iAgentID;}
 

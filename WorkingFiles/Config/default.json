@@ -14,15 +14,23 @@
   "agents": [
     {
       "agent_id": 0,
-      "entry_policy": "example_entry_policy",
-      "exit_policy": "example_exit_policy",
-      "include_none_action": true
+      "entry_policy": "all",
+      "exit_policy": "all",
+      "entry_action_likelihood": 70,
+      "exit_action_likelihood": 30,
+      "none_action_likelihood": 0,
+      "percent_threshold_for_loss_exit_policy": 80,
+      "num_macro_steps_for_loss_exit_policy": 3
     },
     {
-      "agent_id": 1,
-      "entry_policy": "example_entry_policy2",
-      "exit_policy": "example_exit_policy2",
-      "include_none_action": false
+      "agent_id": 2,
+      "entry_policy": "all",
+      "exit_policy": "all",
+      "entry_action_likelihood": 70,
+      "exit_action_likelihood": 30,
+      "none_action_likelihood": 0,
+      "percent_threshold_for_loss_exit_policy": 80,
+      "num_macro_steps_for_loss_exit_policy": 3
     }
   ],
 

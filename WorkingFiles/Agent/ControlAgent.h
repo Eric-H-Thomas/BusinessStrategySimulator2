@@ -27,7 +27,7 @@ public:
                  const double &dbPercentThresholdForLossExitPolicy = 0.0,
                  const int &iNumMicroStepsForLossExitPolicy = 0);
     int iFirmAssignment;
-    friend std::ostream &operator<<(std::ostream &os, const ControlAgent &agent);
+   // friend std::ostream &operator<<(std::ostream &os, const ControlAgent &agent);
     int getAgentId() const;
     double getDbEntryActionLikelihood() const;
     double getDbExitActionLikelihood() const;

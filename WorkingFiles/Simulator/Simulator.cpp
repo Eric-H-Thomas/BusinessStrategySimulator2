@@ -23,14 +23,25 @@ using std::endl;
 
 int Simulator::run() {
 
+    if (bVerbose) cout << "At the beginning of the Simulator::Run method" << endl;
+
     // TODO: make sure the agent to firm assignments get properly reset if they are not supposed to be the same for each
     //  round of simulation
+
+    if (bVerbose) cout << "Initializing simulation history" << endl;
     init_simulation_history();
 
     // Loop through the macro steps
+    if (bVerbose) cout << "Beginning loop through macro steps" << endl;
+
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
+        if (bVerbose) cout << "Setting the agent turn order" << endl;
         set_agent_turn_order();
+        if (bVerbose) {
+            cout << "Beginning the loop through the micro steps for macro step " << iMacroStep + 1 << " of " << iMacroStepsPerSim << endl;
+        }
         for (int iAgentIndex : vecAgentTurnOrder) {
+            if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iAgentIndex << endl;
             if (perform_micro_step(iAgentIndex))
                 return 1;
         }
@@ -136,7 +147,7 @@ int Simulator::init_economy() {
                                 vecClusterSDs,
                                 vecMarketsPerCluster,
                                 market_parameters["market_entry_cost_max"],
-                                market_parameters["market_entry_cost_in"]);
+                                market_parameters["market_entry_cost_min"]);
     }
 
     catch (const nlohmann::json::exception& e) {
@@ -183,7 +194,7 @@ int Simulator::init_firms_for_control_agents() {
     }
 
     const auto& firm_parameters = this->simulatorConfigs["default_firm_parameters"];
-    double dbDefaultStartingCapital = firm_parameters["default_starting_capital"];
+    double dbDefaultStartingCapital = firm_parameters["starting_capital"];
 
     for (auto pair : mapAgentIDToAgentPtr) {
         // Get the ID number of the agent
@@ -216,35 +227,39 @@ int Simulator::init_markets() {
         std::random_device rd;
         std::mt19937 gen(rd());
 
-        for (int i = 0; i < this->economy.get_total_markets(); i++){
+        for (int iCluster = 0; iCluster < this->economy.get_num_market_clusters(); iCluster++) {
 
-            // Choose the market's var cost from a uniform distribution in the range [dbVarCostMin, dbVarCostMax)
-            std::uniform_real_distribution<double> var_cost_dist(dbVarCostMin, dbVarCostMax);
-            double dbVarCost = var_cost_dist(gen);
+            int iMarketsInCurrCluster = economy.get_vec_markets_per_cluster().at(iCluster);
+            for (int j = 0; j < iMarketsInCurrCluster; j++){
 
-            // Choose the market's demand intercept from a uniform distribution in the range [dbDemandInterceptMin, dbDemandInterceptMax)
-            std::uniform_real_distribution<double> demand_intercept_dist(dbDemandInterceptMin, dbDemandInterceptMax);
-            double dbDemandIntercept = demand_intercept_dist(gen);
+                // Choose the market's var cost from a uniform distribution in the range [dbVarCostMin, dbVarCostMax)
+                std::uniform_real_distribution<double> var_cost_dist(dbVarCostMin, dbVarCostMax);
+                double dbVarCost = var_cost_dist(gen);
 
-            // Choose the market's demand slope from a uniform distribution in the range [dbProductDemandSlopeMin, dbProductDemandSlopeMax)
-            std::uniform_real_distribution<double> demand_slope_dist(dbProductDemandSlopeMin, dbProductDemandSlopeMax);
-            double dbProductDemandSlope = demand_slope_dist(gen);
+                // Choose the market's demand intercept from a uniform distribution in the range [dbDemandInterceptMin, dbDemandInterceptMax)
+                std::uniform_real_distribution<double> demand_intercept_dist(dbDemandInterceptMin, dbDemandInterceptMax);
+                double dbDemandIntercept = demand_intercept_dist(gen);
 
-            // Create the capability vector for this market
-            double dbMean = this->economy.get_vec_cluster_means().at(i);
-            double dbSD = this->economy.get_vec_cluster_SDs().at(i);
-            vector<int> vecMarketCapabilities = create_market_capability_vector(dbMean, dbSD);
+                // Choose the market's demand slope from a uniform distribution in the range [dbProductDemandSlopeMin, dbProductDemandSlopeMax)
+                std::uniform_real_distribution<double> demand_slope_dist(dbProductDemandSlopeMin, dbProductDemandSlopeMax);
+                double dbProductDemandSlope = demand_slope_dist(gen);
 
-            // Create a new market and add it to the economy's vector of markets
-            this->economy.add_market(Market(dbFixedCostPercentageOfEntry, dbVarCost,
-                                            dbDemandIntercept, dbProductDemandSlope, vecMarketCapabilities));
-        }
-    }
+                // Create the capability vector for this market
+                double dbMean = this->economy.get_vec_cluster_means().at(iCluster);
+                double dbSD = this->economy.get_vec_cluster_SDs().at(iCluster);
+                vector<int> vecMarketCapabilities = create_market_capability_vector(dbMean, dbSD);
+
+                // Create a new market and add it to the economy's vector of markets
+                this->economy.add_market(Market(dbFixedCostPercentageOfEntry, dbVarCost,
+
+                                               dbDemandIntercept, dbProductDemandSlope, vecMarketCapabilities));
+            } // End of inner loop
+        } // End of outer loop
+    } // End of try block
     catch (const std::exception& e) {
         cerr << "Error initializing agents: " << e.what() << endl;
         return 1;
     }
-
     return 0;
 };
 
@@ -331,10 +346,18 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
     // TODO: edit this method to work for the simultaneous model as well (or create an overload with no parameters)
     // TODO: make sure this method returns error codes as necessary
 
+    if (bVerbose) cout << "Getting actions for all control agents" << endl;
     vector<Action> vecActions = get_actions_for_all_control_agents(iActingAgentID);
+
+    if (bVerbose) cout << "Executing agent actions" << endl;
     execute_actions(vecActions);
 
+    if (bVerbose) cout << "Distributing profits" << endl;
+    if (bVerbose) cout << "(Note: Profit distribution not yet implemented)" << endl;
     // TODO: dist profits
+
+    if (bVerbose) cout << "Updating the history" << endl;
+    if (bVerbose) cout << "(Note: History update not yet implemented)" << endl;
     // TODO: update history
 
    return 0;
@@ -531,7 +554,7 @@ Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
 
 void Simulator::distribute_profits() {
     // TODO:
-    
+
 
 
 

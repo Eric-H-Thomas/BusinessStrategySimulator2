@@ -123,6 +123,10 @@ template <typename T> T MiscUtils::choose_random_from_set(const std::set<T>& inp
     return myVector[randomIndex];
 }
 
+// Explicit template instantiations for choose_random_from_set
+template Market MiscUtils::choose_random_from_set(const std::set<Market>& inputSet);
+template int MiscUtils::choose_random_from_set(const std::set<int>& inputSet);
+
 double MiscUtils::get_percentage_overlap(const std::vector<int>& vector1, const std::vector<int>& vector2) {
     // Check if the vectors have the same size
     if (vector1.size() != vector2.size()) {
