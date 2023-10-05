@@ -3,3 +3,7 @@
 //
 
 #include "MasterHistory.h"
+
+SimulationHistory* MasterHistory::getCurrentSimulationHistoryPtr() {
+    return vecSimulationHistoryPtrs.back();
+}

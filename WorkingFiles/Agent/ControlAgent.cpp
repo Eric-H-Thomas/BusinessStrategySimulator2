@@ -10,11 +10,11 @@ using std::endl;
 #define NOT_YET_SET -1
 
 ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
-                           const string &strExitPolicy, const double &dbEntryActionLikelihood,
-                           const string &strProductionPolicy,
+                           const string &strExitPolicy, const string &strProductionPolicy,
+                           const double &dbEntryActionLikelihood,
                            const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
                            const double &dbPercentThresholdForLossExitPolicy,
-                           const int &iNumMicroStepsForLossExitPolicy) {
+                           const int &iNumMacroStepsForLossExitPolicy) {
     // Set the entry policy
     if (StringUtils::equalsIgnoreCase(strEntryPolicy, "all"))
         this->enumEntryPolicy = EntryPolicy::All;
@@ -27,7 +27,7 @@ ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
     if (StringUtils::equalsIgnoreCase(strExitPolicy, "loss")) {
         this->enumExitPolicy = ExitPolicy::Loss;
         this->dbPercentThresholdForLossExitPolicy = dbPercentThresholdForLossExitPolicy;
-        this->iNumMacroStepsForLossExitPolicy = iNumMicroStepsForLossExitPolicy;
+        this->iNumMacroStepsForLossExitPolicy = iNumMacroStepsForLossExitPolicy;
     }
 
     // Set the production policy

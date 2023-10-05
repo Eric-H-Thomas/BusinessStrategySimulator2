@@ -9,6 +9,9 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.o: \
  ../WorkingFiles/Agent/ControlAgent.cpp \
  ../WorkingFiles/Agent/ControlAgent.h \
  ../WorkingFiles/Utils/StringUtils.h
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.o: \
+ ../WorkingFiles/DataCache/DataCache.cpp \
+ ../WorkingFiles/DataCache/DataCache.h
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Economy/Economy.cpp.o: \
  ../WorkingFiles/Economy/Economy.cpp \
  ../WorkingFiles/Economy/Economy.h \
@@ -32,6 +35,7 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o: \
  ../JSONReader/json.h \
  ../WorkingFiles/Action/Action.h \
  ../WorkingFiles/Agent/ControlAgent.h \
+ ../WorkingFiles/DataCache/DataCache.h \
  ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Firm/Firm.h \
  ../WorkingFiles/History/MasterHistory.h \
@@ -51,6 +55,7 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o: \
  ../JSONReader/json.h \
  ../WorkingFiles/Action/Action.h \
  ../WorkingFiles/Agent/ControlAgent.h \
+ ../WorkingFiles/DataCache/DataCache.h \
  ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Firm/Firm.h \
  ../WorkingFiles/History/MasterHistory.h \

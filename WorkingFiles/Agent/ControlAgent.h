@@ -26,11 +26,11 @@ enum class ProductionPolicy {
 class ControlAgent {
 public:
     ControlAgent(const int &iAgentID, const string &strEntryPolicy,
-                 const string &strExitPolicy, const double &dbEntryActionLikelihood,
-                 const string &strProductionPolicy,
+                 const string &strExitPolicy, const string &strProductionPolicy,
+                 const double &dbEntryActionLikelihood,
                  const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
                  const double &dbPercentThresholdForLossExitPolicy = 0.0,
-                 const int &iNumMicroStepsForLossExitPolicy = 0);
+                 const int &iNumMacroStepsForLossExitPolicy = 0);
     int iFirmAssignment;
    // friend std::ostream &operator<<(std::ostream &os, const ControlAgent &agent);
     int getAgentId() const;

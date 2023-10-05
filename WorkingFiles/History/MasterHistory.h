@@ -9,4 +9,5 @@
 class MasterHistory {
 public:
     vector<SimulationHistory*> vecSimulationHistoryPtrs;
+    SimulationHistory* getCurrentSimulationHistoryPtr();
 };

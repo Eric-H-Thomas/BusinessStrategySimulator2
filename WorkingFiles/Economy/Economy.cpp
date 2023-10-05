@@ -68,6 +68,14 @@ void Economy::add_market(Market market) {
     this->vecMarkets.push_back(market);
 }
 
+set<int> Economy::get_set_market_IDs() const {
+    set<int> setMarketIDs;
+    for (auto market : vecMarkets) {
+        setMarketIDs.insert(market.get_market_id());
+    }
+    return setMarketIDs;
+}
+
 std::ostream &operator<<(std::ostream &os, const Economy &economy) {
     os << "Economy settings:\n" << "iPossibleCapabilities: " << economy.iPossibleCapabilities << "\niCapabilitiesPerMarket: "
        << economy.iCapabilitiesPerMarket << "\niTotalMarkets: " << economy.iTotalMarkets << "\niFirmCapacity: "

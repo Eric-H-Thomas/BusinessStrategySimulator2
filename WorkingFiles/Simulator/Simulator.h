@@ -15,6 +15,7 @@
 #include "../../JSONReader/json.h"
 #include "../Utils/MiscUtils.h"
 #include "../Market/Market.h"
+#include "../DataCache/DataCache.h"
 
 using std::map;
 using std::vector;
@@ -24,7 +25,7 @@ public:
     Simulator();
     int load_json_configs(const string &strConfigFilePath);
     void init_simulation_history();
-    void init_data_cache();
+    void init_data_cache(SimulationHistory* pCurrentSimulationHistory);
     int prepare_to_run();
     int run();
     int getNumSims() const;
@@ -36,6 +37,7 @@ private:
     Economy economy;
     SimulationHistory* currentSimulationHistoryPtr;
     MasterHistory masterHistory;
+    DataCache dataCache;
     vector<int> vecAgentTurnOrder;
 
     // Simulation parameters
@@ -69,4 +71,6 @@ private:
     Firm* get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr);
     Firm* get_firm_ptr_from_agent(const ControlAgent& agent);
     Firm* get_firm_ptr_from_agent_id(const int& iAgentID);
+    set<int> get_set_firm_IDs();
+    set<int> get_set_market_IDs();
 };

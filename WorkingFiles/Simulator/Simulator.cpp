@@ -32,7 +32,7 @@ int Simulator::run() {
     init_simulation_history();
 
     if (bVerbose) cout << "Initializing data cache" << endl;
-    init_data_cache();
+    init_data_cache(masterHistory.getCurrentSimulationHistoryPtr());
 
     // Loop through the macro steps
     if (bVerbose) cout << "Beginning loop through macro steps" << endl;
@@ -166,6 +166,7 @@ int Simulator::init_control_agents() {
             auto agentPtr = new ControlAgent(agentData["agent_id"],
                                        agentData["entry_policy"],
                                        agentData["exit_policy"],
+                                       agentData["production_policy"],
                                        agentData["entry_action_likelihood"],
                                        agentData["exit_action_likelihood"],
                                        agentData["none_action_likelihood"],
@@ -536,16 +537,32 @@ void Simulator::init_simulation_history() {
     masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
 }
 
-void Simulator::init_data_cache() {
-    // TODO: Initialize capital amounts
-    
+void Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
+    // Initialize capital amounts
+    dataCache.mapFirmCapital = pCurrentSimulationHistory->mapFirmStartingCapital; // TODO: test this to make sure it's getting passed by value, not reference
 
+    // Get all firm-market combinations
+    set<pair<int,int>> setFirmMarketCombinations;
+    for (int iFirmID : get_set_firm_IDs()) {
+        for (int iMarketID : get_set_market_IDs()) {
+            setFirmMarketCombinations.insert(std::make_pair(iFirmID, iMarketID));
+        }
+    }
 
-    // TODO: Initialize revenues
-    // TODO: Initialize fixed costs
-    // TODO: Initialize variable costs
-    // TODO: Initialize entry costs
-    // TODO: Initialize quantities produced
+    // Initialize revenues, fixed costs, variable costs, and quantities produced to zero for each firm-market combination
+    for (auto combination : setFirmMarketCombinations) {
+        dataCache.mapFirmMarketComboToRevenue       [combination] = 0.0;
+        dataCache.mapFirmMarketComboToFixedCost     [combination] = 0.0;
+        dataCache.mapFirmMarketComboToVarCost       [combination] = 0.0;
+        dataCache.mapFirmMarketComboToQtyProduced   [combination] = 0.0;
+    }
+
+    // Initialize each market-firm entry cost to the maximum entry cost for that market
+    for (auto combination : setFirmMarketCombinations) {
+        int iMarketID = combination.second;
+        double dbEntryCost = pCurrentSimulationHistory->mapMarketMaximumEntryCost[iMarketID];
+        dataCache.mapFirmMarketComboToEntryCost[combination] = dbEntryCost;
+    }
 }
 
 Firm* Simulator::get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr) {
@@ -567,6 +584,16 @@ void Simulator::distribute_profits() {
     // TODO: loop through each market, calculating the production level for each firm in the market
 
 
+}
 
+set<int> Simulator::get_set_firm_IDs() {
+    set<int> setFirmIDs;
+    for (auto pair : mapFirmIDToFirmPtr) {
+        setFirmIDs.insert(pair.first);
+    }
+    return setFirmIDs;
+}
 
+set<int> Simulator::get_set_market_IDs() {
+    return economy.get_set_market_IDs();
 }

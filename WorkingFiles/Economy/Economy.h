@@ -5,9 +5,11 @@
 #pragma once
 #include <iostream>
 #include <ostream>
+#include <set>
 #include "../Market/Market.h"
 
 using std::vector;
+using std::set;
 
 class Economy {
 public:
@@ -23,6 +25,7 @@ public:
     // Getters
     const Market&           get_market_by_ID(int iMarketID)   const;
     const vector<Market>&   get_vec_markets()                 const;
+    set<int>                get_set_market_IDs()              const;
     const vector<double>&   get_vec_capability_costs()        const;
     const vector<int>&      get_vec_cluster_means()           const;
     const vector<int>&      get_vec_cluster_SDs()             const;
