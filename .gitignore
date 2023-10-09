@@ -10,3 +10,7 @@ cmake-build-debug/BusinessStrategy2_0
 *.o
 *.o
 *.log
+cmake-build-debug/BusinessStrategy2_0
+cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/CXX.includecache
+*.o
+*.log

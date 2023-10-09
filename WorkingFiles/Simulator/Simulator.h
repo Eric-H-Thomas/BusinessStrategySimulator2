@@ -50,6 +50,7 @@ private:
     bool bVerbose;
     bool bRandomizeTurnOrderWithinEachMacroStep;
     bool bRandomizeAgentFirmAssignmentPerSimulation;
+    bool bRandomizeVariableCostsPerSimulation;
 
     int init_control_agents();
     int init_economy();
@@ -73,4 +74,7 @@ private:
     Firm* get_firm_ptr_from_agent_id(const int& iAgentID);
     set<int> get_set_firm_IDs();
     set<int> get_set_market_IDs();
+    set<int> get_firm_IDs_in_market(Market market);
+    map<int,double> get_map_firm_to_var_cost_for_market(Market market);
+    double get_average_var_cost_in_market(Market market);
 };

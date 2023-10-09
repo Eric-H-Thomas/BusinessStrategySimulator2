@@ -109,6 +109,7 @@ int Simulator::set_simulation_parameters() {
         this->bVerbose = simulation_parameters["verbose"];
         this->bRandomizeTurnOrderWithinEachMacroStep = simulation_parameters["randomize_turn_order_within_each_macro_step"];
         this->bRandomizeAgentFirmAssignmentPerSimulation = simulation_parameters["randomize_agent_firm_assignment_per_simulation"];
+        this->bRandomizeVariableCostsPerSimulation = simulation_parameters["randomize_variable_costs_per_simulation"];
     }
 
     catch (const nlohmann::json::exception& e) {
@@ -142,8 +143,6 @@ int Simulator::init_economy() {
 
         this->economy = Economy(economy_parameters["possible_capabilities"],
                                 economy_parameters["capabilities_per_market"],
-                                economy_parameters["total_markets"],
-                                economy_parameters["firm_capacity"],
                                 economy_parameters["num_market_clusters"],
                                 vecClusterMeans,
                                 vecClusterSDs,
@@ -253,8 +252,7 @@ int Simulator::init_markets() {
                 vector<int> vecMarketCapabilities = create_market_capability_vector(dbMean, dbSD);
 
                 // Create a new market and add it to the economy's vector of markets
-                this->economy.add_market(Market(dbFixedCostPercentageOfEntry, dbVarCost,
-
+                this->economy.add_market(Market(dbFixedCostPercentageOfEntry,
                                                dbDemandIntercept, dbProductDemandSlope, vecMarketCapabilities));
             } // End of inner loop
         } // End of outer loop
@@ -526,7 +524,7 @@ void Simulator::init_simulation_history() {
 
     // Generate map of market maximum entry costs
     map<int,double> mapMarketMaximumEntryCosts;
-    for (auto market : this->economy.get_vec_markets()){
+    for (auto market : this->economy.get_vec_markets()) {
         vector<int> vecMarketCapabilities = market.get_vec_capabilities();
         double dbMaxEntryCost = MiscUtils::dot_product(vecMarketCapabilities, this->economy.get_vec_capability_costs());
         mapMarketMaximumEntryCosts[market.get_market_id()] = dbMaxEntryCost;
@@ -538,9 +536,6 @@ void Simulator::init_simulation_history() {
 }
 
 void Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
-    // Initialize capital amounts
-    dataCache.mapFirmCapital = pCurrentSimulationHistory->mapFirmStartingCapital; // TODO: test this to make sure it's getting passed by value, not reference
-
     // Get all firm-market combinations
     set<pair<int,int>> setFirmMarketCombinations;
     for (int iFirmID : get_set_firm_IDs()) {
@@ -549,12 +544,27 @@ void Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
         }
     }
 
-    // Initialize revenues, fixed costs, variable costs, and quantities produced to zero for each firm-market combination
+    // Create a uniform distribution for drawing variable costs in the range [dbVarCostMin, dbVarCostMax)
+    const auto& default_market_parameters = this->simulatorConfigs["default_market_parameters"];
+    double dbVarCostMin = default_market_parameters["variable_cost_min"];
+    double dbVarCostMax = default_market_parameters["variable_cost_max"];
+    std::uniform_real_distribution<double> var_cost_dist(dbVarCostMin, dbVarCostMax);
+
+    // Create a random number generator engine
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    // Initialize revenues, fixed costs, quantities produced to zero for each firm-market combination.
+    // Initialize variable costs using the uniform distribution created above.
     for (auto combination : setFirmMarketCombinations) {
         dataCache.mapFirmMarketComboToRevenue       [combination] = 0.0;
         dataCache.mapFirmMarketComboToFixedCost     [combination] = 0.0;
-        dataCache.mapFirmMarketComboToVarCost       [combination] = 0.0;
         dataCache.mapFirmMarketComboToQtyProduced   [combination] = 0.0;
+
+        // (Reuse the variable costs from the previous simulation if this condition is false)
+        if (bRandomizeVariableCostsPerSimulation && dataCache.bInitialized) {
+            dataCache.mapFirmMarketComboToVarCost   [combination] = var_cost_dist(gen);
+        }
     }
 
     // Initialize each market-firm entry cost to the maximum entry cost for that market
@@ -563,6 +573,9 @@ void Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
         double dbEntryCost = pCurrentSimulationHistory->mapMarketMaximumEntryCost[iMarketID];
         dataCache.mapFirmMarketComboToEntryCost[combination] = dbEntryCost;
     }
+
+    // Mark the data cache as having been initialized
+    dataCache.bInitialized = true;
 }
 
 Firm* Simulator::get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr) {
@@ -581,8 +594,45 @@ Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
 }
 
 void Simulator::distribute_profits() {
-    // TODO: loop through each market, calculating the production level for each firm in the market
+    for (auto market : economy.get_vec_markets()) {
+        // Calculate the total production level for the market
 
+        /*
+            Here, we use the same variable names provided in the simulator documentation:
+              Key:
+              Q: total production
+              n: number of firms in the market
+              a: demand curve intercept
+              b: demand curve slope
+              V: average variable cost in the market
+        */
+        set<int> setFirmIDsInMarket = get_firm_IDs_in_market(market);
+        double n = (double) setFirmIDsInMarket.size(); // Cast to double to avoid integer division problems
+        double V = get_average_var_cost_in_market(market);
+        double a = market.getDbDemandIntercept();
+        double b = market.getDbDemandSlope();
+        double Q = (n / (n+1.0) ) * ( (a-V) / b);
+
+
+        // Calculate each firm's individual production level for the market
+    }
+
+    // TODO: delete this when done brainstorming
+    //  things that might need to get updated in this method include
+    //  _
+    //  From the data cache:
+    //  map<int,double> mapFirmCapital;
+    //  map<pair<int, int>, double> mapFirmMarketComboToRevenue;
+    //  map<pair<int, int>, double> mapFirmMarketComboToVarCost;
+    //  map<pair<int, int>, double> mapFirmMarketComboToQtyProduced;
+    //  _
+    //  From the history:
+    //  vector<CapitalChange>           vecCapitalChanges;
+    //    vector<RevenueChange>           vecRevenueChanges;
+    //    vector<FixedCostChange>         vecFixedCostChanges;
+    //    vector<VarCostChange>           vecVarCostChanges;
+    //    vector<EntryCostChange>         vecEntryCostChanges;
+    //    vector<QuantityProducedChange>  vecQtyProducedChanges;
 
 }
 
@@ -596,4 +646,47 @@ set<int> Simulator::get_set_firm_IDs() {
 
 set<int> Simulator::get_set_market_IDs() {
     return economy.get_set_market_IDs();
+}
+
+set<int> Simulator::get_firm_IDs_in_market(Market market) {
+    set<int> setFirmIDs;
+    for (auto pair : mapFirmIDToFirmPtr) {
+        auto pFirm = pair.second;
+        if (pFirm->is_in_market(market)) {
+            setFirmIDs.insert(pFirm->getFirmID());
+        }
+    }
+   return setFirmIDs;
+}
+
+map<int,double> Simulator::get_map_firm_to_var_cost_for_market(Market market) {
+    map<int,double> mapFirmToVarCost;
+    int iMarketID = market.get_market_id();
+
+    for (auto pair : dataCache.mapFirmMarketComboToVarCost) {
+        auto currentFirmMarketPair = pair.first;
+        double dbCurrentVarCost = pair.second;
+
+        int iCurrentFirmID = currentFirmMarketPair.first;
+        int iCurrentMarketID = currentFirmMarketPair.second;
+
+        if (iMarketID == iCurrentMarketID) {
+            mapFirmToVarCost.insert(std::make_pair(iCurrentFirmID, dbCurrentVarCost));
+        }
+    }
+
+    return mapFirmToVarCost;
+}
+
+double Simulator::get_average_var_cost_in_market(Market market) {
+    map<int,double> mapFirmToVarCost = get_map_firm_to_var_cost_for_market(market);
+
+    double dbTotalVarCost = 0.0;
+
+    for (auto pair : mapFirmToVarCost) {
+        dbTotalVarCost += pair.second;
+    }
+
+    int iTotalFirms = mapFirmToVarCost.size();
+    return dbTotalVarCost / iTotalFirms;
 }

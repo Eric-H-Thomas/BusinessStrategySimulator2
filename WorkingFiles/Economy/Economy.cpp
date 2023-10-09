@@ -7,13 +7,12 @@
 #include <utility>
 #include <random>
 
-Economy::Economy(int iPossibleCapabilities, int iCapabilitiesPerMarket, int iTotalMarkets, int iFirmCapacity,
-                 int iNumMarketClusters, vector<int> vecClusterMeans, vector<int> vecClusterSDs,
-                 vector<int> vecMarketsPerCluster, double dbMarketEntryCostMax, double dbMarketEntryCostMin) {
+Economy::Economy(int iPossibleCapabilities, int iCapabilitiesPerMarket, int iNumMarketClusters, vector<int> vecClusterMeans,
+                 vector<int> vecClusterSDs, vector<int> vecMarketsPerCluster, double dbMarketEntryCostMax,
+                 double dbMarketEntryCostMin) {
+
     this->iPossibleCapabilities  = iPossibleCapabilities;
     this->iCapabilitiesPerMarket = iCapabilitiesPerMarket;
-    this->iTotalMarkets          = iTotalMarkets;
-    this->iFirmCapacity          = iFirmCapacity;
     this->iNumMarketClusters     = iNumMarketClusters;
     this->vecClusterMeans        = vecClusterMeans;
     this->vecClusterSDs          = vecClusterSDs;
@@ -30,7 +29,7 @@ Economy::Economy(int iPossibleCapabilities, int iCapabilitiesPerMarket, int iTot
     // Create a uniform distribution in the range [dbCapCostMin, dbCapCostMax) to draw capability costs
     std::uniform_real_distribution<double> capability_cost_dist(dbCapCostMin, dbCapCostMax);
 
-    for (int i = 0; i < iPossibleCapabilities; i++) {
+    for (int i = 0; i < iPossibleCapabilities ; i++) {
         // Append a randomly generated capability cost to the capability cost vector
         this->vecCapabilityCosts.push_back(capability_cost_dist(gen));
     }
@@ -39,12 +38,10 @@ Economy::Economy(int iPossibleCapabilities, int iCapabilitiesPerMarket, int iTot
 Economy::Economy() {
     this->iPossibleCapabilities  = NOT_YET_SET;
     this->iCapabilitiesPerMarket = NOT_YET_SET;
-    this->iTotalMarkets          = NOT_YET_SET;
-    this->iFirmCapacity          = NOT_YET_SET;
 }
 
 // Getters
-int Economy::get_total_markets()                            const {return iTotalMarkets;}
+int Economy::get_total_markets()                            const {return vecMarkets.size();}
 int Economy::get_num_market_clusters()                      const {return iNumMarketClusters;}
 int Economy::get_num_possible_capabilities()                const {return iPossibleCapabilities;}
 int Economy::get_num_capabilities_per_market()              const {return iCapabilitiesPerMarket;}
@@ -74,11 +71,4 @@ set<int> Economy::get_set_market_IDs() const {
         setMarketIDs.insert(market.get_market_id());
     }
     return setMarketIDs;
-}
-
-std::ostream &operator<<(std::ostream &os, const Economy &economy) {
-    os << "Economy settings:\n" << "iPossibleCapabilities: " << economy.iPossibleCapabilities << "\niCapabilitiesPerMarket: "
-       << economy.iCapabilitiesPerMarket << "\niTotalMarkets: " << economy.iTotalMarkets << "\niFirmCapacity: "
-       << economy.iFirmCapacity << std::endl;
-    return os;
 }

@@ -10,16 +10,19 @@ using std::vector;
 class Market {
 public:
     Market();
-    Market(double dbFixedCostAsPercentageOfEntryCost, double dbVarCost, double dbDemandIntercept, double dbDemandSlope,
+    Market(double dbFixedCostAsPercentageOfEntryCost, double dbDemandIntercept, double dbDemandSlope,
            const vector<int> &vecCapabilities);
-    const vector<int> &get_vec_capabilities() const;
+    const vector<int>& get_vec_capabilities() const;
     const int&         get_market_id() const;
+    const double&      getDbDemandIntercept() const;
+    const double&      getDbDemandSlope() const;
+
+    // Comparison operator to allow markets to be placed in ordered data structures
     bool operator<(const Market& other) const;
 
 private:
-    int    iMarketID; // TODO: need to make sure this new member variable is fully implemented
+    int    iMarketID;
     double dbFixedCostAsPercentageOfEntryCost;
-    double dbVarCost;
     double dbDemandIntercept;
     double dbDemandSlope;
     vector<int> vecCapabilities;

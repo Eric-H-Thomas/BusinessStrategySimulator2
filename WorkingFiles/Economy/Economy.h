@@ -15,12 +15,9 @@ class Economy {
 public:
     // Constructors
     Economy();
-    Economy(int iPossibleCapabilities, int iCapabilitiesPerMarket, int iTotalMarkets, int iFirmCapacity,
-            int iNumMarketClusters, vector<int> vecClusterMeans, vector<int> vecClusterSDs,
-            vector<int> vecMarketsPerCluster, double dbMarketEntryCostMax, double dbMarketEntryCostMin);
-
-    // Output stream overload
-    friend std::ostream &operator<<(std::ostream &os, const Economy &economy);
+    Economy(int iPossibleCapabilities, int iCapabilitiesPerMarket, int iNumMarketClusters, vector<int> vecClusterMeans,
+            vector<int> vecClusterSDs, vector<int> vecMarketsPerCluster, double dbMarketEntryCostMax,
+            double dbMarketEntryCostMin);
 
     // Getters
     const Market&           get_market_by_ID(int iMarketID)   const;
@@ -39,10 +36,8 @@ public:
     void add_market(Market market);
 
 private:
-    int iPossibleCapabilities;  // TODO: Get rid of this and instead just reference the size of the capabilities cost vector
+    int iPossibleCapabilities;
     int iCapabilitiesPerMarket;
-    int iTotalMarkets;
-    int iFirmCapacity;
     int iNumMarketClusters;
     vector<Market> vecMarkets;
     vector<int> vecClusterMeans;
