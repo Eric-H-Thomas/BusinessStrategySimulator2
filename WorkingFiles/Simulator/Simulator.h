@@ -77,4 +77,5 @@ private:
     set<int> get_firm_IDs_in_market(Market market);
     map<int,double> get_map_firm_to_var_cost_for_market(Market market);
     double get_average_var_cost_in_market(Market market);
+    void add_profit_to_firm(double dbProfit, int iFirmID);
 };

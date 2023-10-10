@@ -416,13 +416,27 @@ set
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Firm/Firm.cpp
+Firm.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Firm/Firm.h
+../Utils/MiscUtils.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.h
+
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Firm/Firm.h
 set
 -
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.cpp
+MasterHistory.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.h
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.h
+SimulationHistory.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.cpp
 SimulationHistory.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
 
@@ -497,4 +511,10 @@ random
 -
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp
+Simulator/Simulator.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
+iostream
+-
 

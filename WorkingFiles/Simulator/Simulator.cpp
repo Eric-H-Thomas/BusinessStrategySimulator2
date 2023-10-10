@@ -354,8 +354,6 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
     execute_actions(vecActions);
 
     if (bVerbose) cout << "Distributing profits" << endl;
-    if (bVerbose) cout << "(Note: Profit distribution not yet implemented)" << endl;
-    // TODO: dist profits
     distribute_profits();
 
    return 0;
@@ -594,46 +592,83 @@ Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
 }
 
 void Simulator::distribute_profits() {
-    for (auto market : economy.get_vec_markets()) {
-        // Calculate the total production level for the market
+    // Create a map to record the total capital change for each firm during this time step; init all values to 0
+    map<int,double> mapFirmIDToCapitalChangeWithinCurrentTimeStep;
+    for (int iFirmID : get_set_firm_IDs()) {
+        mapFirmIDToCapitalChangeWithinCurrentTimeStep[iFirmID] = 0.0;
+    }
 
+    // Iterate through each of the markets in the economy
+    for (auto market : economy.get_vec_markets()) {
         /*
             Here, we use the same variable names provided in the simulator documentation:
               Key:
               Q: total production
+              P: price level (for now, we assume one price level for all firms)
+              q: production for a specific firm-market combination
               n: number of firms in the market
               a: demand curve intercept
               b: demand curve slope
               V: average variable cost in the market
+              v: variable cost for a specific firm-market combination
         */
+
+        // Calculate the total production level and price for the market
         set<int> setFirmIDsInMarket = get_firm_IDs_in_market(market);
         double n = (double) setFirmIDsInMarket.size(); // Cast to double to avoid integer division problems
         double V = get_average_var_cost_in_market(market);
         double a = market.getDbDemandIntercept();
         double b = market.getDbDemandSlope();
         double Q = (n / (n+1.0) ) * ( (a-V) / b);
+        double P = a - (b*Q);
+
+        auto mapFirmIDToVarCosts = get_map_firm_to_var_cost_for_market(market);
+
+        // Iterate through the firms in the current market
+        for (int iFirmID : get_firm_IDs_in_market(market)) {
+            // Calculate production quantity for the firm-market combo
+            double v = mapFirmIDToVarCosts[iFirmID];
+            double q = (a - (b*Q) - v) / b; // Production quantity for this firm-market combo
+
+            // Calculate revenue and profit for the firm-market combo
+            auto pairFirmMarket = std::make_pair(iFirmID, market.get_market_id());
+            double dbRevenue = q * P;
+            double dbFixedCost = dataCache.mapFirmMarketComboToFixedCost[pairFirmMarket];
+            double dbVarCost = q * v;
+            double dbProfit = dbRevenue - dbFixedCost - dbVarCost;
+
+            // Update capital within the firm object
+            add_profit_to_firm(dbProfit, iFirmID);
+
+            // Track accumulated profit for this firm for this time step
+            mapFirmIDToCapitalChangeWithinCurrentTimeStep[iFirmID] += dbProfit;
+
+            // Update revenue in the history and data cache if needed
+            if (dbRevenue != dataCache.mapFirmMarketComboToRevenue[pairFirmMarket]) {
+                currentSimulationHistoryPtr->record_revenue_change(iCurrentMicroTimeStep, dbRevenue,
+                                                                   pairFirmMarket.first, pairFirmMarket.second);
+                dataCache.mapFirmMarketComboToRevenue[pairFirmMarket] = dbRevenue;
+            }
+
+            // Update production quantities in the history and data cache if needed
+            if (q != dataCache.mapFirmMarketComboToQtyProduced[pairFirmMarket]) {
+                currentSimulationHistoryPtr->record_production_quantity_change(iCurrentMicroTimeStep, q,
+                                                                   pairFirmMarket.first, pairFirmMarket.second);
+                dataCache.mapFirmMarketComboToQtyProduced[pairFirmMarket] = q;
+            }
+        } // End of loop through firms
+    } // End of loop through markets
 
 
-        // Calculate each firm's individual production level for the market
+    // Record capital changes in the history
+    for (auto pair : mapFirmIDToCapitalChangeWithinCurrentTimeStep) {
+        if (pair.second != 0.0) {
+            int iFirmID = pair.first;
+            auto pFirm = mapFirmIDToFirmPtr[iFirmID];
+            double dbCapital = pFirm->getDbCapital();
+            currentSimulationHistoryPtr->record_capital_change(iCurrentMicroTimeStep, iFirmID, dbCapital);
+        }
     }
-
-    // TODO: delete this when done brainstorming
-    //  things that might need to get updated in this method include
-    //  _
-    //  From the data cache:
-    //  map<int,double> mapFirmCapital;
-    //  map<pair<int, int>, double> mapFirmMarketComboToRevenue;
-    //  map<pair<int, int>, double> mapFirmMarketComboToVarCost;
-    //  map<pair<int, int>, double> mapFirmMarketComboToQtyProduced;
-    //  _
-    //  From the history:
-    //  vector<CapitalChange>           vecCapitalChanges;
-    //    vector<RevenueChange>           vecRevenueChanges;
-    //    vector<FixedCostChange>         vecFixedCostChanges;
-    //    vector<VarCostChange>           vecVarCostChanges;
-    //    vector<EntryCostChange>         vecEntryCostChanges;
-    //    vector<QuantityProducedChange>  vecQtyProducedChanges;
-
 }
 
 set<int> Simulator::get_set_firm_IDs() {
@@ -689,4 +724,9 @@ double Simulator::get_average_var_cost_in_market(Market market) {
 
     int iTotalFirms = mapFirmToVarCost.size();
     return dbTotalVarCost / iTotalFirms;
+}
+
+void Simulator::add_profit_to_firm(double dbProfit, int iFirmID) {
+    auto pFirm = mapFirmIDToFirmPtr[iFirmID];
+    pFirm->add_capital(dbProfit);
 }

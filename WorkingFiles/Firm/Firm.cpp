@@ -64,3 +64,7 @@ Market Firm::choose_market_with_highest_overlap(set<Market> setMarkets){
 const set<int> &Firm::getSetMarketIDs() const {
     return setMarketIDs;
 }
+
+void Firm::add_capital(double dbChangeInCapital) {
+    this->dbCapital += dbChangeInCapital;
+}

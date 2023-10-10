@@ -14,6 +14,7 @@ public:
     Firm(int iFirmID, double dbStartingCapital);
     int getFirmID() const;
     double getDbCapital() const;
+    void add_capital(double dbChangeInCapital);
     void enter_market(const int& iMarketID);
     void exit_market(const int& iMarketID);
     bool is_in_market(Market market);

@@ -17,25 +17,30 @@ using std::vector;
 
 // Predeclare the structs so that we can keep the SimulationHistory info at the top of the file
 struct CapitalChange; struct RevenueChange; struct FixedCostChange; struct VarCostChange;
-struct EntryCostChange; struct QuantityProducedChange; struct MarketPresenceChange;
+struct EntryCostChange; struct ProductionQuantityChange; struct MarketPresenceChange;
 
 class SimulationHistory {
 public:
-    map<int,int>                    mapAgentToFirm;
-    map<int,double>                 mapFirmStartingCapital;
-    map<int,double>                 mapMarketMaximumEntryCost;
-    vector<CapitalChange>           vecCapitalChanges;
-    vector<RevenueChange>           vecRevenueChanges;
-    vector<FixedCostChange>         vecFixedCostChanges;
-    vector<VarCostChange>           vecVarCostChanges;
-    vector<EntryCostChange>         vecEntryCostChanges;
-    vector<QuantityProducedChange>  vecQtyProducedChanges;
-    vector<MarketPresenceChange>    vecMarketPresenceChanges;
+    map<int,int>                     mapAgentToFirm;
+    map<int,double>                  mapFirmStartingCapital;
+    map<int,double>                  mapMarketMaximumEntryCost;
+    vector<CapitalChange>            vecCapitalChanges;
+    vector<RevenueChange>            vecRevenueChanges;
+    vector<FixedCostChange>          vecFixedCostChanges;
+    vector<EntryCostChange>          vecEntryCostChanges;
+    vector<ProductionQuantityChange> vecProductionQtyChanges;
+    vector<MarketPresenceChange>     vecMarketPresenceChanges;
 
     SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,double> &mapFirmStartingCapital,
                       const map<int,double> &mapMarketMaximumEntryCost);
 
     void record_market_presence_change(int iMicroTimeStep, bool bPresent, int iFirmID, int iMarketID);
+    void record_capital_change(int iMicroTimeStep, int iFirmID, double dbNewCapitalQty);
+    void record_revenue_change(int iMicroTimeStep, double dbNewRevenueAmount, int iFirmID, int iMarketID);
+    void record_fixed_cost_change(int iMicroTimeStep, double dbNewFixedCost, int iFirmID, int iMarketID);
+    void record_entry_cost_change(int iMicroTimeStep, double dbNewEntryCost, int iFirmID, int iMarketID);
+    void record_production_quantity_change(int iMicroTimeStep, double dbNewProductionQty, int iFirmID, int iMarketID);
+
 };
 
 struct CapitalChange {
@@ -58,13 +63,6 @@ struct FixedCostChange {
     int iMarketID;
 };
 
-struct VarCostChange {
-    int iMicroTimeStep;
-    double dbNewVarCost;
-    int iFirmID;
-    int iMarketID;
-};
-
 struct EntryCostChange {
     int iMicroTimeStep;
     double dbNewEntryCost;
@@ -72,9 +70,9 @@ struct EntryCostChange {
     int iMarketID;
 };
 
-struct QuantityProducedChange {
+struct ProductionQuantityChange {
     int iMicroTimeStep;
-    double dbNewQtyProduced;
+    double dbNewProductionQty;
     int iFirmID;
     int iMarketID;
 };
