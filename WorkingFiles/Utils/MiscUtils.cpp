@@ -148,3 +148,62 @@ double MiscUtils::get_percentage_overlap(const std::vector<int>& vector1, const 
 
     return percentageOverlap;
 }
+
+vector<int> MiscUtils::element_wise_logical_and(const vector<int>& vector1, const vector<int>& vector2) {
+    // Check that the vectors have the same size
+    if (vector1.size() != vector2.size()) {
+        throw std::invalid_argument("Vector sizes must be the same for element-wise AND.");
+    }
+
+    std::vector<int> result;
+    result.reserve(vector1.size()); // Reserve space for the result vector
+
+    // Perform element-wise logical AND and store the result
+    for (size_t i = 0; i < vector1.size(); i++) {
+        result.push_back(vector1[i] && vector2[i]);
+    }
+
+    return result;
+}
+
+vector<int> MiscUtils::vector_addition(const vector<int>& vector1, const vector<int>& vector2) {
+    // Check that the vectors have the same size
+    if (vector1.size() != vector2.size()) {
+        throw std::invalid_argument("Vector sizes must be the same for vector addition.");
+    }
+
+    std::vector<int> result;
+    result.reserve(vector1.size()); // Reserve space for the result vector
+
+    // Perform element-wise addition
+    for (size_t i = 0; i < vector1.size(); i++) {
+        result.push_back(vector1[i] + vector2[i]);
+    }
+
+    return result;
+}
+
+vector<int> MiscUtils::vector_subtraction(const vector<int>& vector1, const vector<int>& vector2) {
+    // Check that the vectors have the same size
+    if (vector1.size() != vector2.size()) {
+        throw std::invalid_argument("Vector sizes must be the same for vector subtraction.");
+    }
+
+    std::vector<int> result;
+    result.reserve(vector1.size()); // Reserve space for the result vector
+
+    // Perform element-wise addition
+    for (size_t i = 0; i < vector1.size(); i++) {
+        result.push_back(vector1[i] - vector2[i]);
+    }
+
+    return result;
+}
+
+void MiscUtils::set_all_positive_values_to_one(vector<int> &vector) {
+    for (size_t i = 0; i < vector.size(); i++) {
+        if (vector.at(i) > 0) {
+            vector.at(i) = 1;
+        }
+    }
+}

@@ -14,22 +14,21 @@ int main(int argc, char* argv[]) {
     }
 
     // Create simulator instance
-    Simulator simulator = Simulator();
+    Simulator simulator;
 
     // TODO: write code to check that all values in the JSON config file are valid
 
-    // Load the JSONReader configs for the simulator
     if (simulator.load_json_configs(argv[1]))
         return 1;
 
     if (simulator.prepare_to_run())
         return 1;
 
-    for (int iSim = 0; iSim < simulator.getNumSims(); iSim++){
+    for (int iSim = 0; iSim < simulator.getNumSims(); iSim++) {
+        cout << "Beginning simulation " << iSim+1 << " of " << simulator.getNumSims() << endl;
         if (simulator.run())
             return 1;
     }
-
 
     // TODO: Save the results to an output file
 

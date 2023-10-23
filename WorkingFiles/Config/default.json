@@ -8,7 +8,7 @@
     "skipped_turns_per_regular_turn": 1,
     "verbose": true,
     "randomize_turn_order_within_each_macro_step": true,
-    "randomize_agent_firm_assignment_per_simulation": true,
+    "randomize_agent_firm_assignment_per_simulation": false,
     "randomize_variable_costs_per_simulation":  true
   },
 
@@ -57,6 +57,7 @@
     "variable_cost_min": 0.5,
 
     "fixed_cost_percentage_of_entry": 1.5,
+    "exit_cost_percentage_of_entry": 30,
 
     "demand_intercept_max": 40,
     "demand_intercept_min": 25,

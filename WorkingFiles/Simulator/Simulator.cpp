@@ -23,27 +23,19 @@ using std::endl;
 
 int Simulator::run() {
 
-    if (bVerbose) cout << "At the beginning of the Simulator::Run method" << endl;
-
-    // TODO: make sure the agent to firm assignments get properly reset if they are not supposed to be the same for each
-    //  round of simulation
-
-    if (bVerbose) cout << "Initializing simulation history" << endl;
     init_simulation_history();
 
-    if (bVerbose) cout << "Initializing data cache" << endl;
-    init_data_cache(masterHistory.getCurrentSimulationHistoryPtr());
+    if (init_data_cache(masterHistory.getCurrentSimulationHistoryPtr()))
+        return 1;
 
     // Loop through the macro steps
-    if (bVerbose) cout << "Beginning loop through macro steps" << endl;
-
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
         if (bVerbose) cout << "Beginning macro step " << iMacroStep + 1 << " of " << iMacroStepsPerSim << endl;
-        if (bVerbose) cout << "Setting the agent turn order" << endl;
 
         set_agent_turn_order();
+
+        // Loop through the micro steps
         for (int iAgentIndex : vecAgentTurnOrder) {
-            if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iAgentIndex << endl;
             if (perform_micro_step(iAgentIndex))
                 return 1;
         }
@@ -100,7 +92,6 @@ int Simulator::prepare_to_run() {
 int Simulator::set_simulation_parameters() {
     try {
         const auto& simulation_parameters = this->simulatorConfigs["simulation_parameters"];
-
         this->strRunName = simulation_parameters["run_name"];
         this->strResultsDir = simulation_parameters["results_dir"];
         this->iNumSims = simulation_parameters["num_sims"];
@@ -190,36 +181,49 @@ int Simulator::init_firms_for_control_agents() {
     //    - no presence in any markets
     //    - the default starting capital
 
-    if (mapAgentIDToAgentPtr.empty()){
+    if (mapAgentIDToAgentPtr.empty()) {
         cerr << "Tried to initialize firms for control agents before creating the control agents." << endl;
         return 1;
     }
 
     const auto& firm_parameters = this->simulatorConfigs["default_firm_parameters"];
     double dbDefaultStartingCapital = firm_parameters["starting_capital"];
+    const auto& economy_parameters = this->simulatorConfigs["default_economy_parameters"];
+    int iPossibleCapabilities = economy_parameters["possible_capabilities"];
 
     for (auto pair : mapAgentIDToAgentPtr) {
         // Get the ID number of the agent
         int iID = pair.first;
 
         // Create a firm with the same ID number and place it in the map of firms
-        auto firmPtr = new Firm(iID, dbDefaultStartingCapital);
+        auto firmPtr = new Firm(iID, dbDefaultStartingCapital, iPossibleCapabilities);
         mapFirmIDToFirmPtr.insert(std::make_pair(iID, firmPtr));
 
         // Set the agent's firm assignment number
         pair.second->iFirmAssignment = iID;
     }
 
+    if (bRandomizeAgentFirmAssignmentPerSimulation) {
+        shuffle_agent_firm_assignments(mapAgentIDToAgentPtr);
+    }
+
     return 0;
+}
+
+void Simulator::shuffle_agent_firm_assignments(map<int,ControlAgent*> mapAgentIDToAgentPtr) {
+    cerr << "Called shuffle agent-firm assignments option.\nThis has not been implemented yet because the simulator "\
+    "currently creates identical firms that begin with the same capital and no capabilities.\nCome back and fill in "\
+    "this function or turn the shuffle option off." << endl;
+    throw std::exception();
 }
 
 int Simulator::init_markets() {
     try {
         const auto& market_parameters = this->simulatorConfigs["default_market_parameters"];
-
         double dbVarCostMin                 = market_parameters["variable_cost_min"];
         double dbVarCostMax                 = market_parameters["variable_cost_max"];
         double dbFixedCostPercentageOfEntry = market_parameters["fixed_cost_percentage_of_entry"];
+        double dbExitCostPercentageOfEntry  = market_parameters["exit_cost_percentage_of_entry"];
         double dbDemandInterceptMax         = market_parameters["demand_intercept_max"];
         double dbDemandInterceptMin         = market_parameters["demand_intercept_min"];
         double dbProductDemandSlopeMax      = market_parameters["product_demand_slope_max"];
@@ -252,21 +256,19 @@ int Simulator::init_markets() {
                 vector<int> vecMarketCapabilities = create_market_capability_vector(dbMean, dbSD);
 
                 // Create a new market and add it to the economy's vector of markets
-                this->economy.add_market(Market(dbFixedCostPercentageOfEntry,
+                this->economy.add_market(Market(dbFixedCostPercentageOfEntry, dbExitCostPercentageOfEntry,
                                                dbDemandIntercept, dbProductDemandSlope, vecMarketCapabilities));
             } // End of inner loop
         } // End of outer loop
     } // End of try block
     catch (const std::exception& e) {
-        cerr << "Error initializing agents: " << e.what() << endl;
+        cerr << "Error initializing markets: " << e.what() << endl;
         return 1;
     }
     return 0;
 };
 
 vector<int> Simulator::create_market_capability_vector(const double& dbMean, const double& dbSD) {
-    // TODO: Test this method
-
     // Create a vector of all zeros
     vector<int> vecCapabilities(this->economy.get_num_possible_capabilities(), 0);
 
@@ -314,13 +316,12 @@ vector<int> Simulator::create_market_capability_vector(const double& dbMean, con
 }
 
 void Simulator::set_agent_turn_order() {
-    // TODO: Test this method
+    if (bVerbose) cout << "Setting the agent turn order" << endl;
 
     // If we are not resetting the order within each macro step, we only want to set the order once
     if (!bRandomizeTurnOrderWithinEachMacroStep && !vecAgentTurnOrder.empty())
         return;
 
-    // TODO: edit this later for when there are non-control agents
     // Get the total number of turns
     double dbTotalTurns = mapAgentIDToAgentPtr.size() * dbSkippedTurnsPerRegularTurn;
     int iTotalTurns = static_cast<int>(std::ceil(dbTotalTurns));
@@ -341,31 +342,63 @@ void Simulator::set_agent_turn_order() {
 };
 
 int Simulator::perform_micro_step(const int& iActingAgentID) {
+    if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iActingAgentID << endl;
+
     iCurrentMicroTimeStep++;
 
-    // TODO: edit this method to make it compatible with non-control agents
-    // TODO: edit this method to work for the simultaneous model as well (or create an overload with no parameters)
-    // TODO: make sure this method returns error codes as necessary
+    // Get agent actions
+    vector<Action> vecActions;
+    try {
+        vecActions = get_actions_for_all_control_agents(iActingAgentID);
+    }
+    catch (std::exception e) {
+        cerr << "Error getting actions for control agents during micro step " << iCurrentMicroTimeStep << endl;
+        cerr << e.what() << endl;
+        return 1;
+    }
 
-    if (bVerbose) cout << "Getting actions for all control agents" << endl;
-    vector<Action> vecActions = get_actions_for_all_control_agents(iActingAgentID);
+    // Create a map of capital change for each firm within this micro step (capital can be affected by both action
+    // execution and profit distribution, so to get the total capital change within the micro time step we must add
+    // these two effects). Initialize all values to zero.
+    map<int,double> mapFirmIDToCapitalChange;
+    for (auto firmID : get_set_firm_IDs()) {
+        mapFirmIDToCapitalChange[firmID] = 0.0;
+    }
 
-    if (bVerbose) cout << "Executing agent actions" << endl;
-    execute_actions(vecActions);
+    // Execute actions and distribute profits
+    if (execute_actions(vecActions, &mapFirmIDToCapitalChange))
+        return 1;
 
-    if (bVerbose) cout << "Distributing profits" << endl;
-    distribute_profits();
+    distribute_profits(&mapFirmIDToCapitalChange);
 
-   return 0;
+    // Record capital changes in the history
+    for (auto pair : mapFirmIDToCapitalChange) {
+        if (pair.second != 0.0) {
+            int iFirmID = pair.first;
+            auto pFirm = mapFirmIDToFirmPtr[iFirmID];
+            double dbCapital = pFirm->getDbCapital();
+            currentSimulationHistoryPtr->record_capital_change(iCurrentMicroTimeStep, iFirmID, dbCapital);
+        }
+    }
+
+    return 0;
 };
 
 vector<Action> Simulator::get_actions_for_all_control_agents(const int& iActingAgentID) {
+    if (bVerbose) cout << "Getting actions for all control agents" << endl;
+
     vector<Action> vecActions;
     for (const auto& pair : mapAgentIDToAgentPtr) {
         auto agentPtr = pair.second;
         // Get action for the acting agent
-        if (agentPtr->getAgentId() == iActingAgentID){
-            vecActions.emplace_back(get_agent_action(*agentPtr));
+        if (agentPtr->getAgentId() == iActingAgentID) {
+            try {
+                vecActions.emplace_back(get_agent_action(*agentPtr));
+            }
+            catch (std::exception e){
+                cerr << "Error getting actions for control agents" << e.what() << endl;
+                throw std::exception();
+            }
         }
         else { // Create none actions for the agents not currently acting
             vecActions.emplace_back(Action::generate_none_action(agentPtr->getAgentId()));
@@ -374,14 +407,18 @@ vector<Action> Simulator::get_actions_for_all_control_agents(const int& iActingA
     return vecActions;
 }
 
-void Simulator::execute_actions(const vector<Action>& vecActions) {
+int Simulator::execute_actions(const vector<Action>& vecActions, map<int,double>* pMapFirmIDToCapitalChange) {
+    if (bVerbose) cout << "Executing agent actions" << endl;
+
     for (const Action& action : vecActions) {
         switch (action.enumActionType) {
             case ActionType::enumEntryAction:
-                execute_entry_action(action);
+                if (execute_entry_action(action, pMapFirmIDToCapitalChange))
+                    return 1;
                 break;
             case ActionType::enumExitAction:
-                execute_exit_action(action);
+                if (execute_exit_action(action, pMapFirmIDToCapitalChange))
+                    return 1;
                 break;
             case ActionType::enumNoneAction:
                 // Do nothing for ActionType::enumNoneAction
@@ -389,23 +426,135 @@ void Simulator::execute_actions(const vector<Action>& vecActions) {
             default:
                 // Should never reach this section of the code
                 std::cerr << "Invalid enumerated action type" << std::endl;
-                throw std::exception();
+                return 1;
+        } // End of switch block
+    } // End of for loop
+
+    return 0;
+}
+
+int Simulator::execute_entry_action(const Action& action, map<int,double>* pMapFirmIDToCapitalChange) {
+    // Get pointer to the firm
+    auto agentPtr = mapAgentIDToAgentPtr.at(action.iAgentID);
+    auto firmPtr = get_firm_ptr_from_agent_ptr(agentPtr);
+
+    // Get the entry cost for the firm
+    double dbEntryCost = dataCache.mapFirmMarketComboToEntryCost.at(std::make_pair(firmPtr->getFirmID(), action.iMarketID));
+
+    // Update the map of firm IDs to capital change with the entry cost of this action
+    pMapFirmIDToCapitalChange->at(firmPtr->getFirmID()) -= dbEntryCost;
+
+    // Update the firm's capability vector
+    firmPtr->add_market_capabilities_to_firm_capabilities(economy.get_market_by_ID(action.iMarketID));
+
+    // Add this market to the firm's portfolio and record this change in the history
+    if (firmPtr->add_market_to_portfolio(action.iMarketID))
+        return 1;
+    currentSimulationHistoryPtr->record_market_presence_change(action.iMicroTimeStep, true, firmPtr->getFirmID(), action.iMarketID);
+
+    // Update the entry cost for this firm for other markets
+    for (Market market : economy.get_vec_markets()) {
+        // Get vector of capabilities the firm lacks to enter the market
+        auto vecFirmCapabilities = firmPtr->getVecCapabilities();
+        auto vecMarketCapabilities = market.get_vec_capabilities();
+
+        if (vecFirmCapabilities.size() != vecMarketCapabilities.size()) {
+            cerr << "Mismatch between firm capability vector size and market capability vector size in execute_entry_action()" << endl;
+            return 1;
+        }
+
+        std::vector<int> vecMissingCapabilities;
+        // Reserve space for the missing capabilities vector
+        vecMissingCapabilities.reserve(vecFirmCapabilities.size());
+
+        // Set the vecMissingCapabilities vector to 1 where the market requires a capability the firm does not have
+        for (size_t i = 0; i < vecFirmCapabilities.size(); i++) {
+            if (vecMarketCapabilities[i] && !vecFirmCapabilities[i]) {
+                vecMissingCapabilities.push_back(1);
+            }
+            else {
+                vecMissingCapabilities.push_back(0);
+            }
+        }
+
+        // Calculate the cost of the missing capabilities vector
+        double dbCost = MiscUtils::dot_product(vecMissingCapabilities, economy.get_vec_capability_costs());
+
+        // Update the data cache and the history if the entry cost has changed since it was last calculated
+        auto pairFirmMarket = std::make_pair(firmPtr->getFirmID(), market.get_market_id());
+        double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket];
+        if (dbCost != dbPriorCost) {
+            dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket] = dbCost;
+            currentSimulationHistoryPtr->record_entry_cost_change(iCurrentMicroTimeStep,
+                                                                  dbCost, firmPtr->getFirmID(), market.get_market_id());
         }
     }
+
+    return 0;
 }
 
-void Simulator::execute_entry_action(const Action& action) {
+int Simulator::execute_exit_action(const Action& action, map<int,double>* pMapFirmIDToCapitalChange) {
+    // Get pointer to the firm
     auto agentPtr = mapAgentIDToAgentPtr.at(action.iAgentID);
     auto firmPtr = get_firm_ptr_from_agent_ptr(agentPtr);
-    firmPtr->enter_market(action.iMarketID);
-    currentSimulationHistoryPtr->record_market_presence_change(action.iMicroTimeStep, true, firmPtr->getFirmID(), action.iMarketID);
-}
 
-void Simulator::execute_exit_action(const Action& action) {
-    auto agentPtr = mapAgentIDToAgentPtr.at(action.iAgentID);
-    auto firmPtr = get_firm_ptr_from_agent_ptr(agentPtr);
-    firmPtr->exit_market(action.iMarketID);
+    // Get a copy of the market
+    auto marketCopy = economy.get_market_by_ID(action.iMarketID);
+
+    // Get the exit cost for the firm
+    double dbEntryCost = dataCache.mapFirmMarketComboToEntryCost.at(std::make_pair(firmPtr->getFirmID(), action.iMarketID));
+    double dbExitCost = marketCopy.getExitCostAsPercentageOfEntryCost() * dbEntryCost * 0.01; // Scaling factor due to whole percentages
+
+    // Update the map of firm IDs to capital change with the entry cost of this action
+    pMapFirmIDToCapitalChange->at(firmPtr->getFirmID()) -= dbExitCost;
+
+    // Update the firm's capability vector
+    firmPtr->remove_market_capabilities_from_firm_capabilities(marketCopy, economy);
+
+    // Remove this market from the firm's portfolio and record this change in the history
+    if (firmPtr->remove_market_from_portfolio(action.iMarketID))
+        return 1;
     currentSimulationHistoryPtr->record_market_presence_change(action.iMicroTimeStep, false, firmPtr->getFirmID(), action.iMarketID);
+
+    // Update the entry cost for this firm for each market
+    for (Market market : economy.get_vec_markets()) {
+        // Get vector of capabilities the firm lacks to enter the market
+        auto vecFirmCapabilities = firmPtr->getVecCapabilities();
+        auto vecMarketCapabilities = market.get_vec_capabilities();
+
+        if (vecFirmCapabilities.size() != vecMarketCapabilities.size()) {
+            cerr << "Mismatch between firm capability vector size and market capability vector size in execute_entry_action()" << endl;
+            return 1;
+        }
+
+        std::vector<int> vecMissingCapabilities;
+        // Reserve space for the missing capabilities vector
+        vecMissingCapabilities.reserve(vecFirmCapabilities.size());
+
+        // Set the vecMissingCapabilities vector to 1 where the market requires a capability the firm does not have
+        for (size_t i = 0; i < vecFirmCapabilities.size(); i++) {
+            if (vecMarketCapabilities[i] && !vecFirmCapabilities[i]) {
+                vecMissingCapabilities.push_back(1);
+            }
+            else {
+                vecMissingCapabilities.push_back(0);
+            }
+        }
+
+        // Calculate the cost of the missing capabilities vector
+        double dbCost = MiscUtils::dot_product(vecMissingCapabilities, economy.get_vec_capability_costs());
+
+        // Update the data cache and the history if the entry cost has changed since it was last calculated
+        auto pairFirmMarket = std::make_pair(firmPtr->getFirmID(), market.get_market_id());
+        double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket];
+        if (dbCost != dbPriorCost) {
+            dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket] = dbCost;
+            currentSimulationHistoryPtr->record_entry_cost_change(iCurrentMicroTimeStep,
+                                                                  dbCost, firmPtr->getFirmID(), market.get_market_id());
+        }
+    }
+
+    return 0;
 }
 
 Action Simulator::get_agent_action(const ControlAgent& agent) {
@@ -506,6 +655,8 @@ Action Simulator::get_exit_action(const ControlAgent& agent) {
 }
 
 void Simulator::init_simulation_history() {
+    if (bVerbose) cout << "Initializing simulation history" << endl;
+
     // Generate map of agents to firms
     map<int,int> mapAgentToFirm;
     for (const auto& pair : this->mapAgentIDToAgentPtr) {
@@ -533,47 +684,59 @@ void Simulator::init_simulation_history() {
     masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
 }
 
-void Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
-    // Get all firm-market combinations
-    set<pair<int,int>> setFirmMarketCombinations;
-    for (int iFirmID : get_set_firm_IDs()) {
-        for (int iMarketID : get_set_market_IDs()) {
-            setFirmMarketCombinations.insert(std::make_pair(iFirmID, iMarketID));
+int Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
+    if (bVerbose) cout << "Initializing data cache" << endl;
+
+    try {
+        // Get all firm-market combinations
+        set<pair<int,int>> setFirmMarketCombinations;
+        for (int iFirmID : get_set_firm_IDs()) {
+            for (int iMarketID : get_set_market_IDs()) {
+                setFirmMarketCombinations.insert(std::make_pair(iFirmID, iMarketID));
+            }
         }
-    }
 
-    // Create a uniform distribution for drawing variable costs in the range [dbVarCostMin, dbVarCostMax)
-    const auto& default_market_parameters = this->simulatorConfigs["default_market_parameters"];
-    double dbVarCostMin = default_market_parameters["variable_cost_min"];
-    double dbVarCostMax = default_market_parameters["variable_cost_max"];
-    std::uniform_real_distribution<double> var_cost_dist(dbVarCostMin, dbVarCostMax);
+        // Create a uniform distribution for drawing variable costs in the range [dbVarCostMin, dbVarCostMax)
+        const auto& default_market_parameters = this->simulatorConfigs["default_market_parameters"];
+        double dbVarCostMin = default_market_parameters["variable_cost_min"];
+        double dbVarCostMax = default_market_parameters["variable_cost_max"];
+        std::uniform_real_distribution<double> var_cost_dist(dbVarCostMin, dbVarCostMax);
 
-    // Create a random number generator engine
-    std::random_device rd;
-    std::mt19937 gen(rd());
+        // Create a random number generator engine
+        std::random_device rd;
+        std::mt19937 gen(rd());
 
-    // Initialize revenues, fixed costs, quantities produced to zero for each firm-market combination.
-    // Initialize variable costs using the uniform distribution created above.
-    for (auto combination : setFirmMarketCombinations) {
-        dataCache.mapFirmMarketComboToRevenue       [combination] = 0.0;
-        dataCache.mapFirmMarketComboToFixedCost     [combination] = 0.0;
-        dataCache.mapFirmMarketComboToQtyProduced   [combination] = 0.0;
+        // Initialize revenues, fixed costs, quantities produced to zero for each firm-market combination.
+        // Initialize variable costs using the uniform distribution created above.
+        for (auto combination : setFirmMarketCombinations) {
+            dataCache.mapFirmMarketComboToRevenue       [combination] = 0.0;
+            dataCache.mapFirmMarketComboToFixedCost     [combination] = 0.0;
+            dataCache.mapFirmMarketComboToQtyProduced   [combination] = 0.0;
 
-        // (Reuse the variable costs from the previous simulation if this condition is false)
-        if (bRandomizeVariableCostsPerSimulation && dataCache.bInitialized) {
-            dataCache.mapFirmMarketComboToVarCost   [combination] = var_cost_dist(gen);
+            // (Reuse the variable costs from the previous simulation if this condition is false)
+            if (bRandomizeVariableCostsPerSimulation && dataCache.bInitialized) {
+                dataCache.mapFirmMarketComboToVarCost   [combination] = var_cost_dist(gen);
+            }
         }
+
+        // Initialize each market-firm entry cost to the maximum entry cost for that market
+        for (auto combination : setFirmMarketCombinations) {
+            int iMarketID = combination.second;
+            double dbEntryCost = pCurrentSimulationHistory->mapMarketMaximumEntryCost[iMarketID];
+            dataCache.mapFirmMarketComboToEntryCost[combination] = dbEntryCost;
+        }
+
+        // Mark the data cache as having been initialized
+        dataCache.bInitialized = true;
+
+    } // End of try block
+
+    catch (const nlohmann::json::exception& e) {
+        std::cerr << "Error initializing the data cache: " << e.what() << std::endl;
+        return 1;
     }
 
-    // Initialize each market-firm entry cost to the maximum entry cost for that market
-    for (auto combination : setFirmMarketCombinations) {
-        int iMarketID = combination.second;
-        double dbEntryCost = pCurrentSimulationHistory->mapMarketMaximumEntryCost[iMarketID];
-        dataCache.mapFirmMarketComboToEntryCost[combination] = dbEntryCost;
-    }
-
-    // Mark the data cache as having been initialized
-    dataCache.bInitialized = true;
+    return 0;
 }
 
 Firm* Simulator::get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr) {
@@ -591,12 +754,8 @@ Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
     return get_firm_ptr_from_agent_ptr(agentPtr);
 }
 
-void Simulator::distribute_profits() {
-    // Create a map to record the total capital change for each firm during this time step; init all values to 0
-    map<int,double> mapFirmIDToCapitalChangeWithinCurrentTimeStep;
-    for (int iFirmID : get_set_firm_IDs()) {
-        mapFirmIDToCapitalChangeWithinCurrentTimeStep[iFirmID] = 0.0;
-    }
+void Simulator::distribute_profits(map<int,double>* pMapFirmIDToCapitalChange) {
+    if (bVerbose) cout << "Distributing profits" << endl;
 
     // Iterate through each of the markets in the economy
     for (auto market : economy.get_vec_markets()) {
@@ -641,7 +800,7 @@ void Simulator::distribute_profits() {
             add_profit_to_firm(dbProfit, iFirmID);
 
             // Track accumulated profit for this firm for this time step
-            mapFirmIDToCapitalChangeWithinCurrentTimeStep[iFirmID] += dbProfit;
+            pMapFirmIDToCapitalChange->at(iFirmID) += dbProfit;
 
             // Update revenue in the history and data cache if needed
             if (dbRevenue != dataCache.mapFirmMarketComboToRevenue[pairFirmMarket]) {
@@ -658,18 +817,7 @@ void Simulator::distribute_profits() {
             }
         } // End of loop through firms
     } // End of loop through markets
-
-
-    // Record capital changes in the history
-    for (auto pair : mapFirmIDToCapitalChangeWithinCurrentTimeStep) {
-        if (pair.second != 0.0) {
-            int iFirmID = pair.first;
-            auto pFirm = mapFirmIDToFirmPtr[iFirmID];
-            double dbCapital = pFirm->getDbCapital();
-            currentSimulationHistoryPtr->record_capital_change(iCurrentMicroTimeStep, iFirmID, dbCapital);
-        }
-    }
-}
+} // End of distribute_profits method
 
 set<int> Simulator::get_set_firm_IDs() {
     set<int> setFirmIDs;

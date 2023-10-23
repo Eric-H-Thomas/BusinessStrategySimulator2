@@ -9,7 +9,7 @@ Action Action::generate_none_action(int iAgentID) {
     action.iAgentID = iAgentID;
     action.enumActionType = ActionType::enumNoneAction;
     return action;
-};
+}
 
 // Constructors
 Action::Action() {}

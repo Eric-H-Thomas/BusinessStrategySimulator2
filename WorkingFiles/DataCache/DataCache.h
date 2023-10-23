@@ -34,7 +34,4 @@ public:
     map<pair<int,int>, double> mapFirmMarketComboToVarCost;
     map<pair<int,int>, double> mapFirmMarketComboToEntryCost;
     map<pair<int,int>, double> mapFirmMarketComboToQtyProduced;
-
-    double dbVarCostMin;
-    double dbVarCostMax;
 };

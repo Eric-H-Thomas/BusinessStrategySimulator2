@@ -17,6 +17,7 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Economy/Economy.cpp.o: \
  ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Market/Market.h
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Firm/Firm.cpp.o: \
+ ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Firm/Firm.cpp \
  ../WorkingFiles/Firm/Firm.h \
  ../WorkingFiles/Market/Market.h \

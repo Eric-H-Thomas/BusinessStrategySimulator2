@@ -25,7 +25,7 @@ public:
     Simulator();
     int load_json_configs(const string &strConfigFilePath);
     void init_simulation_history();
-    void init_data_cache(SimulationHistory* pCurrentSimulationHistory);
+    int init_data_cache(SimulationHistory* pCurrentSimulationHistory);
     int prepare_to_run();
     int run();
     int getNumSims() const;
@@ -61,14 +61,14 @@ private:
     void set_agent_turn_order();
     int perform_micro_step(const int& iActingAgentID);
     vector<Action> get_actions_for_all_control_agents(const int &iActingAgentID);
-    void execute_actions(const vector<Action> &vecActions);
-    void execute_entry_action(const Action& action);
-    void execute_exit_action(const Action& action);
+    int execute_actions(const vector<Action> &vecActions, map<int,double>* pMapFirmIDToCapitalChange);
+    int execute_entry_action(const Action& action, map<int,double>* pMapFirmIDToCapitalChange);
+    int execute_exit_action(const Action& action, map<int,double>* pMapFirmIDToCapitalChange);
     Action get_agent_action(const ControlAgent &agent);
     ActionType get_action_type(const ControlAgent &agent);
     Action get_entry_action(const ControlAgent &agent);
     Action get_exit_action(const ControlAgent &agent);
-    void distribute_profits();
+    void distribute_profits(map<int,double>* pMapFirmIDToCapitalChange);
     Firm* get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr);
     Firm* get_firm_ptr_from_agent(const ControlAgent& agent);
     Firm* get_firm_ptr_from_agent_id(const int& iAgentID);
@@ -78,4 +78,5 @@ private:
     map<int,double> get_map_firm_to_var_cost_for_market(Market market);
     double get_average_var_cost_in_market(Market market);
     void add_profit_to_firm(double dbProfit, int iFirmID);
+    void shuffle_agent_firm_assignments(map<int, ControlAgent*> mapAgentIDToAgentPtr);
 };
