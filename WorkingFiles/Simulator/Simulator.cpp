@@ -369,7 +369,8 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
     if (execute_actions(vecActions, &mapFirmIDToCapitalChange))
         return 1;
 
-    distribute_profits(&mapFirmIDToCapitalChange);
+    if (distribute_profits(&mapFirmIDToCapitalChange))
+        return 1;
 
     // Record capital changes in the history
     for (auto pair : mapFirmIDToCapitalChange) {
@@ -744,6 +745,28 @@ Firm* Simulator::get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr) {
     return mapFirmIDToFirmPtr.at(iFirmID);
 }
 
+ControlAgent* Simulator::get_agent_ptr_from_firm_ptr(Firm* pFirm) {
+    int iFirmID = pFirm->getFirmID();
+    try {
+        return get_agent_ptr_from_firm_ID(iFirmID);
+    }
+    catch (std::exception e) {
+        cerr << "Error in get_agent_ptr_from_firm_ptr" << endl;
+        throw std::exception();
+    }
+}
+
+ControlAgent* Simulator::get_agent_ptr_from_firm_ID(int iFirmID) {
+    for (auto pair : mapAgentIDToAgentPtr) {
+        auto pAgent = pair.second;
+        if (pAgent->iFirmAssignment == iFirmID) {
+            return pAgent;
+        }
+    }
+    cerr << "Error in get_agent_ptr_from_firm_ID" << endl;
+    throw std::exception();
+}
+
 Firm* Simulator::get_firm_ptr_from_agent(const ControlAgent& agent) {
     int iFirmID = agent.iFirmAssignment;
     return mapFirmIDToFirmPtr.at(iFirmID);
@@ -754,7 +777,7 @@ Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
     return get_firm_ptr_from_agent_ptr(agentPtr);
 }
 
-void Simulator::distribute_profits(map<int,double>* pMapFirmIDToCapitalChange) {
+int Simulator::distribute_profits(map<int,double>* pMapFirmIDToCapitalChange) {
     if (bVerbose) cout << "Distributing profits" << endl;
 
     // Iterate through each of the markets in the economy
@@ -787,7 +810,25 @@ void Simulator::distribute_profits(map<int,double>* pMapFirmIDToCapitalChange) {
         for (int iFirmID : get_firm_IDs_in_market(market)) {
             // Calculate production quantity for the firm-market combo
             double v = mapFirmIDToVarCosts[iFirmID];
-            double q = (a - (b*Q) - v) / b; // Production quantity for this firm-market combo
+
+            ProductionPolicy policy;
+            try {
+                auto pAgent = get_agent_ptr_from_firm_ID(iFirmID);
+                policy = pAgent->getEnumProductionPolicy();
+            }
+            catch (std::exception e) {
+                cerr << "Error in distribute_profits method: " << e.what() << endl;
+                return 1;
+            }
+
+            double q; // Production quantity for this firm-market combo
+            if (policy == ProductionPolicy::Cournot) {
+                q = (a - (b*Q) - v) / b;
+            }
+            else {
+                cerr << "Did not specify a valid production policy" << endl;
+                return 1;
+            }
 
             // Calculate revenue and profit for the firm-market combo
             auto pairFirmMarket = std::make_pair(iFirmID, market.get_market_id());
@@ -817,6 +858,7 @@ void Simulator::distribute_profits(map<int,double>* pMapFirmIDToCapitalChange) {
             }
         } // End of loop through firms
     } // End of loop through markets
+    return 0;
 } // End of distribute_profits method
 
 set<int> Simulator::get_set_firm_IDs() {

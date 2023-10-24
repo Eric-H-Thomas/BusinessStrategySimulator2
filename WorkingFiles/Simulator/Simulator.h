@@ -68,8 +68,10 @@ private:
     ActionType get_action_type(const ControlAgent &agent);
     Action get_entry_action(const ControlAgent &agent);
     Action get_exit_action(const ControlAgent &agent);
-    void distribute_profits(map<int,double>* pMapFirmIDToCapitalChange);
+    int distribute_profits(map<int,double>* pMapFirmIDToCapitalChange);
     Firm* get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr);
+    ControlAgent* get_agent_ptr_from_firm_ptr(Firm* pFirm);
+    ControlAgent* get_agent_ptr_from_firm_ID(int iFirmID);
     Firm* get_firm_ptr_from_agent(const ControlAgent& agent);
     Firm* get_firm_ptr_from_agent_id(const int& iAgentID);
     set<int> get_set_firm_IDs();
