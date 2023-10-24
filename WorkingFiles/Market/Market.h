@@ -18,6 +18,7 @@ public:
     const double&      getDbDemandIntercept() const;
     const double&      getDbDemandSlope() const;
     const double&      getExitCostAsPercentageOfEntryCost() const;
+    const double&      getFixedCostAsPercentageOfEntryCost() const;
 
     // Comparison operator to allow markets to be placed in ordered data structures
     bool operator<(const Market& other) const;

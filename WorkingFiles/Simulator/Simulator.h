@@ -70,15 +70,13 @@ private:
     Action get_exit_action(const ControlAgent &agent);
     int distribute_profits(map<int,double>* pMapFirmIDToCapitalChange);
     Firm* get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr);
-    ControlAgent* get_agent_ptr_from_firm_ptr(Firm* pFirm);
     ControlAgent* get_agent_ptr_from_firm_ID(int iFirmID);
     Firm* get_firm_ptr_from_agent(const ControlAgent& agent);
-    Firm* get_firm_ptr_from_agent_id(const int& iAgentID);
     set<int> get_set_firm_IDs();
     set<int> get_set_market_IDs();
     set<int> get_firm_IDs_in_market(Market market);
     map<int,double> get_map_firm_to_var_cost_for_market(Market market);
     double get_average_var_cost_in_market(Market market);
     void add_profit_to_firm(double dbProfit, int iFirmID);
-    void shuffle_agent_firm_assignments(map<int, ControlAgent*> mapAgentIDToAgentPtr);
+    void shuffle_agent_firm_assignments();
 };

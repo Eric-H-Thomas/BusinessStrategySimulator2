@@ -430,15 +430,15 @@ set
 SimulationHistory.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
 
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.cpp
-SimulationHistory.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
-
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
 vector
 -
 map
 -
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.cpp
+Market.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
 
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
 vector
@@ -447,21 +447,11 @@ vector
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp
 Simulator.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
-../Agent/ControlAgent.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/ControlAgent.h
 map
 -
 iostream
 -
-../../JSONReader/json.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/JSONReader/json.h
-../Utils/MiscUtils.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.h
-../Action/Action.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Action/Action.h
 fstream
--
-iostream
 -
 random
 -
@@ -505,4 +495,10 @@ random
 -
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp
+Simulator/Simulator.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
+iostream
+-
 

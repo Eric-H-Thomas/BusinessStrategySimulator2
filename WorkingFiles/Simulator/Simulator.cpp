@@ -3,14 +3,9 @@
 //
 
 #include "Simulator.h"
-#include "../Agent/ControlAgent.h"
 #include <map>
 #include <iostream>
-#include "../../JSONReader/json.h"
-#include "../Utils/MiscUtils.h"
-#include "../Action/Action.h"
 #include <fstream>
-#include <iostream>
 #include <random>
 #include <cmath>
 
@@ -67,7 +62,7 @@ int Simulator::load_json_configs(const string& strConfigFilePath) {
     }
 
     return 0;
-};
+}
 
 int Simulator::prepare_to_run() {
 
@@ -87,7 +82,7 @@ int Simulator::prepare_to_run() {
         return 1;
 
     return 0;
-};
+}
 
 int Simulator::set_simulation_parameters() {
     try {
@@ -109,7 +104,7 @@ int Simulator::set_simulation_parameters() {
     }
 
     return 0;
-};
+}
 
 int Simulator::init_economy() {
 
@@ -148,7 +143,7 @@ int Simulator::init_economy() {
     }
 
     return 0;
-};
+}
 
 int Simulator::init_control_agents() {
     try {
@@ -173,7 +168,7 @@ int Simulator::init_control_agents() {
     }
 
     return 0;
-};
+}
 
 int Simulator::init_firms_for_control_agents() {
     // For now, this assigns each agent a firm with
@@ -204,13 +199,13 @@ int Simulator::init_firms_for_control_agents() {
     }
 
     if (bRandomizeAgentFirmAssignmentPerSimulation) {
-        shuffle_agent_firm_assignments(mapAgentIDToAgentPtr);
+        shuffle_agent_firm_assignments();
     }
 
     return 0;
 }
 
-void Simulator::shuffle_agent_firm_assignments(map<int,ControlAgent*> mapAgentIDToAgentPtr) {
+void Simulator::shuffle_agent_firm_assignments() {
     cerr << "Called shuffle agent-firm assignments option.\nThis has not been implemented yet because the simulator "\
     "currently creates identical firms that begin with the same capital and no capabilities.\nCome back and fill in "\
     "this function or turn the shuffle option off." << endl;
@@ -238,10 +233,6 @@ int Simulator::init_markets() {
             int iMarketsInCurrCluster = economy.get_vec_markets_per_cluster().at(iCluster);
             for (int j = 0; j < iMarketsInCurrCluster; j++){
 
-                // Choose the market's var cost from a uniform distribution in the range [dbVarCostMin, dbVarCostMax)
-                std::uniform_real_distribution<double> var_cost_dist(dbVarCostMin, dbVarCostMax);
-                double dbVarCost = var_cost_dist(gen);
-
                 // Choose the market's demand intercept from a uniform distribution in the range [dbDemandInterceptMin, dbDemandInterceptMax)
                 std::uniform_real_distribution<double> demand_intercept_dist(dbDemandInterceptMin, dbDemandInterceptMax);
                 double dbDemandIntercept = demand_intercept_dist(gen);
@@ -266,7 +257,7 @@ int Simulator::init_markets() {
         return 1;
     }
     return 0;
-};
+}
 
 vector<int> Simulator::create_market_capability_vector(const double& dbMean, const double& dbSD) {
     // Create a vector of all zeros
@@ -339,7 +330,7 @@ void Simulator::set_agent_turn_order() {
 
     // Set the agent turn order equal to the newly created turn order
     vecAgentTurnOrder = vecNewTurnOrder;
-};
+}
 
 int Simulator::perform_micro_step(const int& iActingAgentID) {
     if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iActingAgentID << endl;
@@ -383,7 +374,7 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
     }
 
     return 0;
-};
+}
 
 vector<Action> Simulator::get_actions_for_all_control_agents(const int& iActingAgentID) {
     if (bVerbose) cout << "Getting actions for all control agents" << endl;
@@ -448,8 +439,8 @@ int Simulator::execute_entry_action(const Action& action, map<int,double>* pMapF
     pMapFirmIDToCapitalChange->at(firmPtr->getFirmID()) -= dbEntryCost;
 
     // Update the fixed cost for this firm-market combo
-    const auto& default_market_parameters = this->simulatorConfigs["default_market_parameters"];
-    double dbFixedCostAsPctOfEntryCost = default_market_parameters["fixed_cost_percentage_of_entry"];
+    auto marketCopy = economy.get_market_by_ID(action.iMarketID);
+    double dbFixedCostAsPctOfEntryCost = marketCopy.getFixedCostAsPercentageOfEntryCost();
     dbFixedCostAsPctOfEntryCost *= 0.01; // Scaling factor for percentage expressed as whole number
     double dbFixedCost = dbFixedCostAsPctOfEntryCost * dbEntryCost;
     dataCache.mapFirmMarketComboToFixedCost[pairFirmMarket] = dbFixedCost;
@@ -761,17 +752,6 @@ Firm* Simulator::get_firm_ptr_from_agent_ptr(ControlAgent* agentPtr) {
     return mapFirmIDToFirmPtr.at(iFirmID);
 }
 
-ControlAgent* Simulator::get_agent_ptr_from_firm_ptr(Firm* pFirm) {
-    int iFirmID = pFirm->getFirmID();
-    try {
-        return get_agent_ptr_from_firm_ID(iFirmID);
-    }
-    catch (std::exception e) {
-        cerr << "Error in get_agent_ptr_from_firm_ptr" << endl;
-        throw std::exception();
-    }
-}
-
 ControlAgent* Simulator::get_agent_ptr_from_firm_ID(int iFirmID) {
     for (auto pair : mapAgentIDToAgentPtr) {
         auto pAgent = pair.second;
@@ -786,11 +766,6 @@ ControlAgent* Simulator::get_agent_ptr_from_firm_ID(int iFirmID) {
 Firm* Simulator::get_firm_ptr_from_agent(const ControlAgent& agent) {
     int iFirmID = agent.iFirmAssignment;
     return mapFirmIDToFirmPtr.at(iFirmID);
-}
-
-Firm* Simulator::get_firm_ptr_from_agent_id(const int& iAgentID) {
-    ControlAgent* agentPtr = mapAgentIDToAgentPtr.at(iAgentID);
-    return get_firm_ptr_from_agent_ptr(agentPtr);
 }
 
 int Simulator::distribute_profits(map<int,double>* pMapFirmIDToCapitalChange) {

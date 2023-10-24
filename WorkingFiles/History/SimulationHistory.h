@@ -16,8 +16,8 @@ using std::vector;
 // at time step 1 and an exit at time step 4.
 
 // Predeclare the structs so that we can keep the SimulationHistory info at the top of the file
-struct CapitalChange; struct RevenueChange; struct FixedCostChange; struct VarCostChange;
-struct EntryCostChange; struct ProductionQuantityChange; struct MarketPresenceChange;
+struct CapitalChange; struct RevenueChange; struct FixedCostChange; struct EntryCostChange;
+struct ProductionQuantityChange; struct MarketPresenceChange;
 
 class SimulationHistory {
 public:

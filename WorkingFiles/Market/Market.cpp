@@ -18,13 +18,12 @@ Market::Market(double dbFixedCostAsPercentageOfEntryCost, double dbExitCostAsPer
                vecCapabilities(vecCapabilities) {}
 
 // Getters
-const vector<int> &Market::get_vec_capabilities() const {return vecCapabilities;};
-const int         &Market::get_market_id()        const {return iMarketID;};
-
+const vector<int> &Market::get_vec_capabilities() const {return vecCapabilities;}
+const int         &Market::get_market_id()        const {return iMarketID;}
 const double      &Market::getDbDemandIntercept() const {return dbDemandIntercept;}
 const double      &Market::getDbDemandSlope()     const {return dbDemandSlope;}
 const double      &Market::getExitCostAsPercentageOfEntryCost() const {return dbExitCostAsPercentageOfEntryCost;}
-
+const double      &Market::getFixedCostAsPercentageOfEntryCost() const {return dbFixedCostAsPercentageOfEntryCost;}
 
 
 // Comparison operator (necessary in order to put Markets in sets)
