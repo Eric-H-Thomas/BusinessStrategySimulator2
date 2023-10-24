@@ -6,10 +6,10 @@
 
 SimulationHistory::SimulationHistory(const map<int, int> &mapAgentToFirm,
                                      const map<int, double> &mapFirmStartingCapital,
-                                     const map<int, double> &mapMarketMaximumEntryCost):
-                                     mapAgentToFirm(mapAgentToFirm),
-                                     mapFirmStartingCapital(mapFirmStartingCapital),
-                                     mapMarketMaximumEntryCost(mapMarketMaximumEntryCost) {};
+                                     const map<int, double> &mapMarketMaximumEntryCost) :
+        mapAgentToFirm(mapAgentToFirm),
+        mapFirmStartingCapital(mapFirmStartingCapital),
+        mapMarketMaximumEntryCost(mapMarketMaximumEntryCost) {}
 
 void SimulationHistory::record_market_presence_change(int iMicroTimeStep, bool bPresent, int iFirmID, int iMarketID) {
     MarketPresenceChange presenceChange;

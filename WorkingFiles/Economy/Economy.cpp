@@ -4,7 +4,6 @@
 
 #define NOT_YET_SET -1
 #include "Economy.h"
-#include <utility>
 #include <random>
 
 Economy::Economy(int iPossibleCapabilities, int iCapabilitiesPerMarket, int iNumMarketClusters, vector<int> vecClusterMeans,

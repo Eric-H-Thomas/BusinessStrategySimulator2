@@ -439,11 +439,22 @@ int Simulator::execute_entry_action(const Action& action, map<int,double>* pMapF
     auto agentPtr = mapAgentIDToAgentPtr.at(action.iAgentID);
     auto firmPtr = get_firm_ptr_from_agent_ptr(agentPtr);
 
+    auto pairFirmMarket = std::make_pair(firmPtr->getFirmID(), action.iMarketID);
+
     // Get the entry cost for the firm
-    double dbEntryCost = dataCache.mapFirmMarketComboToEntryCost.at(std::make_pair(firmPtr->getFirmID(), action.iMarketID));
+    double dbEntryCost = dataCache.mapFirmMarketComboToEntryCost.at(pairFirmMarket);
 
     // Update the map of firm IDs to capital change with the entry cost of this action
     pMapFirmIDToCapitalChange->at(firmPtr->getFirmID()) -= dbEntryCost;
+
+    // Update the fixed cost for this firm-market combo
+    const auto& default_market_parameters = this->simulatorConfigs["default_market_parameters"];
+    double dbFixedCostAsPctOfEntryCost = default_market_parameters["fixed_cost_percentage_of_entry"];
+    dbFixedCostAsPctOfEntryCost *= 0.01; // Scaling factor for percentage expressed as whole number
+    double dbFixedCost = dbFixedCostAsPctOfEntryCost * dbEntryCost;
+    dataCache.mapFirmMarketComboToFixedCost[pairFirmMarket] = dbFixedCost;
+    currentSimulationHistoryPtr->record_fixed_cost_change(iCurrentMicroTimeStep,
+                                                          dbFixedCost, pairFirmMarket.first, pairFirmMarket.second);
 
     // Update the firm's capability vector
     firmPtr->add_market_capabilities_to_firm_capabilities(economy.get_market_by_ID(action.iMarketID));
@@ -482,7 +493,6 @@ int Simulator::execute_entry_action(const Action& action, map<int,double>* pMapF
         double dbCost = MiscUtils::dot_product(vecMissingCapabilities, economy.get_vec_capability_costs());
 
         // Update the data cache and the history if the entry cost has changed since it was last calculated
-        auto pairFirmMarket = std::make_pair(firmPtr->getFirmID(), market.get_market_id());
         double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket];
         if (dbCost != dbPriorCost) {
             dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket] = dbCost;
@@ -499,15 +509,22 @@ int Simulator::execute_exit_action(const Action& action, map<int,double>* pMapFi
     auto agentPtr = mapAgentIDToAgentPtr.at(action.iAgentID);
     auto firmPtr = get_firm_ptr_from_agent_ptr(agentPtr);
 
+    auto pairFirmMarket = std::make_pair(firmPtr->getFirmID(), action.iMarketID);
+
     // Get a copy of the market
     auto marketCopy = economy.get_market_by_ID(action.iMarketID);
 
     // Get the exit cost for the firm
-    double dbEntryCost = dataCache.mapFirmMarketComboToEntryCost.at(std::make_pair(firmPtr->getFirmID(), action.iMarketID));
+    double dbEntryCost = dataCache.mapFirmMarketComboToEntryCost.at(pairFirmMarket);
     double dbExitCost = marketCopy.getExitCostAsPercentageOfEntryCost() * dbEntryCost * 0.01; // Scaling factor due to whole percentages
 
     // Update the map of firm IDs to capital change with the entry cost of this action
     pMapFirmIDToCapitalChange->at(firmPtr->getFirmID()) -= dbExitCost;
+
+    // Update the fixed cost for this firm-market combo
+    dataCache.mapFirmMarketComboToFixedCost[pairFirmMarket] = 0.0;
+    currentSimulationHistoryPtr->record_fixed_cost_change(iCurrentMicroTimeStep,
+                                                          0.0, pairFirmMarket.first, pairFirmMarket.second);
 
     // Update the firm's capability vector
     firmPtr->remove_market_capabilities_from_firm_capabilities(marketCopy, economy);
@@ -546,7 +563,6 @@ int Simulator::execute_exit_action(const Action& action, map<int,double>* pMapFi
         double dbCost = MiscUtils::dot_product(vecMissingCapabilities, economy.get_vec_capability_costs());
 
         // Update the data cache and the history if the entry cost has changed since it was last calculated
-        auto pairFirmMarket = std::make_pair(firmPtr->getFirmID(), market.get_market_id());
         double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket];
         if (dbCost != dbPriorCost) {
             dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket] = dbCost;

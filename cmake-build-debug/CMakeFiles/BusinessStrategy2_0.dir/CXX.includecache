@@ -430,6 +430,10 @@ set
 SimulationHistory.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.cpp
+SimulationHistory.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
+
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
 vector
 -
@@ -501,10 +505,4 @@ random
 -
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
-
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp
-Simulator/Simulator.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
-iostream
--
 
