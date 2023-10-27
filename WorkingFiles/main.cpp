@@ -25,12 +25,15 @@ int main(int argc, char* argv[]) {
         return 1;
 
     for (int iSim = 0; iSim < simulator.getNumSims(); iSim++) {
-        cout << "Beginning simulation " << iSim+1 << " of " << simulator.getNumSims() << endl;
+        cout << "Beginning simulation " << iSim << " of " << simulator.getNumSims()-1 << " (indexed at 0)" << endl;
         if (simulator.run())
             return 1;
     }
 
-    // TODO: Save the results to an output file
+    if (simulator.masterHistory.generate_master_output()) {
+        cerr << "Error generating master output file" << endl;
+        return 1;
+    }
 
     return 0;
 }

@@ -8,7 +8,6 @@
 class StringUtils {
 public:
     static std::string toUpper(const std::string& str);
-    static std::string toLower(const std::string& str);
     static bool equalsIgnoreCase(const std::string& str1, const std::string& str2);
     static bool equalsIgnoreCaseAndIgnoreUnderscores(const std::string& str1, const std::string& str2);
 };

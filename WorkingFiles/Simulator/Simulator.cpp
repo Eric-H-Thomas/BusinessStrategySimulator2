@@ -23,6 +23,9 @@ int Simulator::run() {
     if (init_data_cache(masterHistory.getCurrentSimulationHistoryPtr()))
         return 1;
 
+    // Set current micro time step to 0 (needs to be reset between each run of the simulator)
+    iCurrentMicroTimeStep = 0;
+
     // Loop through the macro steps
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
         if (bVerbose) cout << "Beginning macro step " << iMacroStep + 1 << " of " << iMacroStepsPerSim << endl;
@@ -80,6 +83,8 @@ int Simulator::prepare_to_run() {
 
     if (init_firms_for_control_agents())
         return 1;
+
+    init_master_history();
 
     return 0;
 }
@@ -203,6 +208,16 @@ int Simulator::init_firms_for_control_agents() {
     }
 
     return 0;
+}
+
+void Simulator::init_master_history() {
+    // Get the number of micro steps per macro step
+    double dbMicroStepsPerMacroStep = mapAgentIDToAgentPtr.size() * (1.0 + dbSkippedTurnsPerRegularTurn);
+    int iMicroStepsPerMacroStep = static_cast<int>(std::ceil(dbMicroStepsPerMacroStep));
+
+    masterHistory.iMicroStepsPerSim = iMicroStepsPerMacroStep * iMacroStepsPerSim;
+    masterHistory.iNumFirms = mapFirmIDToFirmPtr.size();
+    masterHistory.iNumMarkets = economy.get_total_markets();
 }
 
 void Simulator::shuffle_agent_firm_assignments() {

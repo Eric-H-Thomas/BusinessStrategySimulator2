@@ -13,13 +13,6 @@ std::string StringUtils::toUpper(const std::string& str) {
 }
 
 // TODO: test this method
-std::string StringUtils::toLower(const std::string& str) {
-    std::string result = str;
-    std::transform(result.begin(), result.end(), result.begin(), ::tolower);
-    return result;
-}
-
-// TODO: test this method
 bool StringUtils::equalsIgnoreCase(const std::string& str1, const std::string& str2) {
     if (str1.size() != str2.size()) {
         return false;

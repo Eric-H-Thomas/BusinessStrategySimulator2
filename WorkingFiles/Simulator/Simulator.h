@@ -24,11 +24,13 @@ class Simulator {
 public:
     Simulator();
     int load_json_configs(const string &strConfigFilePath);
+    void init_master_history();
     void init_simulation_history();
     int init_data_cache(SimulationHistory* pCurrentSimulationHistory);
     int prepare_to_run();
     int run();
     int getNumSims() const;
+    MasterHistory masterHistory;
 
 private:
     nlohmann::json simulatorConfigs;
@@ -36,7 +38,6 @@ private:
     map<int, Firm*> mapFirmIDToFirmPtr;
     Economy economy;
     SimulationHistory* currentSimulationHistoryPtr;
-    MasterHistory masterHistory;
     DataCache dataCache;
     vector<int> vecAgentTurnOrder;
 
