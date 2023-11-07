@@ -9,6 +9,7 @@
 
 using std::map;
 using std::vector;
+using std::pair;
 
 // To keep the history as lightweight as possible, we will record changes in the states of simulator objects
 // rather than recording values for such objects at every time step. For example, rather than recording that firm A was
@@ -17,18 +18,20 @@ using std::vector;
 
 // Predeclare the structs so that we can keep the SimulationHistory info at the top of the file
 struct CapitalChange; struct RevenueChange; struct FixedCostChange; struct EntryCostChange;
-struct ProductionQuantityChange; struct MarketPresenceChange;
+struct ProductionQuantityChange; struct PriceChange; struct MarketPresenceChange;
 
 class SimulationHistory {
 public:
     map<int,int>                     mapAgentToFirm;
     map<int,double>                  mapFirmStartingCapital;
     map<int,double>                  mapMarketMaximumEntryCost;
+    map<pair<int,int>,double>        mapFirmMarketComboToVarCost;
     vector<CapitalChange>            vecCapitalChanges;
     vector<RevenueChange>            vecRevenueChanges;
     vector<FixedCostChange>          vecFixedCostChanges;
     vector<EntryCostChange>          vecEntryCostChanges;
     vector<ProductionQuantityChange> vecProductionQtyChanges;
+    vector<PriceChange>              vecPriceChanges;
     vector<MarketPresenceChange>     vecMarketPresenceChanges;
 
     SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,double> &mapFirmStartingCapital,
@@ -40,7 +43,7 @@ public:
     void record_fixed_cost_change(int iMicroTimeStep, double dbNewFixedCost, int iFirmID, int iMarketID);
     void record_entry_cost_change(int iMicroTimeStep, double dbNewEntryCost, int iFirmID, int iMarketID);
     void record_production_quantity_change(int iMicroTimeStep, double dbNewProductionQty, int iFirmID, int iMarketID);
-
+    void record_price_change(int iMicroTimeStep, double dbNewPrice, int iFirmID, int iMarketID);
 };
 
 struct CapitalChange {
@@ -73,6 +76,13 @@ struct EntryCostChange {
 struct ProductionQuantityChange {
     int iMicroTimeStep;
     double dbNewProductionQty;
+    int iFirmID;
+    int iMarketID;
+};
+
+struct PriceChange {
+    int iMicroTimeStep;
+    double dbNewPrice;
     int iFirmID;
     int iMarketID;
 };

@@ -26,6 +26,14 @@ public:
 private:
     int get_row_number(int iCurrentSim, int iCurrentFirm, int iCurrentMarket, int iCurrentMicroStep);
     void fill_in_capital_info();
+    void fill_in_revenue_info();
+    void fill_in_market_presence_info();
+    void fill_in_variable_cost_info();
+    void fill_in_fixed_cost_info();
+    void fill_in_entry_cost_info();
+    void fill_in_price_info();
+    void fill_in_quantity_info();
+
 };
 
 class DataRow {

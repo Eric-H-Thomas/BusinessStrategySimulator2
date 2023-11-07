@@ -243,10 +243,12 @@ int Simulator::init_markets() {
         std::random_device rd;
         std::mt19937 gen(rd());
 
-        for (int iCluster = 0; iCluster < this->economy.get_num_market_clusters(); iCluster++) {
+        // Create index for generating market IDs (gets incremented at the end of each iteration)
+        int iMarketID = 0;
 
+        for (int iCluster = 0; iCluster < this->economy.get_num_market_clusters(); iCluster++) {
             int iMarketsInCurrCluster = economy.get_vec_markets_per_cluster().at(iCluster);
-            for (int j = 0; j < iMarketsInCurrCluster; j++){
+            for (int j = 0; j < iMarketsInCurrCluster; j++) {
 
                 // Choose the market's demand intercept from a uniform distribution in the range [dbDemandInterceptMin, dbDemandInterceptMax)
                 std::uniform_real_distribution<double> demand_intercept_dist(dbDemandInterceptMin, dbDemandInterceptMax);
@@ -262,8 +264,10 @@ int Simulator::init_markets() {
                 vector<int> vecMarketCapabilities = create_market_capability_vector(dbMean, dbSD);
 
                 // Create a new market and add it to the economy's vector of markets
-                this->economy.add_market(Market(dbFixedCostPercentageOfEntry, dbExitCostPercentageOfEntry,
+                this->economy.add_market(Market(iMarketID, dbFixedCostPercentageOfEntry, dbExitCostPercentageOfEntry,
                                                dbDemandIntercept, dbProductDemandSlope, vecMarketCapabilities));
+
+                iMarketID++;
             } // End of inner loop
         } // End of outer loop
     } // End of try block
@@ -328,13 +332,13 @@ void Simulator::set_agent_turn_order() {
     if (!bRandomizeTurnOrderWithinEachMacroStep && !vecAgentTurnOrder.empty())
         return;
 
-    // Get the total number of turns
-    double dbTotalTurns = mapAgentIDToAgentPtr.size() * dbSkippedTurnsPerRegularTurn;
+    // Get the total number of turns (i.e., the number of micro steps per macro step)
+    double dbTotalTurns = mapAgentIDToAgentPtr.size() * (1.0 + dbSkippedTurnsPerRegularTurn);
     int iTotalTurns = static_cast<int>(std::ceil(dbTotalTurns));
 
     // Generate a vector for the new turn order
     vector<int> vecNewTurnOrder;
-    for (int i = 1; i <= iTotalTurns; ++i) {
+    for (int i = 0; i <= iTotalTurns; ++i) {
         vecNewTurnOrder.push_back(i);
     }
 
@@ -735,12 +739,16 @@ int Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
             dataCache.mapFirmMarketComboToRevenue       [combination] = 0.0;
             dataCache.mapFirmMarketComboToFixedCost     [combination] = 0.0;
             dataCache.mapFirmMarketComboToQtyProduced   [combination] = 0.0;
+            dataCache.mapFirmMarketComboToPrice         [combination] = 0.0;
 
             // (Reuse the variable costs from the previous simulation if this condition is false)
-            if (bRandomizeVariableCostsPerSimulation && dataCache.bInitialized) {
+            if (!dataCache.bInitialized || bRandomizeVariableCostsPerSimulation) {
                 dataCache.mapFirmMarketComboToVarCost   [combination] = var_cost_dist(gen);
             }
         }
+
+        // Copy over the map of variable costs to the simulation history
+        currentSimulationHistoryPtr->mapFirmMarketComboToVarCost = dataCache.mapFirmMarketComboToVarCost;
 
         // Initialize each market-firm entry cost to the maximum entry cost for that market
         for (auto combination : setFirmMarketCombinations) {
@@ -861,6 +869,15 @@ int Simulator::distribute_profits(map<int,double>* pMapFirmIDToCapitalChange) {
                 currentSimulationHistoryPtr->record_production_quantity_change(iCurrentMicroTimeStep, q,
                                                                    pairFirmMarket.first, pairFirmMarket.second);
                 dataCache.mapFirmMarketComboToQtyProduced[pairFirmMarket] = q;
+            }
+
+            // Update prices in the history and data cache if needed
+            // Note: Yes, there is only one price per market for now, but we record price changes according to firm-
+            // market combinations in case we want to change the simulator to allow for intra-market price variation.
+            if (P != dataCache.mapFirmMarketComboToPrice[pairFirmMarket]) {
+                currentSimulationHistoryPtr->record_price_change(iCurrentMicroTimeStep, P,
+                                                                               pairFirmMarket.first, pairFirmMarket.second);
+                dataCache.mapFirmMarketComboToPrice[pairFirmMarket] = P;
             }
         } // End of loop through firms
     } // End of loop through markets

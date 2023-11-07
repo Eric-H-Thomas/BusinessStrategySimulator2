@@ -63,3 +63,12 @@ void SimulationHistory::record_production_quantity_change(int iMicroTimeStep, do
     productionQuantityChange.iMarketID = iMarketID;
     vecProductionQtyChanges.push_back(productionQuantityChange);
 }
+
+void SimulationHistory::record_price_change(int iMicroTimeStep, double dbNewPrice, int iFirmID, int iMarketID) {
+    PriceChange priceChange;
+    priceChange.iMicroTimeStep = iMicroTimeStep;
+    priceChange.dbNewPrice = dbNewPrice;
+    priceChange.iFirmID = iFirmID;
+    priceChange.iMarketID = iMarketID;
+    vecPriceChanges.push_back(priceChange);
+}

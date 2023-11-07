@@ -10,7 +10,7 @@ using std::vector;
 class Market {
 public:
     Market();
-    Market(double dbFixedCostAsPercentageOfEntryCost, double dbExitCostAsPercentageOfEntryCost,
+    Market(int iMarketID, double dbFixedCostAsPercentageOfEntryCost, double dbExitCostAsPercentageOfEntryCost,
            double dbDemandIntercept, double dbDemandSlope,
            const vector<int> &vecCapabilities);
     const vector<int>& get_vec_capabilities() const;

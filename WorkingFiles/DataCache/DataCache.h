@@ -19,9 +19,7 @@ using std::pair;
 //      - the variable cost         in the most recent micro time step for each firm-market combination
 //      - the entry cost            in the most recent micro time step for each firm-market combination
 //      - the quantity produced     in the most recent micro time step for each firm-market combination
-
-// This class is also where we store the variable cost min and max as specified in the config file. We choose to store
-// that information here because variable costs are specific to a firm-market combination rather than just a firm or a market.
+//      - the price per unit        in the most recent micro time step for each firm-market combination
 
 class DataCache {
 public:
@@ -34,4 +32,5 @@ public:
     map<pair<int,int>, double> mapFirmMarketComboToVarCost;
     map<pair<int,int>, double> mapFirmMarketComboToEntryCost;
     map<pair<int,int>, double> mapFirmMarketComboToQtyProduced;
+    map<pair<int,int>, double> mapFirmMarketComboToPrice;
 };

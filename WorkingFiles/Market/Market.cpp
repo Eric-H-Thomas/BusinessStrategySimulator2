@@ -8,9 +8,10 @@
 Market::Market() {}
 
 // Parameterized constructor
-Market::Market(double dbFixedCostAsPercentageOfEntryCost, double dbExitCostAsPercentageOfEntryCost,
+Market::Market(int iMarketID, double dbFixedCostAsPercentageOfEntryCost, double dbExitCostAsPercentageOfEntryCost,
                double dbDemandIntercept, double dbDemandSlope,
                const vector<int> &vecCapabilities) :
+               iMarketID(iMarketID),
                dbFixedCostAsPercentageOfEntryCost(dbFixedCostAsPercentageOfEntryCost),
                dbExitCostAsPercentageOfEntryCost(dbExitCostAsPercentageOfEntryCost),
                dbDemandIntercept(dbDemandIntercept),
