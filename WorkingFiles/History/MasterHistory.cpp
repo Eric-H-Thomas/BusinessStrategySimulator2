@@ -39,7 +39,8 @@ int MasterHistory::generate_master_output() {
     ofStreamMasterOutput << "In Market"     << ",";
     ofStreamMasterOutput << "Price"         << ",";
     ofStreamMasterOutput << "Quantity"      << ",";
-    ofStreamMasterOutput << "Market Number" << "\n";
+    //ofStreamMasterOutput << "Market Number" << "\n";
+    ofStreamMasterOutput << "\n";
 
     for (int i = 0; i < vecDataRows.size(); i++) {
         auto row = vecDataRows.at(i);
@@ -57,23 +58,9 @@ int MasterHistory::generate_master_output() {
         ofStreamMasterOutput << row.bInMarket           << ",";
         ofStreamMasterOutput << row.dbPrice             << ",";
         ofStreamMasterOutput << row.dbQty               << ",";
-        ofStreamMasterOutput << "Market # Placeholder"  << "\n";
+        //ofStreamMasterOutput << "Market # Placeholder"  << "\n";
+        ofStreamMasterOutput << "\n";
     }
-
-
-    // Brainstorming
-    // Right now, the data is stored as a vector of individual simulation history pointers.
-    // Within each simulation history, we have the following information:
-//    map<int,int>                     mapAgentToFirm;
-//    map<int,double>                  mapFirmStartingCapital;
-//    map<int,double>                  mapMarketMaximumEntryCost;
-//    vector<CapitalChange>            vecCapitalChanges;
-//    vector<RevenueChange>            vecRevenueChanges;
-//    vector<FixedCostChange>          vecFixedCostChanges;
-//    vector<EntryCostChange>          vecEntryCostChanges;
-//    vector<ProductionQuantityChange> vecProductionQtyChanges;
-//    vector<MarketPresenceChange>     vecMarketPresenceChanges;
-
 
     ofStreamMasterOutput.close();
 
@@ -158,20 +145,23 @@ void MasterHistory::fill_in_capital_info() {
                     for (int iRow = iStartRow; iRow < iEndRow; iRow++) {
                         vecDataRows.at(iRow).dbCapital = dbCurrentCapital;
                     }
-                    // Update the time step and capital
-                    iCurrentTimeStep = entry.iMicroTimeStep;
-                    dbCurrentCapital = entry.dbNewCapitalQty;
 
                     // Fill in capital amounts for rows after the last capital change
                     if (i == vecCapitalChanges.size() - 1) {
-                        iStartRow = get_row_number(iSim, iFirm, iMarket, iCurrentTimeStep);
+                        // Update the time step and capital
+                        iStartRow = get_row_number(iSim, iFirm, iMarket, entry.iMicroTimeStep);
                         iEndRow = get_row_number(iSim, iFirm, iMarket + 1, 0);
                         // Update the rows with the current capital amount
                         for (int iRow = iStartRow; iRow < iEndRow; iRow++) {
-                            vecDataRows.at(iRow).dbCapital = dbCurrentCapital;
+                            vecDataRows.at(iRow).dbCapital = entry.dbNewCapitalQty;
                         }
                     }
                 } // End of loop through markets
+
+                // Update the time step and capital
+                iCurrentTimeStep = entry.iMicroTimeStep;
+                dbCurrentCapital = entry.dbNewCapitalQty;
+
             } // End of loop through vector of capital changes for current simulation-firm combo
         } // End of loop over firms
     } // End of loop over simulations
@@ -363,7 +353,7 @@ void MasterHistory::fill_in_fixed_cost_info() {
                         vecDataRows.at(iRow).dbFixedCost = dbCurrentFixedCost;
                     }
 
-                    // Update the time step and capital
+                    // Update the time step and fixed cost
                     iCurrentTimeStep = entry.iMicroTimeStep;
                     dbCurrentFixedCost= entry.dbNewFixedCost;
 

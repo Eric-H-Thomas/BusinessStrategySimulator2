@@ -338,7 +338,7 @@ void Simulator::set_agent_turn_order() {
 
     // Generate a vector for the new turn order
     vector<int> vecNewTurnOrder;
-    for (int i = 0; i <= iTotalTurns; ++i) {
+    for (int i = 0; i < iTotalTurns; i++) {
         vecNewTurnOrder.push_back(i);
     }
 
@@ -353,8 +353,6 @@ void Simulator::set_agent_turn_order() {
 
 int Simulator::perform_micro_step(const int& iActingAgentID) {
     if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iActingAgentID << endl;
-
-    iCurrentMicroTimeStep++;
 
     // Get agent actions
     vector<Action> vecActions;
@@ -391,6 +389,8 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
             currentSimulationHistoryPtr->record_capital_change(iCurrentMicroTimeStep, iFirmID, dbCapital);
         }
     }
+
+    iCurrentMicroTimeStep++;
 
     return 0;
 }
@@ -474,7 +474,7 @@ int Simulator::execute_entry_action(const Action& action, map<int,double>* pMapF
         return 1;
     currentSimulationHistoryPtr->record_market_presence_change(action.iMicroTimeStep, true, firmPtr->getFirmID(), action.iMarketID);
 
-    // Update the entry cost for this firm for other markets
+    // Update the entry cost for this firm for all markets
     for (Market market : economy.get_vec_markets()) {
         // Get vector of capabilities the firm lacks to enter the market
         auto vecFirmCapabilities = firmPtr->getVecCapabilities();
@@ -503,7 +503,8 @@ int Simulator::execute_entry_action(const Action& action, map<int,double>* pMapF
         double dbCost = MiscUtils::dot_product(vecMissingCapabilities, economy.get_vec_capability_costs());
 
         // Update the data cache and the history if the entry cost has changed since it was last calculated
-        double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket];
+        auto pair = std::make_pair(firmPtr->getFirmID(), market.get_market_id());
+        double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pair];
         if (dbCost != dbPriorCost) {
             dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket] = dbCost;
             currentSimulationHistoryPtr->record_entry_cost_change(iCurrentMicroTimeStep,

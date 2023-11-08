@@ -37,8 +37,8 @@ int Firm::add_market_to_portfolio(const int& iMarketID) {
 
 int Firm::add_market_capabilities_to_firm_capabilities(const Market& market) {
     try {
-        // Set firm capability vector to (firmCapVec ANDed with marketCapVec)
-        this->vecCapabilities = MiscUtils::element_wise_logical_and(this->vecCapabilities, market.get_vec_capabilities());
+        // Set firm capability vector to (firmCapVec ORed with marketCapVec)
+        this->vecCapabilities = MiscUtils::element_wise_logical_or(this->vecCapabilities, market.get_vec_capabilities());
     }
     catch (std::exception e) {
         std::cerr << "Error adding market capabilities to firm capabilities" << std::endl;

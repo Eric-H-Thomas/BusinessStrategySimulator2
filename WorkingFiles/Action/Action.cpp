@@ -4,10 +4,14 @@
 
 #include "Action.h"
 
+#define NOT_APPLICABLE -1
+
 Action Action::generate_none_action(int iAgentID) {
     Action action;
     action.iAgentID = iAgentID;
     action.enumActionType = ActionType::enumNoneAction;
+    action.iMarketID = NOT_APPLICABLE;
+    action.iMicroTimeStep = NOT_APPLICABLE;
     return action;
 }
 
