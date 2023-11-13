@@ -115,3 +115,16 @@ void Firm::add_capital(double dbChangeInCapital) {
 const vector<int> &Firm::getVecCapabilities() const {
     return vecCapabilities;
 }
+
+void Firm::reset(double dbStartingCapital) {
+    // Reset capabilities
+    for (size_t i = 0; i < vecCapabilities.size(); i++) {
+        vecCapabilities[i] = 0;
+    }
+
+    // Reset portfolio
+    setMarketIDs.clear();
+
+    // Reset capital
+    dbCapital = dbStartingCapital;
+}

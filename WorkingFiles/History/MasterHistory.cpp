@@ -460,12 +460,12 @@ void MasterHistory::fill_in_price_info() {
                 if (vecPriceChanges.empty()) {
                     int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
-                        vecDataRows.at(iStartRow + i).dbEntryCost = dbStartingPrice;
+                        vecDataRows.at(iStartRow + i).dbPrice = dbStartingPrice;
                     }
                 }
 
                 int iCurrentTimeStep = 0;
-                double dbCurrentPrice= dbStartingPrice;
+                double dbCurrentPrice = dbStartingPrice;
 
                 // For each entry in the vector of price changes
                 for (int i = 0; i < vecPriceChanges.size(); i++) {
@@ -523,7 +523,7 @@ void MasterHistory::fill_in_quantity_info() {
                 if (vecProductionQuantityChanges.empty()) {
                     int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
-                        vecDataRows.at(iStartRow + i).dbEntryCost = dbStartingQuantity;
+                        vecDataRows.at(iStartRow + i).dbQty = dbStartingQuantity;
                     }
                 }
 

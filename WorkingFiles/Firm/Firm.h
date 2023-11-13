@@ -14,6 +14,7 @@ class Firm {
 public:
     Firm();
     Firm(int iFirmID, double dbStartingCapital, int iPossibleCapabilities);
+    void reset(double dbStartingCapital);
     int getFirmID() const;
     double getDbCapital() const;
     const vector<int> &getVecCapabilities() const;

@@ -89,6 +89,19 @@ int Simulator::prepare_to_run() {
     return 0;
 }
 
+int Simulator::reset() {
+
+    // Reset capabilities, portfolio, and capital for all firms
+    for (auto pair : mapFirmIDToFirmPtr){
+        auto firm = pair.second;
+        const auto& firm_parameters = this->simulatorConfigs["default_firm_parameters"];
+        double dbDefaultStartingCapital = firm_parameters["starting_capital"];
+        firm->reset((dbDefaultStartingCapital));
+    }
+
+    return 0;
+}
+
 int Simulator::set_simulation_parameters() {
     try {
         const auto& simulation_parameters = this->simulatorConfigs["simulation_parameters"];
@@ -506,7 +519,7 @@ int Simulator::execute_entry_action(const Action& action, map<int,double>* pMapF
         auto pair = std::make_pair(firmPtr->getFirmID(), market.get_market_id());
         double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pair];
         if (dbCost != dbPriorCost) {
-            dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket] = dbCost;
+            dataCache.mapFirmMarketComboToEntryCost[pair] = dbCost;
             currentSimulationHistoryPtr->record_entry_cost_change(iCurrentMicroTimeStep,
                                                                   dbCost, firmPtr->getFirmID(), market.get_market_id());
         }

@@ -28,6 +28,12 @@ int main(int argc, char* argv[]) {
         cout << "Beginning simulation " << iSim << " of " << simulator.getNumSims()-1 << " (indexed at 0)" << endl;
         if (simulator.run())
             return 1;
+
+        // Reset the simulator unless it is the last time running it
+        if (iSim != simulator.getNumSims() - 1) {
+            if (simulator.reset())
+                return 1;
+        }
     }
 
     if (simulator.masterHistory.generate_master_output()) {

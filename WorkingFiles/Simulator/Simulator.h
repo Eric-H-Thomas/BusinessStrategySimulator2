@@ -28,6 +28,7 @@ public:
     void init_simulation_history();
     int init_data_cache(SimulationHistory* pCurrentSimulationHistory);
     int prepare_to_run();
+    int reset();
     int run();
     int getNumSims() const;
     MasterHistory masterHistory;
