@@ -91,7 +91,7 @@ void MasterHistory::prepare_data_for_output() {
                     int iRow = get_row_number(iSim, iFirm, iMarket, iMicroTimeStep);
                     vecDataRows.at(iRow).iSim = iSim;
                     vecDataRows.at(iRow).iFirmID = iFirm;
-                    vecDataRows.at(iRow).strAgentType = "Placeholder for agent info; Fill this in!";
+                    vecDataRows.at(iRow).strAgentType = vecSimulationHistoryPtrs.at(iSim)->mapFirmToAgentDescription[iFirm];
                     vecDataRows.at(iRow).iMarketID = iMarket;
                     vecDataRows.at(iRow).iMicroTimeStep = iMicroTimeStep;
                 }

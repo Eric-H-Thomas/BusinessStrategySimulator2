@@ -720,8 +720,17 @@ void Simulator::init_simulation_history() {
         mapMarketMaximumEntryCosts[market.get_market_id()] = dbMaxEntryCost;
     }
 
-    // Initialize the simulation history using the above three maps
-    currentSimulationHistoryPtr = new SimulationHistory(mapAgentToFirm, mapFirmStartingCapital, mapMarketMaximumEntryCosts);
+    // Generate map of firm to agent descriptions
+    map<int,string> mapFirmIDToAgentDescriptions;
+    for (auto pair : mapAgentToFirm) {
+        int iFirmID = pair.second;
+        auto pAgent = get_agent_ptr_from_firm_ID(iFirmID);
+        mapFirmIDToAgentDescriptions[iFirmID] = pAgent->toString();
+    }
+
+    // Initialize the simulation history using the above four maps
+    currentSimulationHistoryPtr = new SimulationHistory(mapAgentToFirm, mapFirmIDToAgentDescriptions,
+                                                        mapFirmStartingCapital, mapMarketMaximumEntryCosts);
     masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
 }
 
@@ -943,13 +952,14 @@ map<int,double> Simulator::get_map_firm_to_var_cost_for_market(Market market) {
 double Simulator::get_average_var_cost_in_market(Market market) {
     map<int,double> mapFirmToVarCost = get_map_firm_to_var_cost_for_market(market);
 
-    double dbTotalVarCost = 0.0;
+    set<int> setFirmsInMarket = get_firm_IDs_in_market(market);
 
-    for (auto pair : mapFirmToVarCost) {
-        dbTotalVarCost += pair.second;
+    double dbTotalVarCost = 0.0;
+    for (int iFirmID : setFirmsInMarket) {
+        dbTotalVarCost += mapFirmToVarCost[iFirmID];
     }
 
-    int iTotalFirms = mapFirmToVarCost.size();
+    int iTotalFirms = setFirmsInMarket.size();
     return dbTotalVarCost / iTotalFirms;
 }
 

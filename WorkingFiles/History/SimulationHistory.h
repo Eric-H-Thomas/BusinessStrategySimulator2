@@ -6,10 +6,12 @@
 
 #include <vector>
 #include <map>
+#include <string>
 
 using std::map;
 using std::vector;
 using std::pair;
+using std::string;
 
 // To keep the history as lightweight as possible, we will record changes in the states of simulator objects
 // rather than recording values for such objects at every time step. For example, rather than recording that firm A was
@@ -23,6 +25,7 @@ struct ProductionQuantityChange; struct PriceChange; struct MarketPresenceChange
 class SimulationHistory {
 public:
     map<int,int>                     mapAgentToFirm;
+    map<int,string>                  mapFirmToAgentDescription;
     map<int,double>                  mapFirmStartingCapital;
     map<int,double>                  mapMarketMaximumEntryCost;
     map<pair<int,int>,double>        mapFirmMarketComboToVarCost;
@@ -34,7 +37,8 @@ public:
     vector<PriceChange>              vecPriceChanges;
     vector<MarketPresenceChange>     vecMarketPresenceChanges;
 
-    SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,double> &mapFirmStartingCapital,
+    SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,string> &mapFirmToAgentDescription,
+                      const map<int,double> &mapFirmStartingCapital,
                       const map<int,double> &mapMarketMaximumEntryCost);
 
     void record_market_presence_change(int iMicroTimeStep, bool bPresent, int iFirmID, int iMarketID);

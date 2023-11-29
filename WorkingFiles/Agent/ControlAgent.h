@@ -37,6 +37,7 @@ public:
     EntryPolicy getEnumEntryPolicy() const;
     ExitPolicy getEnumExitPolicy() const;
     ProductionPolicy getEnumProductionPolicy() const;
+    string toString() const;
 
 private:
     int iAgentID;

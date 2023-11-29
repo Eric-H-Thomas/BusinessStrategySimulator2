@@ -5,11 +5,14 @@
 #include "SimulationHistory.h"
 
 SimulationHistory::SimulationHistory(const map<int, int> &mapAgentToFirm,
+                                     const map<int,string> &mapFirmToAgentDescription,
                                      const map<int, double> &mapFirmStartingCapital,
                                      const map<int, double> &mapMarketMaximumEntryCost) :
         mapAgentToFirm(mapAgentToFirm),
+        mapFirmToAgentDescription(mapFirmToAgentDescription),
         mapFirmStartingCapital(mapFirmStartingCapital),
-        mapMarketMaximumEntryCost(mapMarketMaximumEntryCost) {}
+        mapMarketMaximumEntryCost(mapMarketMaximumEntryCost) {
+}
 
 void SimulationHistory::record_market_presence_change(int iMicroTimeStep, bool bPresent, int iFirmID, int iMarketID) {
     MarketPresenceChange presenceChange;

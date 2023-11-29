@@ -4,7 +4,7 @@
     "run_name": "example_name_of_run",
     "results_dir": "example_results_directory",
     "num_sims": 4,
-    "macro_steps_per_sim": 2,
+    "macro_steps_per_sim": 100,
     "skipped_turns_per_regular_turn": 1,
     "verbose": false,
     "randomize_turn_order_within_each_macro_step": true,
@@ -34,22 +34,33 @@
       "none_action_likelihood": 0,
       "percent_threshold_for_loss_exit_policy": 80,
       "num_macro_steps_for_loss_exit_policy": 3
+    },
+    {
+      "agent_id": 2,
+      "entry_policy": "all",
+      "exit_policy": "all",
+      "production_policy": "Cournot",
+      "entry_action_likelihood": 70,
+      "exit_action_likelihood": 30,
+      "none_action_likelihood": 0,
+      "percent_threshold_for_loss_exit_policy": 80,
+      "num_macro_steps_for_loss_exit_policy": 3
     }
   ],
 
   "default_economy_parameters": {
-    "possible_capabilities": 100,
-    "capabilities_per_market": 10,
-    "total_markets": 4,
+    "possible_capabilities": 1000,
+    "capabilities_per_market": 100,
+    "total_markets": 6,
 
-    "num_market_clusters":   2,
-    "cluster_means":         [25, 75],
-    "cluster_SDs":          [5,  10],
-    "markets_per_cluster":  [2,   2]
+    "num_market_clusters":   3,
+    "cluster_means":         [250, 500, 750],
+    "cluster_SDs":          [50, 500, 100],
+    "markets_per_cluster":  [2, 2, 2]
   },
 
   "default_firm_parameters": {
-    "starting_capital": 1000
+    "starting_capital": 100
   },
 
   "default_market_parameters": {
@@ -59,8 +70,8 @@
     "fixed_cost_percentage_of_entry": 1.5,
     "exit_cost_percentage_of_entry": 30,
 
-    "demand_intercept_max": 40,
-    "demand_intercept_min": 25,
+    "demand_intercept_max": 10,
+    "demand_intercept_min": 6,
 
     "market_entry_cost_max": 500,
     "market_entry_cost_min": 50,
