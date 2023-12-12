@@ -63,16 +63,61 @@ CMAKE_BINARY_DIR = /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-deb
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/bss_module_december_sixth.dir/all
 all: CMakeFiles/BusinessStrategy2_0.dir/all
+all: external/pybind11/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: external/pybind11/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
+clean: CMakeFiles/bss_module_december_sixth.dir/clean
 clean: CMakeFiles/BusinessStrategy2_0.dir/clean
+clean: external/pybind11/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory external/pybind11
+
+# Recursive "all" directory target.
+external/pybind11/all:
+.PHONY : external/pybind11/all
+
+# Recursive "preinstall" directory target.
+external/pybind11/preinstall:
+.PHONY : external/pybind11/preinstall
+
+# Recursive "clean" directory target.
+external/pybind11/clean:
+.PHONY : external/pybind11/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/bss_module_december_sixth.dir
+
+# All Build rule for target.
+CMakeFiles/bss_module_december_sixth.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32 "Built target bss_module_december_sixth"
+.PHONY : CMakeFiles/bss_module_december_sixth.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/bss_module_december_sixth.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles 16
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/bss_module_december_sixth.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/bss_module_december_sixth.dir/rule
+
+# Convenience name for target.
+bss_module_december_sixth: CMakeFiles/bss_module_december_sixth.dir/rule
+.PHONY : bss_module_december_sixth
+
+# clean rule for target.
+CMakeFiles/bss_module_december_sixth.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/clean
+.PHONY : CMakeFiles/bss_module_december_sixth.dir/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/BusinessStrategy2_0.dir
@@ -81,12 +126,12 @@ clean: CMakeFiles/BusinessStrategy2_0.dir/clean
 CMakeFiles/BusinessStrategy2_0.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Built target BusinessStrategy2_0"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 "Built target BusinessStrategy2_0"
 .PHONY : CMakeFiles/BusinessStrategy2_0.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/BusinessStrategy2_0.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles 16
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/BusinessStrategy2_0.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/BusinessStrategy2_0.dir/rule

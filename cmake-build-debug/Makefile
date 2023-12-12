@@ -117,6 +117,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named bss_module_december_sixth
+
+# Build rule for target.
+bss_module_december_sixth: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bss_module_december_sixth
+.PHONY : bss_module_december_sixth
+
+# fast build rule for target.
+bss_module_december_sixth/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/build
+.PHONY : bss_module_december_sixth/fast
+
+#=============================================================================
 # Target rules for targets named BusinessStrategy2_0
 
 # Build rule for target.
@@ -134,6 +147,7 @@ WorkingFiles/Action/Action.o: WorkingFiles/Action/Action.cpp.o
 
 # target to build an object file
 WorkingFiles/Action/Action.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Action/Action.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.o
 .PHONY : WorkingFiles/Action/Action.cpp.o
 
@@ -142,6 +156,7 @@ WorkingFiles/Action/Action.i: WorkingFiles/Action/Action.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Action/Action.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Action/Action.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.i
 .PHONY : WorkingFiles/Action/Action.cpp.i
 
@@ -150,6 +165,7 @@ WorkingFiles/Action/Action.s: WorkingFiles/Action/Action.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Action/Action.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Action/Action.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.s
 .PHONY : WorkingFiles/Action/Action.cpp.s
 
@@ -158,6 +174,7 @@ WorkingFiles/Agent/ControlAgent.o: WorkingFiles/Agent/ControlAgent.cpp.o
 
 # target to build an object file
 WorkingFiles/Agent/ControlAgent.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Agent/ControlAgent.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.o
 .PHONY : WorkingFiles/Agent/ControlAgent.cpp.o
 
@@ -166,6 +183,7 @@ WorkingFiles/Agent/ControlAgent.i: WorkingFiles/Agent/ControlAgent.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Agent/ControlAgent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Agent/ControlAgent.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.i
 .PHONY : WorkingFiles/Agent/ControlAgent.cpp.i
 
@@ -174,6 +192,7 @@ WorkingFiles/Agent/ControlAgent.s: WorkingFiles/Agent/ControlAgent.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Agent/ControlAgent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Agent/ControlAgent.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.s
 .PHONY : WorkingFiles/Agent/ControlAgent.cpp.s
 
@@ -182,6 +201,7 @@ WorkingFiles/DataCache/DataCache.o: WorkingFiles/DataCache/DataCache.cpp.o
 
 # target to build an object file
 WorkingFiles/DataCache/DataCache.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/DataCache/DataCache.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.o
 .PHONY : WorkingFiles/DataCache/DataCache.cpp.o
 
@@ -190,6 +210,7 @@ WorkingFiles/DataCache/DataCache.i: WorkingFiles/DataCache/DataCache.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/DataCache/DataCache.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/DataCache/DataCache.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.i
 .PHONY : WorkingFiles/DataCache/DataCache.cpp.i
 
@@ -198,6 +219,7 @@ WorkingFiles/DataCache/DataCache.s: WorkingFiles/DataCache/DataCache.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/DataCache/DataCache.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/DataCache/DataCache.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.s
 .PHONY : WorkingFiles/DataCache/DataCache.cpp.s
 
@@ -206,6 +228,7 @@ WorkingFiles/Economy/Economy.o: WorkingFiles/Economy/Economy.cpp.o
 
 # target to build an object file
 WorkingFiles/Economy/Economy.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Economy/Economy.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Economy/Economy.cpp.o
 .PHONY : WorkingFiles/Economy/Economy.cpp.o
 
@@ -214,6 +237,7 @@ WorkingFiles/Economy/Economy.i: WorkingFiles/Economy/Economy.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Economy/Economy.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Economy/Economy.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Economy/Economy.cpp.i
 .PHONY : WorkingFiles/Economy/Economy.cpp.i
 
@@ -222,6 +246,7 @@ WorkingFiles/Economy/Economy.s: WorkingFiles/Economy/Economy.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Economy/Economy.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Economy/Economy.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Economy/Economy.cpp.s
 .PHONY : WorkingFiles/Economy/Economy.cpp.s
 
@@ -230,6 +255,7 @@ WorkingFiles/Firm/Firm.o: WorkingFiles/Firm/Firm.cpp.o
 
 # target to build an object file
 WorkingFiles/Firm/Firm.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Firm/Firm.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Firm/Firm.cpp.o
 .PHONY : WorkingFiles/Firm/Firm.cpp.o
 
@@ -238,6 +264,7 @@ WorkingFiles/Firm/Firm.i: WorkingFiles/Firm/Firm.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Firm/Firm.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Firm/Firm.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Firm/Firm.cpp.i
 .PHONY : WorkingFiles/Firm/Firm.cpp.i
 
@@ -246,6 +273,7 @@ WorkingFiles/Firm/Firm.s: WorkingFiles/Firm/Firm.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Firm/Firm.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Firm/Firm.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Firm/Firm.cpp.s
 .PHONY : WorkingFiles/Firm/Firm.cpp.s
 
@@ -254,6 +282,7 @@ WorkingFiles/History/MasterHistory.o: WorkingFiles/History/MasterHistory.cpp.o
 
 # target to build an object file
 WorkingFiles/History/MasterHistory.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/History/MasterHistory.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.o
 .PHONY : WorkingFiles/History/MasterHistory.cpp.o
 
@@ -262,6 +291,7 @@ WorkingFiles/History/MasterHistory.i: WorkingFiles/History/MasterHistory.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/History/MasterHistory.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/History/MasterHistory.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.i
 .PHONY : WorkingFiles/History/MasterHistory.cpp.i
 
@@ -270,6 +300,7 @@ WorkingFiles/History/MasterHistory.s: WorkingFiles/History/MasterHistory.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/History/MasterHistory.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/History/MasterHistory.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.s
 .PHONY : WorkingFiles/History/MasterHistory.cpp.s
 
@@ -278,6 +309,7 @@ WorkingFiles/History/SimulationHistory.o: WorkingFiles/History/SimulationHistory
 
 # target to build an object file
 WorkingFiles/History/SimulationHistory.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/History/SimulationHistory.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/SimulationHistory.cpp.o
 .PHONY : WorkingFiles/History/SimulationHistory.cpp.o
 
@@ -286,6 +318,7 @@ WorkingFiles/History/SimulationHistory.i: WorkingFiles/History/SimulationHistory
 
 # target to preprocess a source file
 WorkingFiles/History/SimulationHistory.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/History/SimulationHistory.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/SimulationHistory.cpp.i
 .PHONY : WorkingFiles/History/SimulationHistory.cpp.i
 
@@ -294,6 +327,7 @@ WorkingFiles/History/SimulationHistory.s: WorkingFiles/History/SimulationHistory
 
 # target to generate assembly for a file
 WorkingFiles/History/SimulationHistory.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/History/SimulationHistory.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/SimulationHistory.cpp.s
 .PHONY : WorkingFiles/History/SimulationHistory.cpp.s
 
@@ -302,6 +336,7 @@ WorkingFiles/Market/Market.o: WorkingFiles/Market/Market.cpp.o
 
 # target to build an object file
 WorkingFiles/Market/Market.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Market/Market.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.o
 .PHONY : WorkingFiles/Market/Market.cpp.o
 
@@ -310,6 +345,7 @@ WorkingFiles/Market/Market.i: WorkingFiles/Market/Market.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Market/Market.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Market/Market.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.i
 .PHONY : WorkingFiles/Market/Market.cpp.i
 
@@ -318,14 +354,70 @@ WorkingFiles/Market/Market.s: WorkingFiles/Market/Market.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Market/Market.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Market/Market.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.s
 .PHONY : WorkingFiles/Market/Market.cpp.s
+
+WorkingFiles/PyBindTest/PyBindTest.o: WorkingFiles/PyBindTest/PyBindTest.cpp.o
+.PHONY : WorkingFiles/PyBindTest/PyBindTest.o
+
+# target to build an object file
+WorkingFiles/PyBindTest/PyBindTest.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.o
+.PHONY : WorkingFiles/PyBindTest/PyBindTest.cpp.o
+
+WorkingFiles/PyBindTest/PyBindTest.i: WorkingFiles/PyBindTest/PyBindTest.cpp.i
+.PHONY : WorkingFiles/PyBindTest/PyBindTest.i
+
+# target to preprocess a source file
+WorkingFiles/PyBindTest/PyBindTest.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.i
+.PHONY : WorkingFiles/PyBindTest/PyBindTest.cpp.i
+
+WorkingFiles/PyBindTest/PyBindTest.s: WorkingFiles/PyBindTest/PyBindTest.cpp.s
+.PHONY : WorkingFiles/PyBindTest/PyBindTest.s
+
+# target to generate assembly for a file
+WorkingFiles/PyBindTest/PyBindTest.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.s
+.PHONY : WorkingFiles/PyBindTest/PyBindTest.cpp.s
+
+WorkingFiles/PythonAPI/PythonAPI.o: WorkingFiles/PythonAPI/PythonAPI.cpp.o
+.PHONY : WorkingFiles/PythonAPI/PythonAPI.o
+
+# target to build an object file
+WorkingFiles/PythonAPI/PythonAPI.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o
+.PHONY : WorkingFiles/PythonAPI/PythonAPI.cpp.o
+
+WorkingFiles/PythonAPI/PythonAPI.i: WorkingFiles/PythonAPI/PythonAPI.cpp.i
+.PHONY : WorkingFiles/PythonAPI/PythonAPI.i
+
+# target to preprocess a source file
+WorkingFiles/PythonAPI/PythonAPI.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.i
+.PHONY : WorkingFiles/PythonAPI/PythonAPI.cpp.i
+
+WorkingFiles/PythonAPI/PythonAPI.s: WorkingFiles/PythonAPI/PythonAPI.cpp.s
+.PHONY : WorkingFiles/PythonAPI/PythonAPI.s
+
+# target to generate assembly for a file
+WorkingFiles/PythonAPI/PythonAPI.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.s
+.PHONY : WorkingFiles/PythonAPI/PythonAPI.cpp.s
 
 WorkingFiles/Simulator/Simulator.o: WorkingFiles/Simulator/Simulator.cpp.o
 .PHONY : WorkingFiles/Simulator/Simulator.o
 
 # target to build an object file
 WorkingFiles/Simulator/Simulator.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Simulator/Simulator.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o
 .PHONY : WorkingFiles/Simulator/Simulator.cpp.o
 
@@ -334,6 +426,7 @@ WorkingFiles/Simulator/Simulator.i: WorkingFiles/Simulator/Simulator.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Simulator/Simulator.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Simulator/Simulator.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.i
 .PHONY : WorkingFiles/Simulator/Simulator.cpp.i
 
@@ -342,6 +435,7 @@ WorkingFiles/Simulator/Simulator.s: WorkingFiles/Simulator/Simulator.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Simulator/Simulator.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Simulator/Simulator.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.s
 .PHONY : WorkingFiles/Simulator/Simulator.cpp.s
 
@@ -350,6 +444,7 @@ WorkingFiles/Utils/MiscUtils.o: WorkingFiles/Utils/MiscUtils.cpp.o
 
 # target to build an object file
 WorkingFiles/Utils/MiscUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Utils/MiscUtils.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o
 .PHONY : WorkingFiles/Utils/MiscUtils.cpp.o
 
@@ -358,6 +453,7 @@ WorkingFiles/Utils/MiscUtils.i: WorkingFiles/Utils/MiscUtils.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Utils/MiscUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Utils/MiscUtils.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.i
 .PHONY : WorkingFiles/Utils/MiscUtils.cpp.i
 
@@ -366,6 +462,7 @@ WorkingFiles/Utils/MiscUtils.s: WorkingFiles/Utils/MiscUtils.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Utils/MiscUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Utils/MiscUtils.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.s
 .PHONY : WorkingFiles/Utils/MiscUtils.cpp.s
 
@@ -374,6 +471,7 @@ WorkingFiles/Utils/StringUtils.o: WorkingFiles/Utils/StringUtils.cpp.o
 
 # target to build an object file
 WorkingFiles/Utils/StringUtils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Utils/StringUtils.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.o
 .PHONY : WorkingFiles/Utils/StringUtils.cpp.o
 
@@ -382,6 +480,7 @@ WorkingFiles/Utils/StringUtils.i: WorkingFiles/Utils/StringUtils.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/Utils/StringUtils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Utils/StringUtils.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.i
 .PHONY : WorkingFiles/Utils/StringUtils.cpp.i
 
@@ -390,6 +489,7 @@ WorkingFiles/Utils/StringUtils.s: WorkingFiles/Utils/StringUtils.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/Utils/StringUtils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Utils/StringUtils.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.s
 .PHONY : WorkingFiles/Utils/StringUtils.cpp.s
 
@@ -398,6 +498,7 @@ WorkingFiles/main.o: WorkingFiles/main.cpp.o
 
 # target to build an object file
 WorkingFiles/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/main.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o
 .PHONY : WorkingFiles/main.cpp.o
 
@@ -406,6 +507,7 @@ WorkingFiles/main.i: WorkingFiles/main.cpp.i
 
 # target to preprocess a source file
 WorkingFiles/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/main.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.i
 .PHONY : WorkingFiles/main.cpp.i
 
@@ -414,8 +516,36 @@ WorkingFiles/main.s: WorkingFiles/main.cpp.s
 
 # target to generate assembly for a file
 WorkingFiles/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/main.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.s
 .PHONY : WorkingFiles/main.cpp.s
+
+WorkingFiles/python_wrapper.o: WorkingFiles/python_wrapper.cpp.o
+.PHONY : WorkingFiles/python_wrapper.o
+
+# target to build an object file
+WorkingFiles/python_wrapper.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/python_wrapper.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o
+.PHONY : WorkingFiles/python_wrapper.cpp.o
+
+WorkingFiles/python_wrapper.i: WorkingFiles/python_wrapper.cpp.i
+.PHONY : WorkingFiles/python_wrapper.i
+
+# target to preprocess a source file
+WorkingFiles/python_wrapper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/python_wrapper.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.i
+.PHONY : WorkingFiles/python_wrapper.cpp.i
+
+WorkingFiles/python_wrapper.s: WorkingFiles/python_wrapper.cpp.s
+.PHONY : WorkingFiles/python_wrapper.s
+
+# target to generate assembly for a file
+WorkingFiles/python_wrapper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bss_module_december_sixth.dir/build.make CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/python_wrapper.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/BusinessStrategy2_0.dir/build.make CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.s
+.PHONY : WorkingFiles/python_wrapper.cpp.s
 
 # Help Target
 help:
@@ -426,6 +556,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... BusinessStrategy2_0"
+	@echo "... bss_module_december_sixth"
 	@echo "... WorkingFiles/Action/Action.o"
 	@echo "... WorkingFiles/Action/Action.i"
 	@echo "... WorkingFiles/Action/Action.s"
@@ -450,6 +581,12 @@ help:
 	@echo "... WorkingFiles/Market/Market.o"
 	@echo "... WorkingFiles/Market/Market.i"
 	@echo "... WorkingFiles/Market/Market.s"
+	@echo "... WorkingFiles/PyBindTest/PyBindTest.o"
+	@echo "... WorkingFiles/PyBindTest/PyBindTest.i"
+	@echo "... WorkingFiles/PyBindTest/PyBindTest.s"
+	@echo "... WorkingFiles/PythonAPI/PythonAPI.o"
+	@echo "... WorkingFiles/PythonAPI/PythonAPI.i"
+	@echo "... WorkingFiles/PythonAPI/PythonAPI.s"
 	@echo "... WorkingFiles/Simulator/Simulator.o"
 	@echo "... WorkingFiles/Simulator/Simulator.i"
 	@echo "... WorkingFiles/Simulator/Simulator.s"
@@ -462,6 +599,9 @@ help:
 	@echo "... WorkingFiles/main.o"
 	@echo "... WorkingFiles/main.i"
 	@echo "... WorkingFiles/main.s"
+	@echo "... WorkingFiles/python_wrapper.o"
+	@echo "... WorkingFiles/python_wrapper.i"
+	@echo "... WorkingFiles/python_wrapper.s"
 .PHONY : help
 
 

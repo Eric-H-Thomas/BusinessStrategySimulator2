@@ -5,6 +5,14 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
+// TODO: For testing; comment out when done
+//#include "PythonAPI/PythonAPI.h"
+//int main(int argc, char* argv[]) {
+//    string strJsonconfigs = argv[1];
+//    run_business_strategy_simulator(strJsonconfigs);
+//    return 0;
+//}
+
 int main(int argc, char* argv[]) {
 
     // Check for correct number of command-line arguments

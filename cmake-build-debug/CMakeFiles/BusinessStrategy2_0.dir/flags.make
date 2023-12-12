@@ -4,7 +4,7 @@
 # compile CXX with /Library/Developer/CommandLineTools/usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = 
+CXX_INCLUDES = -isystem /Users/eric/CLionProjects/BusinessStrategy2.0/external/pybind11/include -isystem /Users/eric/opt/anaconda3/include/python3.9
 
 CXX_FLAGS = -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -std=gnu++14
 

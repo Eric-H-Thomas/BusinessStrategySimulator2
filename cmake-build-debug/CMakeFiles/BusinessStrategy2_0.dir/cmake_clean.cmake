@@ -9,10 +9,13 @@ file(REMOVE_RECURSE
   "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.o"
   "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/SimulationHistory.cpp.o"
   "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.o"
+  "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.o"
+  "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o"
   "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o"
   "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o"
   "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.o"
   "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o"
+  "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.

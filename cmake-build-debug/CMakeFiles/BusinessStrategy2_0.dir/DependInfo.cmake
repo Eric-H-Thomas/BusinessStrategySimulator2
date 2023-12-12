@@ -16,15 +16,20 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/MasterHistory.cpp.o"
   "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/History/SimulationHistory.cpp.o"
   "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Market/Market.cpp.o"
+  "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/PyBindTest/PyBindTest.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.o"
+  "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/PythonAPI/PythonAPI.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o"
   "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o"
   "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/MiscUtils.cpp.o"
   "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/StringUtils.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.o"
   "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o"
+  "/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/python_wrapper.cpp" "/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../external/pybind11/include"
+  "/Users/eric/opt/anaconda3/include/python3.9"
   )
 
 # The set of dependency files which are needed:

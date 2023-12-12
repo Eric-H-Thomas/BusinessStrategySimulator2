@@ -264,3 +264,16 @@ Parsed CXX implicit link information from above output:
   implicit fwks: [/Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk/System/Library/Frameworks]
 
 
+Performing C++ SOURCE FILE Test HAS_FLTO succeeded with the following output:
+Change Dir: /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_fe9a4/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_fe9a4.dir/build.make CMakeFiles/cmTC_fe9a4.dir/build
+Building CXX object CMakeFiles/cmTC_fe9a4.dir/src.cxx.o
+/Library/Developer/CommandLineTools/usr/bin/c++ -DHAS_FLTO  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk   -flto -std=gnu++14 -MD -MT CMakeFiles/cmTC_fe9a4.dir/src.cxx.o -MF CMakeFiles/cmTC_fe9a4.dir/src.cxx.o.d -o CMakeFiles/cmTC_fe9a4.dir/src.cxx.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_fe9a4
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fe9a4.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/c++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_fe9a4.dir/src.cxx.o -o cmTC_fe9a4  -flto 
+
+
+Source file was:
+int main() { return 0; }

@@ -20,3 +20,19 @@ ld: library not found for -lc++
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
 
 
+Performing C++ SOURCE FILE Test HAS_FLTO_THIN failed with the following output:
+Change Dir: /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make -f Makefile cmTC_294fa/fast && /Library/Developer/CommandLineTools/usr/bin/make  -f CMakeFiles/cmTC_294fa.dir/build.make CMakeFiles/cmTC_294fa.dir/build
+Building CXX object CMakeFiles/cmTC_294fa.dir/src.cxx.o
+/Library/Developer/CommandLineTools/usr/bin/c++ -DHAS_FLTO_THIN  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk   -flto -std=gnu++14 -MD -MT CMakeFiles/cmTC_294fa.dir/src.cxx.o -MF CMakeFiles/cmTC_294fa.dir/src.cxx.o.d -o CMakeFiles/cmTC_294fa.dir/src.cxx.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_294fa
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -E cmake_link_script CMakeFiles/cmTC_294fa.dir/link.txt --verbose=1
+/Library/Developer/CommandLineTools/usr/bin/c++  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cmTC_294fa.dir/src.cxx.o -o cmTC_294fa  -flto= 
+clang: error: unsupported argument '' to option '-flto='
+make[2]: *** [cmTC_294fa] Error 1
+make[1]: *** [cmTC_294fa/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }

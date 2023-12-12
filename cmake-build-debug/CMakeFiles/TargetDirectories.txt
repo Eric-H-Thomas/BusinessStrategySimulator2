@@ -1,3 +1,6 @@
 /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/bss_module_december_sixth.dir
 /Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles/BusinessStrategy2_0.dir
+/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/external/pybind11/CMakeFiles/rebuild_cache.dir
+/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/external/pybind11/CMakeFiles/edit_cache.dir
