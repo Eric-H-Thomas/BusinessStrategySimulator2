@@ -6,15 +6,7 @@
 
 int PythonAPI::run_business_strategy_simulator(string strJsonConfigs) {
 
-    // Create simulator instance
-    Simulator simulator;
-
-    // TODO: write code to check that all values in the JSON config file are valid
-
-    if (simulator.load_json_configs(strJsonConfigs))
-        return 1;
-
-    if (simulator.prepare_to_run())
+    if (init_simulator(strJsonConfigs))
         return 1;
 
     for (int iSim = 0; iSim < simulator.getNumSims(); iSim++) {
@@ -33,6 +25,18 @@ int PythonAPI::run_business_strategy_simulator(string strJsonConfigs) {
         cerr << "Error generating master output file" << endl;
         return 1;
     }
+
+    return 0;
+}
+
+int PythonAPI::init_simulator(string strJsonConfigs) {
+    // TODO: write code to check that all values in the JSON config file are valid
+
+    if (simulator.load_json_configs(strJsonConfigs))
+        return 1;
+
+    if (simulator.prepare_to_run())
+        return 1;
 
     return 0;
 }
