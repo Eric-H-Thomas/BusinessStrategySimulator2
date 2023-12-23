@@ -5,7 +5,7 @@
 #pragma once
 #include <string>
 #include <ostream>
-#include "../Action/Action.h"
+#include "BaseAgent.h"
 
 using std::string;
 
@@ -19,11 +19,7 @@ enum class ExitPolicy {
     Loss
 };
 
-enum class ProductionPolicy {
-    Cournot
-};
-
-class ControlAgent {
+class ControlAgent : public BaseAgent {
 public:
     ControlAgent(const int &iAgentID, const string &strEntryPolicy,
                  const string &strExitPolicy, const string &strProductionPolicy,
@@ -31,16 +27,13 @@ public:
                  const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
                  const double &dbPercentThresholdForLossExitPolicy = 0.0,
                  const int &iNumMacroStepsForLossExitPolicy = 0);
-    int iFirmAssignment;
-    int getAgentId() const;
     std::vector<double> get_action_likelihood_vector() const;
-    EntryPolicy getEnumEntryPolicy() const;
-    ExitPolicy getEnumExitPolicy() const;
-    ProductionPolicy getEnumProductionPolicy() const;
-    string toString() const;
+    EntryPolicy get_enum_entry_policy() const;
+    ExitPolicy get_enum_exit_policy() const;
+    ProductionPolicy get_enum_production_policy() const override;
+    string to_string() const override;
 
 private:
-    int iAgentID;
     EntryPolicy enumEntryPolicy;
     ExitPolicy enumExitPolicy;
     ProductionPolicy enumProductionPolicy;

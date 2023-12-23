@@ -634,13 +634,27 @@ string_view
 
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Action/Action.h
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.h
+string
+-
+../Action/Action.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Action/Action.h
+
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/ControlAgent.h
 string
 -
 ostream
 -
-../Action/Action.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Action/Action.h
+BaseAgent.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.h
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/StableBaselines3Agent.h
+string
+-
+iostream
+-
+BaseAgent.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.h
 
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/DataCache/DataCache.h
 map
@@ -658,6 +672,10 @@ set
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Firm/Firm.cpp
+Firm.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Firm/Firm.h
+
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Firm/Firm.h
 set
 -
@@ -668,6 +686,14 @@ set
 ../Utils/MiscUtils.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.h
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.cpp
+MasterHistory.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.h
+iostream
+-
+fstream
+-
+
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.h
 SimulationHistory.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
@@ -675,6 +701,10 @@ string
 -
 vector
 -
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.cpp
+SimulationHistory.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
 
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
 vector
@@ -700,6 +730,20 @@ iostream
 string
 -
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp
+Simulator.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
+map
+-
+iostream
+-
+fstream
+-
+random
+-
+cmath
+-
+
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
 vector
 -
@@ -711,6 +755,8 @@ string
 -
 ../Agent/ControlAgent.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/ControlAgent.h
+../Agent/StableBaselines3Agent.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/StableBaselines3Agent.h
 ../Economy/Economy.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Economy/Economy.h
 ../Firm/Firm.h
@@ -726,6 +772,16 @@ string
 ../DataCache/DataCache.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/DataCache/DataCache.h
 
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.cpp
+MiscUtils.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.h
+iostream
+-
+vector
+-
+random
+-
+
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.h
 iostream
 -
@@ -737,6 +793,12 @@ random
 -
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
+
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp
+Simulator/Simulator.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
+iostream
+-
 
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/python_wrapper.cpp
 pybind11/pybind11.h

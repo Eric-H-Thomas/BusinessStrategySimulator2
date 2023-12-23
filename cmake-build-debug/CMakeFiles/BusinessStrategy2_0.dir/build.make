@@ -261,6 +261,32 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.s: cmake
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/PythonAPI/PythonAPI.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.s
 
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.o: ../WorkingFiles/Agent/BaseAgent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.cpp
+
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.cpp > CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.i
+
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.s
+
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o: CMakeFiles/BusinessStrategy2_0.dir/flags.make
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o: ../WorkingFiles/Agent/StableBaselines3Agent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o -c /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/StableBaselines3Agent.cpp
+
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/StableBaselines3Agent.cpp > CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.i
+
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/StableBaselines3Agent.cpp -o CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.s
+
 # Object files for target BusinessStrategy2_0
 BusinessStrategy2_0_OBJECTS = \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o" \
@@ -277,7 +303,9 @@ BusinessStrategy2_0_OBJECTS = \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.o" \
 "CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o" \
-"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o"
+"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o" \
+"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.o" \
+"CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o"
 
 # External object files for target BusinessStrategy2_0
 BusinessStrategy2_0_EXTERNAL_OBJECTS =
@@ -297,10 +325,12 @@ BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/D
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o
+BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.o
+BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/build.make
 BusinessStrategy2_0: /Users/eric/opt/anaconda3/lib/libpython3.9.dylib
 BusinessStrategy2_0: CMakeFiles/BusinessStrategy2_0.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable BusinessStrategy2_0"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Linking CXX executable BusinessStrategy2_0"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/BusinessStrategy2_0.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Action/Action.cpp.o"
+  "CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Agent/BaseAgent.cpp.o"
   "CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Agent/ControlAgent.cpp.o"
+  "CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o"
   "CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/DataCache/DataCache.cpp.o"
   "CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Economy/Economy.cpp.o"
   "CMakeFiles/bss_module_december_sixth.dir/WorkingFiles/Firm/Firm.cpp.o"

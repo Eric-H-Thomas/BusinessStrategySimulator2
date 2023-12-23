@@ -29,6 +29,7 @@ public:
     map<int,double>                  mapFirmStartingCapital;
     map<int,double>                  mapMarketMaximumEntryCost;
     map<pair<int,int>,double>        mapFirmMarketComboToVarCost;
+    vector<vector<double>>           vecOfVecMarketOverlapMatrix;
     vector<CapitalChange>            vecCapitalChanges;
     vector<RevenueChange>            vecRevenueChanges;
     vector<FixedCostChange>          vecFixedCostChanges;

@@ -3,7 +3,7 @@
   "simulation_parameters": {
     "run_name": "example_name_of_run",
     "results_dir": "example_results_directory",
-    "num_sims": 4,
+    "num_sims": 5,
     "macro_steps_per_sim": 100,
     "skipped_turns_per_regular_turn": 1,
     "verbose": false,
@@ -12,7 +12,7 @@
     "randomize_variable_costs_per_simulation":  true
   },
 
-  "agents": [
+  "control_agents": [
     {
       "agent_id": 0,
       "entry_policy": "all",
@@ -45,6 +45,13 @@
       "none_action_likelihood": 0,
       "percent_threshold_for_loss_exit_policy": 80,
       "num_macro_steps_for_loss_exit_policy": 3
+    }
+  ],
+
+  "ai_agents": [
+    {
+      "agent_id": 3,
+      "agent_type": "stable_baselines_3"
     }
   ],
 

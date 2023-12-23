@@ -142,11 +142,27 @@
 			<Option target="bss_module_december_sixth"/>
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.cpp">
+			<Option target="bss_module_december_sixth"/>
+			<Option target="BusinessStrategy2_0"/>
+		</Unit>
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/BaseAgent.h">
+			<Option target="bss_module_december_sixth"/>
+			<Option target="BusinessStrategy2_0"/>
+		</Unit>
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/ControlAgent.cpp">
 			<Option target="bss_module_december_sixth"/>
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>
 		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/ControlAgent.h">
+			<Option target="bss_module_december_sixth"/>
+			<Option target="BusinessStrategy2_0"/>
+		</Unit>
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/StableBaselines3Agent.cpp">
+			<Option target="bss_module_december_sixth"/>
+			<Option target="BusinessStrategy2_0"/>
+		</Unit>
+		<Unit filename="/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Agent/StableBaselines3Agent.h">
 			<Option target="bss_module_december_sixth"/>
 			<Option target="BusinessStrategy2_0"/>
 		</Unit>

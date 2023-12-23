@@ -25,4 +25,5 @@ public:
     static vector<int> vector_addition(const vector<int>& vector1, const vector<int>& vector2);
     static vector<int> vector_subtraction(const vector<int>& vector1, const vector<int>& vector2);
     static void set_all_positive_values_to_one(vector<int>& vector);
+    static vector<double> flatten(const vector<vector<double>>& vectorOfVectors);
 };

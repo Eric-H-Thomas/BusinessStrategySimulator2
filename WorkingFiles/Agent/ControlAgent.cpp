@@ -18,6 +18,9 @@ ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
                            const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
                            const double &dbPercentThresholdForLossExitPolicy,
                            const int &iNumMacroStepsForLossExitPolicy) {
+    // Set the agent type
+    this->enumAgentType = AgentType::Control;
+
     // Set the entry policy
     if (StringUtils::equalsIgnoreCase(strEntryPolicy, "all"))
         this->enumEntryPolicy = EntryPolicy::All;
@@ -51,15 +54,18 @@ vector<double> ControlAgent::get_action_likelihood_vector() const {
 }
 
 // Getters
-int                 ControlAgent::getAgentId()              const {return iAgentID;}
-EntryPolicy         ControlAgent::getEnumEntryPolicy()      const {return enumEntryPolicy;}
-ExitPolicy          ControlAgent::getEnumExitPolicy()       const {return enumExitPolicy;}
-ProductionPolicy    ControlAgent::getEnumProductionPolicy() const {return enumProductionPolicy;}
+EntryPolicy         ControlAgent::get_enum_entry_policy()       const {return enumEntryPolicy;}
+ExitPolicy          ControlAgent::get_enum_exit_policy()        const {return enumExitPolicy;}
+ProductionPolicy    ControlAgent::get_enum_production_policy()  const {return enumProductionPolicy;}
 
-string ControlAgent::toString() const {
+string ControlAgent::to_string() const {
     // Agent ID number
     string output = "ID:";
     output += std::to_string(iAgentID);
+
+    // Agent type
+    output += "__";
+    output += "Agent type: ControlAgent";
 
     // Entry policy
     output += "__";

@@ -4,11 +4,21 @@
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Action/Action.cpp.o: \
  ../WorkingFiles/Action/Action.cpp \
  ../WorkingFiles/Action/Action.h
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/BaseAgent.cpp.o: \
+ ../WorkingFiles/Action/Action.h \
+ ../WorkingFiles/Agent/BaseAgent.cpp \
+ ../WorkingFiles/Agent/BaseAgent.h
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/ControlAgent.cpp.o: \
  ../WorkingFiles/Action/Action.h \
+ ../WorkingFiles/Agent/BaseAgent.h \
  ../WorkingFiles/Agent/ControlAgent.cpp \
  ../WorkingFiles/Agent/ControlAgent.h \
  ../WorkingFiles/Utils/StringUtils.h
+CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Agent/StableBaselines3Agent.cpp.o: \
+ ../WorkingFiles/Action/Action.h \
+ ../WorkingFiles/Agent/BaseAgent.h \
+ ../WorkingFiles/Agent/StableBaselines3Agent.cpp \
+ ../WorkingFiles/Agent/StableBaselines3Agent.h
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/DataCache/DataCache.cpp.o: \
  ../WorkingFiles/DataCache/DataCache.cpp \
  ../WorkingFiles/DataCache/DataCache.h
@@ -38,7 +48,9 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PyBindTest/PyBindTest.cpp.o: \
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o: \
  ../JSONReader/json.h \
  ../WorkingFiles/Action/Action.h \
+ ../WorkingFiles/Agent/BaseAgent.h \
  ../WorkingFiles/Agent/ControlAgent.h \
+ ../WorkingFiles/Agent/StableBaselines3Agent.h \
  ../WorkingFiles/DataCache/DataCache.h \
  ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Firm/Firm.h \
@@ -52,7 +64,9 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/PythonAPI/PythonAPI.cpp.o: \
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Simulator/Simulator.cpp.o: \
  ../JSONReader/json.h \
  ../WorkingFiles/Action/Action.h \
+ ../WorkingFiles/Agent/BaseAgent.h \
  ../WorkingFiles/Agent/ControlAgent.h \
+ ../WorkingFiles/Agent/StableBaselines3Agent.h \
  ../WorkingFiles/DataCache/DataCache.h \
  ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Firm/Firm.h \
@@ -72,7 +86,9 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/Utils/StringUtils.cpp.o: \
 CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o: \
  ../JSONReader/json.h \
  ../WorkingFiles/Action/Action.h \
+ ../WorkingFiles/Agent/BaseAgent.h \
  ../WorkingFiles/Agent/ControlAgent.h \
+ ../WorkingFiles/Agent/StableBaselines3Agent.h \
  ../WorkingFiles/DataCache/DataCache.h \
  ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Firm/Firm.h \
@@ -101,7 +117,9 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o: \
  ../external/pybind11/include/pybind11/typing.h \
  ../JSONReader/json.h \
  ../WorkingFiles/Action/Action.h \
+ ../WorkingFiles/Agent/BaseAgent.h \
  ../WorkingFiles/Agent/ControlAgent.h \
+ ../WorkingFiles/Agent/StableBaselines3Agent.h \
  ../WorkingFiles/DataCache/DataCache.h \
  ../WorkingFiles/Economy/Economy.h \
  ../WorkingFiles/Firm/Firm.h \

@@ -224,3 +224,13 @@ void MiscUtils::set_all_positive_values_to_one(vector<int> &vector) {
         }
     }
 }
+
+vector<double> MiscUtils::flatten(const vector<vector<double>>& vectorOfVectors) {
+    vector<double> vecFlattened;
+    // Iterate through each vector in the vector of vectors
+    for (const auto& innerVector : vectorOfVectors) {
+        // Append the elements of the inner vector to the flattened vector
+        vecFlattened.insert(vecFlattened.end(), innerVector.begin(), innerVector.end());
+    }
+    return vecFlattened;
+}

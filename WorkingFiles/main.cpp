@@ -4,7 +4,6 @@ main() only should be used to test functionality of the simulator itself. Do not
 RL functionality. That should be done in PythonAPI.cpp.
 */
 
-
 #include "Simulator/Simulator.h"
 #include <iostream>
 
@@ -31,16 +30,13 @@ int main(int argc, char* argv[]) {
     if (simulator.prepare_to_run())
         return 1;
 
-    for (int iSim = 0; iSim < simulator.getNumSims(); iSim++) {
-        cout << "Beginning simulation " << iSim << " of " << simulator.getNumSims()-1 << " (indexed at 0)" << endl;
-        if (simulator.run())
+    for (int iSim = 0; iSim < simulator.get_num_sims(); iSim++) {
+        cout << "Beginning simulation " << iSim << " of " << simulator.get_num_sims() - 1 << " (indexed at 0)" << endl;
+        if (simulator.reset())
             return 1;
 
-        // Reset the simulator unless it is the last time running it
-        if (iSim != simulator.getNumSims() - 1) {
-            if (simulator.reset())
-                return 1;
-        }
+        if (simulator.run())
+            return 1;
     }
 
     if (simulator.masterHistory.generate_master_output()) {
