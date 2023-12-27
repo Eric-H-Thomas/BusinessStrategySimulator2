@@ -69,6 +69,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/bss_module_december_sixth.dir/DependInfo.cmake"
+  "CMakeFiles/bss_module_december_twentysixth.dir/DependInfo.cmake"
   "CMakeFiles/BusinessStrategy2_0.dir/DependInfo.cmake"
   )

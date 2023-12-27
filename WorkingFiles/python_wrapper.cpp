@@ -5,9 +5,12 @@
 #include <pybind11/pybind11.h>
 #include "../WorkingFiles/PythonAPI/PythonAPI.h"
 
-PYBIND11_MODULE(bss_module_december_sixth, m) {
+PYBIND11_MODULE(bss_module_december_twentysixth, m) {
     // Expose the API class
     pybind11::class_<PythonAPI>(m, "PythonAPI")
             .def(pybind11::init<>())
-            .def("run_bss2_simulator", &PythonAPI::run_business_strategy_simulator);
+            .def("init_simulator", &PythonAPI::init_simulator)
+            .def("step", &PythonAPI::step)
+            .def("reset", &PythonAPI::reset)
+            .def("close", &PythonAPI::close);
 }

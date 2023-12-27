@@ -35,13 +35,13 @@ public:
     int run();
     int get_num_sims() const;
     int get_macro_steps_per_sim() const;
-    int iCurrentSim = 0;
     int iCurrentMacroTimeStep = 0;
     int iCurrentMicroTimeStep = 0;
     MasterHistory masterHistory;
     bool bVerbose;
-    int perform_micro_step(const int& iActingAgentID);
-    int perform_micro_step(const int& iActingAgentID, const int& iAIAgentActionID);
+    bool bGenerateMasterOutput;
+    int perform_micro_step_control_agent_or_skip_turn(const int& iActingAgentID);
+    int perform_micro_step_ai_agent_turn(const int& iActingAgentID, const int& iAIAgentActionID);
     int perform_micro_step_helper(vector<Action> vecActions);
     int get_micro_steps_per_macro_step();
     bool is_ai_agent(const int& iAgentID);
@@ -58,6 +58,9 @@ public:
     vector<double> get_quantity_representation(const int& iAgentID);
     vector<double> get_price_representation(const int& iAgentID);
     double generate_reward(const int& iAgentID);
+    int get_next_AI_agent_index();
+    int get_num_AI_agents();
+    bool at_beginning_of_macro_step();
 
 private:
     nlohmann::json simulatorConfigs;
@@ -82,8 +85,9 @@ private:
     map<int,int> mapAIAgentIDToMicroTimeStepOfLastTurn;
     map<int,double> mapAIAgentIDToCapitalAtLastTurn;
 
-    // Helper for executing AI agent actions
-    int iAgentIDOfMostRecentAITurn = -1;
+    // Helper variables for StableBaselines3 interface
+    int iNumAIAgents = 0;
+    int iNumAITurns = 0;
 
     int init_control_agents();
     int init_AI_agents();
@@ -92,8 +96,8 @@ private:
     int set_simulation_parameters();
     int init_firms_for_agents();
     vector<int> create_market_capability_vector(const double &dbMean, const double &dbSD);
-    vector<Action> get_actions_for_all_agents(const int &iActingAgentID);
-    vector<Action> get_actions_for_all_agents(const int &iActingAgentID, const int& iAIAgentActionID));
+    vector<Action> get_actions_for_all_agents_control_agent_turn(const int &iActingAgentID);
+    vector<Action> get_actions_for_all_agents_ai_agent_turn(const int &iActingAgentID, const int& iAIAgentActionID);
     Action convert_action_ID_to_action_object(const int& iActingAgentID, const int& iAIAgentActionID);
     int execute_actions(const vector<Action> &vecActions, map<int,double>* pMapFirmIDToCapitalChange);
     int execute_entry_action(const Action& action, map<int,double>* pMapFirmIDToCapitalChange);

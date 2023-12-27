@@ -57,4 +57,4 @@ add_executable(BusinessStrategy2_0 WorkingFiles/main.cpp ${COMMON_SOURCES})
 target_link_libraries(BusinessStrategy2_0 PRIVATE pybind11::embed)
 
 # Pybind11 module target
-pybind11_add_module(bss_module_december_sixth ${COMMON_SOURCES})
+pybind11_add_module(bss_module_december_twentysixth ${COMMON_SOURCES})

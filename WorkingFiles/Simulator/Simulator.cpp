@@ -20,14 +20,7 @@ using std::endl;
 // Note that the run method should not be used while training AI agents! This method is used for simulations
 // involving heuristic agents and/or trained AI agents.
 int Simulator::run() {
-
-//    init_simulation_history();
-//
-//    if (init_data_cache(masterHistory.getCurrentSimulationHistoryPtr()))
-//        return 1;
-//
-//    // Set current micro time step to 0 (needs to be reset between each run of the simulator)
-//    iCurrentMicroTimeStep = 0;
+    // TODO: need to add logic to perform micro steps once trained AI agents are included
 
     // Loop through the macro steps
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
@@ -37,7 +30,7 @@ int Simulator::run() {
 
         // Loop through the micro steps
         for (int iAgentIndex : vecAgentTurnOrder) {
-            if (perform_micro_step(iAgentIndex))
+            if (perform_micro_step_control_agent_or_skip_turn(iAgentIndex))
                 return 1;
         }
     }
@@ -138,6 +131,7 @@ int Simulator::set_simulation_parameters() {
         this->iMacroStepsPerSim = simulation_parameters["macro_steps_per_sim"];
         this->dbSkippedTurnsPerRegularTurn = simulation_parameters["skipped_turns_per_regular_turn"];
         this->bVerbose = simulation_parameters["verbose"];
+        this->bGenerateMasterOutput = simulation_parameters["generate_master_output"];
         this->bRandomizeTurnOrderWithinEachMacroStep = simulation_parameters["randomize_turn_order_within_each_macro_step"];
         this->bRandomizeAgentFirmAssignmentPerSimulation = simulation_parameters["randomize_agent_firm_assignment_per_simulation"];
         this->bRandomizeVariableCostsPerSimulation = simulation_parameters["randomize_variable_costs_per_simulation"];
@@ -221,6 +215,7 @@ int Simulator::init_AI_agents() {
             if (agentData["agent_type"] == "stable_baselines_3") {
                 auto agentPtr = new StableBaselines3Agent(agentData["agent_id"]);
                 this->mapAgentIDToAgentPtr.insert(std::make_pair(agentData["agent_id"], agentPtr));
+                this->iNumAIAgents++;
             }
         }
     }
@@ -406,13 +401,13 @@ void Simulator::set_agent_turn_order() {
     vecAgentTurnOrder = vecNewTurnOrder;
 }
 
-int Simulator::perform_micro_step(const int& iActingAgentID) {
+int Simulator::perform_micro_step_control_agent_or_skip_turn(const int& iActingAgentID) {
     if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iActingAgentID << endl;
 
     // Get agent actions
     vector<Action> vecActions;
     try {
-        vecActions = get_actions_for_all_agents(iActingAgentID);
+        vecActions = get_actions_for_all_agents_control_agent_turn(iActingAgentID);
     }
     catch (std::exception e) {
         cerr << "Error getting agent actions during micro step " << iCurrentMicroTimeStep << endl;
@@ -420,6 +415,7 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
         return 1;
     }
 
+    // Execute actions and distribute profits
     if (perform_micro_step_helper(vecActions))
         return 1;
 
@@ -427,13 +423,13 @@ int Simulator::perform_micro_step(const int& iActingAgentID) {
 }
 
 
-int Simulator::perform_micro_step(const int& iActingAgentID, const int& iAIAgentActionID) {
+int Simulator::perform_micro_step_ai_agent_turn(const int& iActingAgentID, const int& iAIAgentActionID) {
     if (bVerbose) cout << "Performing micro step. Acting agent ID: " << iActingAgentID << endl;
 
     // Get agent actions
     vector<Action> vecActions;
     try {
-        vecActions = get_actions_for_all_agents(iActingAgentID, iAIAgentActionID);
+        vecActions = get_actions_for_all_agents_ai_agent_turn(iActingAgentID, iAIAgentActionID);
     }
     catch (std::exception e) {
         cerr << "Error getting agent actions during micro step " << iCurrentMicroTimeStep << endl;
@@ -441,8 +437,12 @@ int Simulator::perform_micro_step(const int& iActingAgentID, const int& iAIAgent
         return 1;
     }
 
+    // Execute actions and distribute profits
     if (perform_micro_step_helper(vecActions))
         return 1;
+
+    // Increment the number of AI turns that have taken place thus far in the simulation
+    iNumAITurns++;
 
     return 0;
 }
@@ -473,14 +473,17 @@ int Simulator::perform_micro_step_helper(vector<Action> vecActions) {
         }
     }
 
+    // Increment the micro step
     iCurrentMicroTimeStep++;
+
+    // Increment the macro step if necessary
+    if (at_beginning_of_macro_step())
+        iCurrentMacroTimeStep++;
 
     return 0;
 }
 
-// Note: This version of the method is for when the acting agent is a control agent; see overloaded version for when
-// the acting agent is an AI agent
-vector<Action> Simulator::get_actions_for_all_agents(const int& iActingAgentID) {
+vector<Action> Simulator::get_actions_for_all_agents_control_agent_turn(const int& iActingAgentID) {
     if (bVerbose) cout << "Getting actions for all agents" << endl;
     vector<Action> vecActions;
     for (const auto& pair : mapAgentIDToAgentPtr) {
@@ -509,9 +512,7 @@ vector<Action> Simulator::get_actions_for_all_agents(const int& iActingAgentID) 
     return vecActions;
 }
 
-// Note: This version of the method is for when the acting agent is an AI agent; see overloaded version for when
-// the acting agent is a control agent
-vector<Action> Simulator::get_actions_for_all_agents(const int& iActingAgentID, const int& iAIAgentActionID) {
+vector<Action> Simulator::get_actions_for_all_agents_ai_agent_turn(const int& iActingAgentID, const int& iAIAgentActionID) {
     if (bVerbose) cout << "Getting actions for all agents" << endl;
     vector<Action> vecActions;
     for (const auto& pair : mapAgentIDToAgentPtr) {
@@ -1090,7 +1091,12 @@ int Simulator::get_micro_steps_per_macro_step() {
 }
 
 bool Simulator::is_ai_agent(const int& iAgentID) {
+    // Case where the agent ID does not exist and represents a skip turn
+    if (mapAgentIDToAgentPtr.find(iAgentID) == mapAgentIDToAgentPtr.end())
+        return false;
+
     auto agentPtr = mapAgentIDToAgentPtr[iAgentID];
+
     if (agentPtr->enumAgentType == AgentType::Control) {
         return false;
     }
@@ -1489,4 +1495,34 @@ double Simulator::generate_reward(const int& iAgentID) {
     double dbCapitalChange = dbCurrentCapital - dbPreviousCapital;
     double dbAverageCapitalChange = dbCapitalChange / (iCurrentMicroTimeStep - iPreviousMicroTimeStep);
     return dbAverageCapitalChange;
+}
+
+int Simulator::get_next_AI_agent_index() {
+    int iAIAgentNumber = iNumAITurns % iNumAIAgents; // Which, of all the AI agents, is acting?
+                                                     // For example, if there are two AI agents,
+                                                     // this will either be 0 or 1. iNumAITurns
+                                                     // is the number of AI turns that have taken
+                                                     // place thus far in the simulation.
+
+    int iTurnsSearched = 0; // How many AI agent turns we have checked so far
+    for (int iAgentID : vecAgentTurnOrder) {
+        if (is_ai_agent(iAgentID)) {
+            if (iTurnsSearched == iAIAgentNumber) {
+                return iAgentID;
+            }
+            iTurnsSearched++;
+        }
+    }
+
+    // Shouldn't reach this part of the code
+    cerr << "Error in Simulator::get_next_AI_agent_index()" << endl;
+    throw std::exception();
+}
+
+int Simulator::get_num_AI_agents() {
+    return iNumAIAgents;
+}
+
+bool Simulator::at_beginning_of_macro_step() {
+    return iCurrentMicroTimeStep % get_micro_steps_per_macro_step() == 0;
 }

@@ -16,20 +16,12 @@ using std::map;
 
 class PythonAPI {
 public:
-    int run_business_strategy_simulator(string strJsonConfigs);
-
     int init_simulator(string strJsonConfigs);
-
-    // Returns tuple containing observation, reward, terminated, truncated
-    tuple<vector<double>, double, bool, bool> step(int iActionID);
-
-    int reset();
-
-    // TODO: Create a close method
+    vector<double> reset(); // Returns observation
+    tuple<vector<double>, double, bool, bool> step(int iActionID); // Returns tuple containing observation, reward, terminated, truncated
+    tuple<vector<double>, double, bool, bool> step_helper();
+    int close();
 
 private:
     Simulator simulator;
-    bool at_beginning_of_macro_step();
-    int iCurrentMicroTimeStepWithinMacroStep = 0;
-    int iCurrentMacroStepWithinSimulation = 0;
 };

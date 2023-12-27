@@ -95,6 +95,7 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o: \
  ../WorkingFiles/History/MasterHistory.h \
  ../WorkingFiles/History/SimulationHistory.h \
  ../WorkingFiles/Market/Market.h \
+ ../WorkingFiles/PythonAPI/PythonAPI.h \
  ../WorkingFiles/Simulator/Simulator.h \
  ../WorkingFiles/Utils/MiscUtils.h \
  ../WorkingFiles/main.cpp
