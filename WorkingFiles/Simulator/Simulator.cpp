@@ -15,8 +15,6 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
-// TODO: Need to figure out logic for when firms go bankrupt!
-
 // Note that the run method should not be used while training AI agents! This method is used for simulations
 // involving heuristic agents and/or trained AI agents.
 int Simulator::run() {
@@ -94,6 +92,18 @@ int Simulator::prepare_to_run() {
 
 int Simulator::reset() {
 
+    // Set current micro time step and macro time step to 0
+    iCurrentMicroTimeStep = 0;
+    iCurrentMacroTimeStep = 0;
+
+    // Reset capabilities, portfolio, and capital for all firms
+    for (auto pair : mapFirmIDToFirmPtr){
+        auto firm = pair.second;
+        const auto& firm_parameters = this->simulatorConfigs["default_firm_parameters"];
+        double dbDefaultStartingCapital = firm_parameters["starting_capital"];
+        firm->reset((dbDefaultStartingCapital));
+    }
+
     // Initialize the history and the data cache
     init_simulation_history();
     if (init_data_cache(masterHistory.getCurrentSimulationHistoryPtr()))
@@ -106,17 +116,6 @@ int Simulator::reset() {
             mapAIAgentIDToCapitalAtLastTurn[pair.first] = firmPtr->getDbCapital();
             mapAIAgentIDToMicroTimeStepOfLastTurn[pair.first] = 0;
         }
-    }
-
-    // Set current micro time step to 0 (needs to be reset between each run of the simulator)
-    iCurrentMicroTimeStep = 0;
-
-    // Reset capabilities, portfolio, and capital for all firms
-    for (auto pair : mapFirmIDToFirmPtr){
-        auto firm = pair.second;
-        const auto& firm_parameters = this->simulatorConfigs["default_firm_parameters"];
-        double dbDefaultStartingCapital = firm_parameters["starting_capital"];
-        firm->reset((dbDefaultStartingCapital));
     }
 
     return 0;
@@ -473,6 +472,14 @@ int Simulator::perform_micro_step_helper(vector<Action> vecActions) {
         }
     }
 
+    // Declare bankruptcy for any firms with negative capital (wipes out portfolio and sets capital = -1.0)
+    for (auto pair : mapAgentIDToAgentPtr) {
+        if (is_bankrupt(pair.first)) {
+            auto firm = get_firm_ptr_from_agent_id(pair.first);
+            firm->declare_bankruptcy();
+        }
+    }
+
     // Increment the micro step
     iCurrentMicroTimeStep++;
 
@@ -518,11 +525,14 @@ vector<Action> Simulator::get_actions_for_all_agents_ai_agent_turn(const int& iA
     for (const auto& pair : mapAgentIDToAgentPtr) {
         auto agentPtr = pair.second;
         if (agentPtr->enumAgentType == AgentType::Control) {
-            ControlAgent* controlAgentPtr = dynamic_cast<ControlAgent*>(agentPtr);
             // Create none actions for the control agents
-            vecActions.emplace_back(Action::generate_none_action(controlAgentPtr->get_agent_ID()));
+            vecActions.emplace_back(Action::generate_none_action(pair.first));
         }
         else if (agentPtr->enumAgentType == AgentType::StableBaselines3) {
+            // If the AI agent is bankrupt, assign the none action.
+            if (is_bankrupt(iActingAgentID)) {
+                vecActions.emplace_back(Action::generate_none_action(iActingAgentID));
+            }
             vecActions.emplace_back(convert_action_ID_to_action_object(iActingAgentID, iAIAgentActionID));
         }
     }
@@ -705,11 +715,15 @@ int Simulator::execute_exit_action(const Action& action, map<int,double>* pMapFi
                                                                   dbCost, firmPtr->getFirmID(), market.get_market_id());
         }
     }
-
     return 0;
 }
 
 Action Simulator::get_agent_action(const ControlAgent& agent) {
+    // If the agent is bankrupt, they automatically choose the none action.
+    if (is_bankrupt(agent.get_agent_ID())){
+        return Action::generate_none_action(agent.get_agent_ID());
+    }
+
     ActionType actionType = get_action_type(agent);
 
     if (actionType == ActionType::enumEntryAction) {

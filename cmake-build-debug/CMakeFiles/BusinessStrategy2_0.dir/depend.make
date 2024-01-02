@@ -95,7 +95,6 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o: \
  ../WorkingFiles/History/MasterHistory.h \
  ../WorkingFiles/History/SimulationHistory.h \
  ../WorkingFiles/Market/Market.h \
- ../WorkingFiles/PythonAPI/PythonAPI.h \
  ../WorkingFiles/Simulator/Simulator.h \
  ../WorkingFiles/Utils/MiscUtils.h \
  ../WorkingFiles/main.cpp
@@ -115,6 +114,7 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o: \
  ../external/pybind11/include/pybind11/options.h \
  ../external/pybind11/include/pybind11/pybind11.h \
  ../external/pybind11/include/pybind11/pytypes.h \
+ ../external/pybind11/include/pybind11/stl.h \
  ../external/pybind11/include/pybind11/typing.h \
  ../JSONReader/json.h \
  ../WorkingFiles/Action/Action.h \

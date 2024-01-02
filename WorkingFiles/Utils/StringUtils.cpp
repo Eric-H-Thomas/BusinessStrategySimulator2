@@ -5,14 +5,12 @@
 #include "StringUtils.h"
 #include <algorithm>
 
-// TODO: test this method
 std::string StringUtils::toUpper(const std::string& str) {
     std::string result = str;
     std::transform(result.begin(), result.end(), result.begin(), ::toupper);
     return result;
 }
 
-// TODO: test this method
 bool StringUtils::equalsIgnoreCase(const std::string& str1, const std::string& str2) {
     if (str1.size() != str2.size()) {
         return false;
@@ -25,7 +23,6 @@ bool StringUtils::equalsIgnoreCase(const std::string& str1, const std::string& s
     return true;
 }
 
-// TODO: test this method
 bool StringUtils::equalsIgnoreCaseAndIgnoreUnderscores(const std::string& str1, const std::string& str2) {
     // Remove underscores from both strings and then compare them case-insensitively
     std::string str1NoUnderscores = str1;

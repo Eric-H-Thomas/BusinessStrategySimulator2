@@ -95,7 +95,6 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/main.cpp.o
  /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/MasterHistory.h
  /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/History/SimulationHistory.h
  /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
- /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/PythonAPI/PythonAPI.h
  /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
  /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Utils/MiscUtils.h
  /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp
@@ -115,6 +114,7 @@ CMakeFiles/BusinessStrategy2_0.dir/WorkingFiles/python_wrapper.cpp.o
  ../external/pybind11/include/pybind11/options.h
  ../external/pybind11/include/pybind11/pybind11.h
  ../external/pybind11/include/pybind11/pytypes.h
+ ../external/pybind11/include/pybind11/stl.h
  ../external/pybind11/include/pybind11/typing.h
  /Users/eric/CLionProjects/BusinessStrategy2.0/JSONReader/json.h
  /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Action/Action.h

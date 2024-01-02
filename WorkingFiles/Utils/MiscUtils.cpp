@@ -9,8 +9,6 @@
 #include <random>
 
 int MiscUtils::choose_index_given_probabilities(const std::vector<double>& probabilities) {
-    // TODO: need to test this method
-
     // Check if the probabilities vector is empty
     if (probabilities.empty()) {
         std::cerr << "Error: Probabilities vector is empty." << std::endl;

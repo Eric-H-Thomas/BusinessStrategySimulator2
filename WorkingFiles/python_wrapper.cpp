@@ -3,6 +3,7 @@
 //
 
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 #include "../WorkingFiles/PythonAPI/PythonAPI.h"
 
 PYBIND11_MODULE(bss_module_december_twentysixth, m) {

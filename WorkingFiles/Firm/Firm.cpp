@@ -128,3 +128,16 @@ void Firm::reset(double dbStartingCapital) {
     // Reset capital
     dbCapital = dbStartingCapital;
 }
+
+void Firm::declare_bankruptcy() {
+    // Reset capabilities
+    for (size_t i = 0; i < vecCapabilities.size(); i++) {
+        vecCapabilities[i] = 0;
+    }
+
+    // Reset portfolio
+    setMarketIDs.clear();
+
+    // Set capital equal to -1
+    dbCapital = -1.0;
+}

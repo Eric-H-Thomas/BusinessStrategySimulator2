@@ -26,6 +26,7 @@ public:
     bool is_in_market(Market market);
     Market choose_market_with_highest_overlap(set<Market> setMarkets);
     const set<int> &getSetMarketIDs() const;
+    void declare_bankruptcy();
 
 private:
     int         iFirmID;

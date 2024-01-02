@@ -57,7 +57,7 @@ tuple<vector<double>, double, bool, bool> PythonAPI::step_helper() {
         bool bEnteredMicroStepLoop = false;
         while (!simulator.at_beginning_of_macro_step() || !bEnteredMicroStepLoop) {
             bEnteredMicroStepLoop = true;
-            int iAgentIndex = simulator.get_agent_turn_order()[simulator.iCurrentMicroTimeStep];
+            int iAgentIndex = simulator.get_agent_turn_order()[simulator.iCurrentMicroTimeStep % simulator.get_micro_steps_per_macro_step()];
             if (simulator.is_ai_agent(iAgentIndex)) {
                 // If the agent is AI-controlled, return state observation, reward, terminated, and truncated
                 vector<double> vecDbStateObservation = simulator.generate_state_observation(iAgentIndex);
@@ -75,7 +75,9 @@ tuple<vector<double>, double, bool, bool> PythonAPI::step_helper() {
 
     // At the end of the macro steps (i.e., at the end of the current simulation). Return state observation indicating
     // the end of the current simulation.
-    vector<double> vecDbStateObservation;
+    // TODO: Check whether this last observation really matters. Just creating an observation to make the SB3 API
+    //  happy, but it's arbitrarily just using the next AI AgentID since the last observation shouldn't matter.
+    vector<double> vecDbStateObservation = simulator.generate_state_observation(simulator.get_next_AI_agent_index());
     double dbReward = 0.0;
     bool bTerminated = false;
     bool bTruncated = true;

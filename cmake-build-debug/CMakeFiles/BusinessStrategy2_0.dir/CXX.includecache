@@ -460,12 +460,18 @@ string
 vector
 -
 
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/PythonAPI/PythonAPI.h
-../Simulator/Simulator.h
+/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.cpp
+Simulator.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
+map
+-
 iostream
 -
-string
+fstream
+-
+random
+-
+cmath
 -
 
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
@@ -507,12 +513,4 @@ random
 -
 ../Market/Market.h
 /Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Market/Market.h
-
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/main.cpp
-Simulator/Simulator.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Simulator/Simulator.h
-iostream
--
-PythonAPI/PythonAPI.h
-/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/PythonAPI/PythonAPI.h
 

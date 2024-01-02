@@ -122,7 +122,7 @@ void MasterHistory::fill_in_capital_info() {
 
             // Get the stating capital amount
             double dbStartingCapital = vecSimulationHistoryPtrs.at(iSim)->mapFirmStartingCapital[iFirm];
-            
+
             // Account for the case when capital never changed
             if (vecCapitalChanges.empty()) {
                 int iStartRow = get_row_number(iSim, iFirm, 0,0);
