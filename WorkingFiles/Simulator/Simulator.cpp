@@ -19,6 +19,8 @@ using std::endl;
 // involving heuristic agents and/or trained AI agents.
 int Simulator::run() {
     // TODO: need to add logic to perform micro steps once trained AI agents are included
+    //  Will need to view other examples of how trained SB3 agents are used. We might be able to use nearly the same
+    //  code that we used while training the AI agent to use the trained AI agent.
 
     // Loop through the macro steps
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
@@ -1050,6 +1052,10 @@ set<int> Simulator::get_set_market_IDs() {
     return economy.get_set_market_IDs();
 }
 
+int Simulator::get_num_markets() {
+    return economy.get_total_markets();
+}
+
 set<int> Simulator::get_firm_IDs_in_market(Market market) {
     set<int> setFirmIDs;
     for (auto pair : mapFirmIDToFirmPtr) {
@@ -1535,6 +1541,10 @@ int Simulator::get_next_AI_agent_index() {
 
 int Simulator::get_num_AI_agents() {
     return iNumAIAgents;
+}
+
+int Simulator::get_num_total_agents() {
+    return mapAgentIDToAgentPtr.size();
 }
 
 bool Simulator::at_beginning_of_macro_step() {

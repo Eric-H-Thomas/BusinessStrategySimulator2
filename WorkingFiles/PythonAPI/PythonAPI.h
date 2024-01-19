@@ -22,6 +22,10 @@ public:
     tuple<vector<double>, double, bool, bool> step_helper();
     int close();
 
+    // Helper functions for defining the state and action spaces
+    int get_num_markets();
+    int get_num_agents();
+
 private:
     Simulator simulator;
 };

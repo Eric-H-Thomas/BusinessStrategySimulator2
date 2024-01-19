@@ -93,3 +93,12 @@ int PythonAPI::close() {
     }
     return 0;
 }
+
+int PythonAPI::get_num_markets() {
+    return simulator.get_num_markets();
+}
+
+
+int PythonAPI::get_num_agents() {
+    return simulator.get_num_total_agents();
+}

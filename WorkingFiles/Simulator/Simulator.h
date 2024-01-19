@@ -60,7 +60,9 @@ public:
     double generate_reward(const int& iAgentID);
     int get_next_AI_agent_index();
     int get_num_AI_agents();
+    int get_num_total_agents();
     bool at_beginning_of_macro_step();
+    int get_num_markets();
 
 private:
     nlohmann::json simulatorConfigs;
@@ -113,6 +115,7 @@ private:
     Firm* get_firm_ptr_from_agent(const ControlAgent& agent);
     set<int> get_set_firm_IDs();
     set<int> get_set_market_IDs();
+
     set<int> get_firm_IDs_in_market(Market market);
     map<int,double> get_map_firm_to_var_cost_for_market(Market market);
     double get_average_var_cost_in_market(Market market);
