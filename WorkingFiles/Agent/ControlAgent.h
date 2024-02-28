@@ -5,7 +5,9 @@
 #pragma once
 #include <string>
 #include <ostream>
+#include <vector>
 #include "BaseAgent.h"
+
 
 using std::string;
 

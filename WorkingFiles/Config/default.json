@@ -29,7 +29,8 @@
   "ai_agents": [
     {
       "agent_id": 1,
-      "agent_type": "stable_baselines_3"
+      "agent_type": "stable_baselines_3",
+      "production_policy": "Cournot"
     }
   ],
 

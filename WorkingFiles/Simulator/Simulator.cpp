@@ -214,9 +214,16 @@ int Simulator::init_AI_agents() {
     try {
         for (const auto& agentData : this->simulatorConfigs["ai_agents"]) {
             if (agentData["agent_type"] == "stable_baselines_3") {
-                auto agentPtr = new StableBaselines3Agent(agentData["agent_id"]);
-                this->mapAgentIDToAgentPtr.insert(std::make_pair(agentData["agent_id"], agentPtr));
-                this->iNumAIAgents++;
+                if (agentData["production_policy"] == "Cournot") {
+                    auto agentPtr = new StableBaselines3Agent(agentData["agent_id"], ProductionPolicy::Cournot);
+                    this->mapAgentIDToAgentPtr.insert(std::make_pair(agentData["agent_id"], agentPtr));
+                    this->iNumAIAgents++;
+                }
+                else {
+                    std::cerr << "AI agent production type not yet supported" << std::endl;
+                    throw new std::exception();
+                }
+
             }
         }
     }
