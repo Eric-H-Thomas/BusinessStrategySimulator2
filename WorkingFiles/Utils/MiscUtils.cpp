@@ -126,11 +126,6 @@ template Market MiscUtils::choose_random_from_set(const std::set<Market>& inputS
 template int MiscUtils::choose_random_from_set(const std::set<int>& inputSet);
 
 double MiscUtils::get_percentage_overlap(const std::vector<int>& vector1, const std::vector<int>& vector2) {
-    // Check if the vectors have the same size
-    if (vector1.size() != vector2.size()) {
-        throw std::invalid_argument("Input vectors must have the same size.");
-    }
-
     // Initialize a counter for the overlap
     int overlapCount = 0;
 
@@ -215,7 +210,7 @@ vector<int> MiscUtils::vector_subtraction(const vector<int>& vector1, const vect
     return result;
 }
 
-void MiscUtils::set_all_positive_values_to_one(vector<int> &vector) {
+void MiscUtils::set_all_positive_values_to_one(vector<int>& vector) {
     for (size_t i = 0; i < vector.size(); i++) {
         if (vector.at(i) > 0) {
             vector.at(i) = 1;

@@ -3,15 +3,16 @@
 //
 
 #include "StableBaselines3Agent.h"
-StableBaselines3Agent::StableBaselines3Agent(int iAgentID, ProductionPolicy productionPolicy) {
+StableBaselines3Agent::StableBaselines3Agent(int iAgentID, ProductionPolicy productionPolicy, string strPathToAgent) {
     // Set the agent type
     this->enumAgentType = AgentType::StableBaselines3;
 
     // Set the agent ID
     this->iAgentID = iAgentID;
-
-    // Set the production policy
     this->enumProductionPolicy = productionPolicy;
+
+    // Set the path to the agent
+    this->strPathToAgent = strPathToAgent;
 }
 
 ProductionPolicy StableBaselines3Agent::get_enum_production_policy() const {
@@ -34,9 +35,11 @@ string StableBaselines3Agent::to_string() const {
         output += "Cournot";
     }
     else {
+
         cerr << "Haha nice try bud. Production policy not yet configured in control agent toString method" << endl;
         throw std::exception();
     }
 
     return output;
+
 }

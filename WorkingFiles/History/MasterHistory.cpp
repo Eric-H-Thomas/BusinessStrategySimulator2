@@ -1,10 +1,11 @@
+
 //
 // Created by Eric Thomas on 9/9/23.
 //
-
 #include "MasterHistory.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 using std::string;
 using std::cout;
@@ -17,52 +18,99 @@ SimulationHistory* MasterHistory::getCurrentSimulationHistoryPtr() {
 int MasterHistory::generate_master_output() {
     cout << "Generating master output file." << endl;
 
-    // TODO: make this path dynamic rather than hard-coded
-    string strMasterOutputPath = "/Users/eric/CLionProjects/BusinessStrategy2.0/OutputFiles/MasterOutput.csv";
     std::ofstream ofStreamMasterOutput;
-    ofStreamMasterOutput.open(strMasterOutputPath);
+    string strPath = this->strMasterHistoryOutputPath + "/MasterOutput.csv";
+    ofStreamMasterOutput.open(strPath);
 
     prepare_data_for_output();
 
     // Create header row
-    ofStreamMasterOutput << ""              << ",";
-    ofStreamMasterOutput << "Sim"           << ",";
-    ofStreamMasterOutput << "Step"          << ",";
-    ofStreamMasterOutput << "Firm"          << ",";
-    ofStreamMasterOutput << "Agent Type"    << ",";
-    ofStreamMasterOutput << "Market"        << ",";
-    ofStreamMasterOutput << "Capital"       << ",";
-    ofStreamMasterOutput << "Rev"           << ",";
-    ofStreamMasterOutput << "Fix Cost"      << ",";
-    ofStreamMasterOutput << "Var Cost"      << ",";
-    ofStreamMasterOutput << "Entry Cost"    << ",";
-    ofStreamMasterOutput << "In Market"     << ",";
-    ofStreamMasterOutput << "Price"         << ",";
-    ofStreamMasterOutput << "Quantity"      << ",";
+    ofStreamMasterOutput << "" << ",";
+    ofStreamMasterOutput << "Sim" << ",";
+    ofStreamMasterOutput << "Step" << ",";
+    ofStreamMasterOutput << "Firm" << ",";
+    ofStreamMasterOutput << "Agent Type" << ",";
+    ofStreamMasterOutput << "Market" << ",";
+    ofStreamMasterOutput << "Capital" << ",";
+    ofStreamMasterOutput << "Rev" << ",";
+    ofStreamMasterOutput << "Fix Cost" << ",";
+    ofStreamMasterOutput << "Var Cost" << ",";
+    ofStreamMasterOutput << "Entry Cost" << ",";
+    ofStreamMasterOutput << "In Market" << ",";
+    ofStreamMasterOutput << "Price" << ",";
+    ofStreamMasterOutput << "Quantity" << ",";
     //ofStreamMasterOutput << "Market Number" << "\n";
     ofStreamMasterOutput << "\n";
 
     for (int i = 0; i < vecDataRows.size(); i++) {
         auto row = vecDataRows.at(i);
-        ofStreamMasterOutput << i                       << ",";
-        ofStreamMasterOutput << row.iSim                << ",";
-        ofStreamMasterOutput << row.iMicroTimeStep      << ",";
-        ofStreamMasterOutput << row.iFirmID             << ",";
-        ofStreamMasterOutput << row.strAgentType        << ",";
-        ofStreamMasterOutput << row.iMarketID           << ",";
-        ofStreamMasterOutput << row.dbCapital           << ",";
-        ofStreamMasterOutput << row.dbRevenue           << ",";
-        ofStreamMasterOutput << row.dbFixedCost         << ",";
-        ofStreamMasterOutput << row.dbVarCost           << ",";
-        ofStreamMasterOutput << row.dbEntryCost         << ",";
-        ofStreamMasterOutput << row.bInMarket           << ",";
-        ofStreamMasterOutput << row.dbPrice             << ",";
-        ofStreamMasterOutput << row.dbQty               << ",";
+        ofStreamMasterOutput << i << ",";
+        ofStreamMasterOutput << row.iSim << ",";
+        ofStreamMasterOutput << row.iMicroTimeStep << ",";
+        ofStreamMasterOutput << row.iFirmID << ",";
+        ofStreamMasterOutput << row.strAgentType << ",";
+        ofStreamMasterOutput << row.iMarketID << ",";
+        ofStreamMasterOutput << row.dbCapital << ",";
+        ofStreamMasterOutput << row.dbRevenue << ",";
+        ofStreamMasterOutput << row.dbFixedCost << ",";
+        ofStreamMasterOutput << row.dbVarCost << ",";
+        ofStreamMasterOutput << row.dbEntryCost << ",";
+        ofStreamMasterOutput << row.bInMarket << ",";
+        ofStreamMasterOutput << row.dbPrice << ",";
+        ofStreamMasterOutput << row.dbQty << ",";
         //ofStreamMasterOutput << "Market # Placeholder"  << "\n";
         ofStreamMasterOutput << "\n";
     }
 
     ofStreamMasterOutput.close();
+
+    return 0;
+}
+
+int MasterHistory::generate_market_overlap_file() {
+    cout << "Generating market overlap file." << endl;
+
+    std::ofstream ofStreamMarketOverlap;
+    string strPath = this->strMasterHistoryOutputPath + "/MarketOverlap.csv";
+    ofStreamMarketOverlap.open(strPath);
+
+    // Create header row
+    ofStreamMarketOverlap << "" << ",";
+    ofStreamMarketOverlap << "Sim" << ",";
+    ofStreamMarketOverlap << "Market A" << ",";
+    ofStreamMarketOverlap << "Market B" << ",";
+    ofStreamMarketOverlap << "Num Common Capabilities" << ",";
+    ofStreamMarketOverlap << "Percentage Cost Overlap (A^B/A)" << ",";
+    ofStreamMarketOverlap << "\n";
+
+    int iRow = 0;
+    // Iterate through each simulation
+    for (int i = 0; i < this->vecSimulationHistoryPtrs.size(); i++) {
+        auto pSimulationHistory = vecSimulationHistoryPtrs.at(i);
+        // Iterate through each market A
+        for (int j = 0; j < this->iNumMarkets; j++) {
+            auto vecMarketOverlap = pSimulationHistory->vecOfVecMarketOverlapMatrix.at(j);
+            // Iterate through each market B
+            for (int k = 0; k < this->iNumMarkets; k++) {
+                double dbPercentOverlap = vecMarketOverlap.at(k);
+                int iCommonCapabilities = static_cast<int>(round(this->iCapabilitiesPerMarket * dbPercentOverlap));
+
+                // Insert a row of data
+                ofStreamMarketOverlap << iRow << ",";
+                ofStreamMarketOverlap << i << ",";
+                ofStreamMarketOverlap << j << ",";
+                ofStreamMarketOverlap << k << ",";
+                ofStreamMarketOverlap << iCommonCapabilities << ",";
+                ofStreamMarketOverlap << dbPercentOverlap << ",";
+                ofStreamMarketOverlap << "\n";
+
+                // Increment the row counter
+                iRow++;
+            }
+        }
+    }
+
+    ofStreamMarketOverlap.close();
 
     return 0;
 }
@@ -125,7 +173,7 @@ void MasterHistory::fill_in_capital_info() {
 
             // Account for the case when capital never changed
             if (vecCapitalChanges.empty()) {
-                int iStartRow = get_row_number(iSim, iFirm, 0,0);
+                int iStartRow = get_row_number(iSim, iFirm, 0, 0);
                 for (int i = 0; i < iNumMarkets * iMicroStepsPerSim; i++) {
                     vecDataRows.at(iStartRow + i).dbCapital = dbStartingCapital;
                 }
@@ -175,7 +223,7 @@ void MasterHistory::fill_in_revenue_info() {
                 // Get all the changes corresponding to the simulation-firm-market combo
                 vector<RevenueChange> vecRevenueChanges;
 
-                for (auto entry: vecSimulationHistoryPtrs.at(iSim)->vecRevenueChanges) {
+                for (auto entry : vecSimulationHistoryPtrs.at(iSim)->vecRevenueChanges) {
                     if (entry.iFirmID == iFirm && entry.iMarketID == iMarket) {
                         vecRevenueChanges.push_back(entry);
                     }
@@ -187,7 +235,7 @@ void MasterHistory::fill_in_revenue_info() {
 
                 // Account for the case when no changes occurred
                 if (vecRevenueChanges.empty()) {
-                    int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
+                    int iStartRow = get_row_number(iSim, iFirm, iMarket, 0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
                         vecDataRows.at(iStartRow + i).dbRevenue = dbStartingRevenue;
                     }
@@ -237,7 +285,7 @@ void MasterHistory::fill_in_market_presence_info() {
                 // Get all the changes corresponding to the simulation-firm-market combo
                 vector<MarketPresenceChange> vecMarketPresenceChanges;
 
-                for (auto entry: vecSimulationHistoryPtrs.at(iSim)->vecMarketPresenceChanges) {
+                for (auto entry : vecSimulationHistoryPtrs.at(iSim)->vecMarketPresenceChanges) {
                     if (entry.iFirmID == iFirm && entry.iMarketID == iMarket) {
                         vecMarketPresenceChanges.push_back(entry);
                     }
@@ -249,7 +297,7 @@ void MasterHistory::fill_in_market_presence_info() {
 
                 // Account for the case when no changes occurred
                 if (vecMarketPresenceChanges.empty()) {
-                    int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
+                    int iStartRow = get_row_number(iSim, iFirm, iMarket, 0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
                         vecDataRows.at(iStartRow + i).bInMarket = bStartingPresence;
                     }
@@ -295,16 +343,16 @@ void MasterHistory::fill_in_variable_cost_info() {
         auto mapFirmMarketComboToVarCost = vecSimulationHistoryPtrs.at(iSim)->mapFirmMarketComboToVarCost;
         for (int iFirm = 0; iFirm < iNumFirms; iFirm++) {
             for (int iMarket = 0; iMarket < iNumMarkets; iMarket++) {
-               auto pairFirmMarket = std::make_pair(iFirm,iMarket);
-               for (int iMicroStep = 0; iMicroStep < iMicroStepsPerSim; iMicroStep++) {
-                   int iRow = get_row_number(iSim, iFirm, iMarket, iMicroStep);
-                   if (vecDataRows.at(iRow).bInMarket) {
-                       vecDataRows.at(iRow).dbVarCost = mapFirmMarketComboToVarCost[pairFirmMarket];
-                   }
-                   else {
-                       vecDataRows.at(iRow).dbVarCost = 0.0;
-                   }
-               } // End of loop over micro time steps
+                auto pairFirmMarket = std::make_pair(iFirm, iMarket);
+                for (int iMicroStep = 0; iMicroStep < iMicroStepsPerSim; iMicroStep++) {
+                    int iRow = get_row_number(iSim, iFirm, iMarket, iMicroStep);
+                    if (vecDataRows.at(iRow).bInMarket) {
+                        vecDataRows.at(iRow).dbVarCost = mapFirmMarketComboToVarCost[pairFirmMarket];
+                    }
+                    else {
+                        vecDataRows.at(iRow).dbVarCost = 0.0;
+                    }
+                } // End of loop over micro time steps
             } // End of loop over markets
         } // End of loop over firms
     } // End of loop over simulations
@@ -319,7 +367,7 @@ void MasterHistory::fill_in_fixed_cost_info() {
                 // Get all the changes corresponding to the simulation-firm-market combo
                 vector<FixedCostChange> vecFixedCostChanges;
 
-                for (auto entry: vecSimulationHistoryPtrs.at(iSim)->vecFixedCostChanges) {
+                for (auto entry : vecSimulationHistoryPtrs.at(iSim)->vecFixedCostChanges) {
                     if (entry.iFirmID == iFirm && entry.iMarketID == iMarket) {
                         vecFixedCostChanges.push_back(entry);
                     }
@@ -331,7 +379,7 @@ void MasterHistory::fill_in_fixed_cost_info() {
 
                 // Account for the case when no changes occurred
                 if (vecFixedCostChanges.empty()) {
-                    int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
+                    int iStartRow = get_row_number(iSim, iFirm, iMarket, 0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
                         vecDataRows.at(iStartRow + i).dbFixedCost = dbStartingFixedCost;
                     }
@@ -355,7 +403,7 @@ void MasterHistory::fill_in_fixed_cost_info() {
 
                     // Update the time step and fixed cost
                     iCurrentTimeStep = entry.iMicroTimeStep;
-                    dbCurrentFixedCost= entry.dbNewFixedCost;
+                    dbCurrentFixedCost = entry.dbNewFixedCost;
 
                     // Fill in fixed cost values for rows after the last fixed cost change
                     if (i == vecFixedCostChanges.size() - 1) {
@@ -382,7 +430,7 @@ void MasterHistory::fill_in_entry_cost_info() {
                 // Get all the changes corresponding to the simulation-firm-market combo
                 vector<EntryCostChange> vecEntryCostChanges;
 
-                for (auto entry: vecSimulationHistoryPtrs.at(iSim)->vecEntryCostChanges) {
+                for (auto entry : vecSimulationHistoryPtrs.at(iSim)->vecEntryCostChanges) {
                     if (entry.iFirmID == iFirm && entry.iMarketID == iMarket) {
                         vecEntryCostChanges.push_back(entry);
                     }
@@ -395,7 +443,7 @@ void MasterHistory::fill_in_entry_cost_info() {
 
                 // Account for the case when no changes occurred
                 if (vecEntryCostChanges.empty()) {
-                    int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
+                    int iStartRow = get_row_number(iSim, iFirm, iMarket, 0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
                         vecDataRows.at(iStartRow + i).dbEntryCost = dbStartingEntryCost;
                     }
@@ -445,7 +493,7 @@ void MasterHistory::fill_in_price_info() {
                 // Get all the changes corresponding to the simulation-firm-market combo
                 vector<PriceChange> vecPriceChanges;
 
-                for (auto entry: vecSimulationHistoryPtrs.at(iSim)->vecPriceChanges) {
+                for (auto entry : vecSimulationHistoryPtrs.at(iSim)->vecPriceChanges) {
                     if (entry.iFirmID == iFirm && entry.iMarketID == iMarket) {
                         vecPriceChanges.push_back(entry);
                     }
@@ -458,7 +506,7 @@ void MasterHistory::fill_in_price_info() {
 
                 // Account for the case when no changes occurred
                 if (vecPriceChanges.empty()) {
-                    int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
+                    int iStartRow = get_row_number(iSim, iFirm, iMarket, 0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
                         vecDataRows.at(iStartRow + i).dbPrice = dbStartingPrice;
                     }
@@ -508,7 +556,7 @@ void MasterHistory::fill_in_quantity_info() {
                 // Get all the changes corresponding to the simulation-firm-market combo
                 vector<ProductionQuantityChange> vecProductionQuantityChanges;
 
-                for (auto entry: vecSimulationHistoryPtrs.at(iSim)->vecProductionQtyChanges) {
+                for (auto entry : vecSimulationHistoryPtrs.at(iSim)->vecProductionQtyChanges) {
                     if (entry.iFirmID == iFirm && entry.iMarketID == iMarket) {
                         vecProductionQuantityChanges.push_back(entry);
                     }
@@ -521,7 +569,7 @@ void MasterHistory::fill_in_quantity_info() {
 
                 // Account for the case when no changes occurred
                 if (vecProductionQuantityChanges.empty()) {
-                    int iStartRow = get_row_number(iSim, iFirm, iMarket,0);
+                    int iStartRow = get_row_number(iSim, iFirm, iMarket, 0);
                     for (int i = 0; i < iMicroStepsPerSim; i++) {
                         vecDataRows.at(iStartRow + i).dbQty = dbStartingQuantity;
                     }
@@ -564,8 +612,8 @@ void MasterHistory::fill_in_quantity_info() {
 
 
 int MasterHistory::get_row_number(int iCurrentSim, int iCurrentFirm, int iCurrentMarket, int iCurrentMicroStep) {
-    int iRowsFromPastSimulations    = iCurrentSim    * iNumFirms * iNumMarkets * iMicroStepsPerSim;
-    int iRowsFromPastFirms          = iCurrentFirm               * iNumMarkets * iMicroStepsPerSim;
-    int iRowsFromPastMarkets        = iCurrentMarket                           * iMicroStepsPerSim;
+    int iRowsFromPastSimulations = iCurrentSim * iNumFirms * iNumMarkets * iMicroStepsPerSim;
+    int iRowsFromPastFirms = iCurrentFirm * iNumMarkets * iMicroStepsPerSim;
+    int iRowsFromPastMarkets = iCurrentMarket * iMicroStepsPerSim;
     return iRowsFromPastSimulations + iRowsFromPastFirms + iRowsFromPastMarkets + iCurrentMicroStep;
 }

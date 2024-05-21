@@ -24,7 +24,9 @@ public:
     virtual string to_string() const = 0;
     virtual ProductionPolicy get_enum_production_policy() const = 0;
     int get_agent_ID() const;
+    string get_path_to_agent() const;
 
 protected:
     int iAgentID;
+    string strPathToAgent = ""; // Not needed for control agents
 };

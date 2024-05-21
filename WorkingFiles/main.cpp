@@ -3,54 +3,25 @@ This main function is used to run the simulator on its own, with control and/or 
 Use business_strategy_gym_env.py or another Python script for training AI agents.
 */
 
-#include "Simulator/Simulator.h"
+#define PY_SSIZE_T_CLEAN
+#include <Python.h>
 #include <iostream>
-
+#include "Simulator/Simulator.h"
 using std::cerr;
 using std::cout;
 using std::endl;
-
-// For debugging the Python API
-//#include "PythonAPI/PythonAPI.h"
-//int main(int argc, char* argv[]) {
-//
-//    // Check for correct number of command-line arguments
-//    if (argc != 2) {
-//        cerr << "Expected 1 command-line argument. Got " << argc-1 << endl;
-//        return 1;
-//    }
-//
-//    // Create PythonAPI instance
-//    PythonAPI api;
-//
-//    // Test the API init method
-//    if (api.init_simulator(argv[1]))
-//        return 1;
-//
-//    for (int iTest = 0; iTest < 100; iTest++) {
-//        // Test the API reset method
-//        //cout << "Debugging: About to run the reset method" << endl;
-//        auto reset_return_values = api.reset();
-//
-//        // Test the API step method, instructing the AI to flip its presence in market 0
-//        //cout << "Debugging: About to run the step method" << endl;
-//        auto step_return_values = api.step(0);
-//    }
-//
-//    // Test the API close method
-//    if (api.close())
-//        return 1;
-//
-//    return 0;
-//}
 
 int main(int argc, char* argv[]) {
 
     // Check for correct number of command-line arguments
     if (argc != 2) {
-        cerr << "Expected 1 command-line argument. Got " << argc-1 << endl;
+        cerr << "Expected 1 command-line argument. Got " << argc - 1 << endl;
         return 1;
     }
+
+    Py_Initialize();
+    PyRun_SimpleString("import sys");
+    PyRun_SimpleString("sys.path.append(\".\")");
 
     // Create simulator instance
     Simulator simulator;
@@ -72,9 +43,15 @@ int main(int argc, char* argv[]) {
             return 1;
     }
 
+    Py_Finalize();
+
     if (simulator.bGenerateMasterOutput) {
         if (simulator.masterHistory.generate_master_output()) {
             cerr << "Error generating master output file" << endl;
+            return 1;
+        }
+        if (simulator.masterHistory.generate_market_overlap_file()) {
+            cerr << "Error generating market overlap file" << endl;
             return 1;
         }
     }

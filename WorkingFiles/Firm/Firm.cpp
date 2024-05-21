@@ -20,11 +20,11 @@ double Firm::getDbCapital() const {
     return dbCapital;
 }
 
-bool Firm::is_in_market(Market market){
-   if (this->setMarketIDs.find(market.get_market_id()) != setMarketIDs.end()){
-       return true;
-   }
-   return false;
+bool Firm::is_in_market(Market market) {
+    if (this->setMarketIDs.find(market.get_market_id()) != setMarketIDs.end()) {
+        return true;
+    }
+    return false;
 }
 
 int Firm::add_market_to_portfolio(const int& iMarketID) {
@@ -77,14 +77,14 @@ int Firm::remove_market_capabilities_from_firm_capabilities(const Market& market
 }
 
 int Firm::remove_market_from_portfolio(const int& iMarketID) {
-    if (this->setMarketIDs.erase(iMarketID) == 0){
+    if (this->setMarketIDs.erase(iMarketID) == 0) {
         std::cerr << "Unsuccessful market exit" << std::endl;
         return 1;
     }
     return 0;
 }
 
-Market Firm::choose_market_with_highest_overlap(set<Market> setMarkets){
+Market Firm::choose_market_with_highest_overlap(set<Market> setMarkets) {
     double dbHighestOverlapValue = 0.0;
     set<Market> setMarketsWithHighestOverlap;
 
@@ -104,7 +104,7 @@ Market Firm::choose_market_with_highest_overlap(set<Market> setMarkets){
     return MiscUtils::choose_random_from_set(setMarketsWithHighestOverlap);
 }
 
-const set<int> &Firm::getSetMarketIDs() const {
+const set<int>& Firm::getSetMarketIDs() const {
     return setMarketIDs;
 }
 
@@ -112,7 +112,7 @@ void Firm::add_capital(double dbChangeInCapital) {
     this->dbCapital += dbChangeInCapital;
 }
 
-const vector<int> &Firm::getVecCapabilities() const {
+const vector<int>& Firm::getVecCapabilities() const {
     return vecCapabilities;
 }
 
@@ -130,6 +130,9 @@ void Firm::reset(double dbStartingCapital) {
 }
 
 void Firm::declare_bankruptcy() {
+    // Set capital equal to a -1e-9
+    dbCapital = -1e-9;
+
     // Reset capabilities
     for (size_t i = 0; i < vecCapabilities.size(); i++) {
         vecCapabilities[i] = 0;
@@ -137,7 +140,4 @@ void Firm::declare_bankruptcy() {
 
     // Reset portfolio
     setMarketIDs.clear();
-
-    // Set capital equal to -1
-    dbCapital = -1.0;
 }

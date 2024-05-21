@@ -12,12 +12,12 @@ using std::cerr;
 
 #define NOT_YET_SET -1
 
-ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
-                           const string &strExitPolicy, const string &strProductionPolicy,
-                           const double &dbEntryActionLikelihood,
-                           const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
-                           const double &dbPercentThresholdForLossExitPolicy,
-                           const int &iNumMacroStepsForLossExitPolicy) {
+ControlAgent::ControlAgent(const int& iAgentID, const string& strEntryPolicy,
+                           const string& strExitPolicy, const string& strProductionPolicy,
+                           const double& dbEntryActionLikelihood,
+                           const double& dbExitActionLikelihood, const double& dbNoneActionLikelihood,
+                           const double& dbPercentThresholdForLossExitPolicy,
+                           const int& iNumMacroStepsForLossExitPolicy) {
     // Set the agent type
     this->enumAgentType = AgentType::Control;
 
@@ -42,21 +42,21 @@ ControlAgent::ControlAgent(const int &iAgentID, const string &strEntryPolicy,
     }
 
     // Set the remaining agent hyperparameters
-    this->iAgentID                = iAgentID;
+    this->iAgentID = iAgentID;
     this->dbEntryActionLikelihood = dbEntryActionLikelihood;
-    this->dbExitActionLikelihood  = dbExitActionLikelihood;
-    this->dbNoneActionLikelihood  = dbNoneActionLikelihood;
-    this->iFirmAssignment         = NOT_YET_SET;
+    this->dbExitActionLikelihood = dbExitActionLikelihood;
+    this->dbNoneActionLikelihood = dbNoneActionLikelihood;
+    this->iFirmAssignment = NOT_YET_SET;
 }
 
 vector<double> ControlAgent::get_action_likelihood_vector() const {
-    return {dbEntryActionLikelihood, dbExitActionLikelihood, dbNoneActionLikelihood};
+    return { dbEntryActionLikelihood, dbExitActionLikelihood, dbNoneActionLikelihood };
 }
 
 // Getters
-EntryPolicy         ControlAgent::get_enum_entry_policy()       const {return enumEntryPolicy;}
-ExitPolicy          ControlAgent::get_enum_exit_policy()        const {return enumExitPolicy;}
-ProductionPolicy    ControlAgent::get_enum_production_policy()  const {return enumProductionPolicy;}
+EntryPolicy         ControlAgent::get_enum_entry_policy()       const { return enumEntryPolicy; }
+ExitPolicy          ControlAgent::get_enum_exit_policy()        const { return enumExitPolicy; }
+ProductionPolicy    ControlAgent::get_enum_production_policy()  const { return enumProductionPolicy; }
 
 string ControlAgent::to_string() const {
     // Agent ID number
