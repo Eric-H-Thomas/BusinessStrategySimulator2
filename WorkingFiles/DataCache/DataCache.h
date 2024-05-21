@@ -33,10 +33,10 @@ public:
     DataCache();
 
     bool bInitialized = false;
-    map<pair<int,int>, double> mapFirmMarketComboToRevenue;
-    map<pair<int,int>, double> mapFirmMarketComboToFixedCost;
-    map<pair<int,int>, double> mapFirmMarketComboToVarCost;
-    map<pair<int,int>, double> mapFirmMarketComboToEntryCost;
-    map<pair<int,int>, double> mapFirmMarketComboToQtyProduced;
-    map<pair<int,int>, double> mapFirmMarketComboToPrice;
+    map<pair<int, int>, double> mapFirmMarketComboToRevenue;
+    map<pair<int, int>, double> mapFirmMarketComboToFixedCost;
+    map<pair<int, int>, double> mapFirmMarketComboToVarCost;
+    map<pair<int, int>, double> mapFirmMarketComboToEntryCost;
+    map<pair<int, int>, double> mapFirmMarketComboToQtyProduced;
+    map<pair<int, int>, double> mapFirmMarketComboToPrice;
 };

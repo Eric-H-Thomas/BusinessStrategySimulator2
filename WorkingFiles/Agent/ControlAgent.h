@@ -10,7 +10,6 @@
 
 
 using std::string;
-
 enum class EntryPolicy {
     All,
     HighestOverlap
@@ -23,12 +22,12 @@ enum class ExitPolicy {
 
 class ControlAgent : public BaseAgent {
 public:
-    ControlAgent(const int &iAgentID, const string &strEntryPolicy,
-                 const string &strExitPolicy, const string &strProductionPolicy,
-                 const double &dbEntryActionLikelihood,
-                 const double &dbExitActionLikelihood, const double &dbNoneActionLikelihood,
-                 const double &dbPercentThresholdForLossExitPolicy = 0.0,
-                 const int &iNumMacroStepsForLossExitPolicy = 0);
+    ControlAgent(const int& iAgentID, const string& strEntryPolicy,
+                 const string& strExitPolicy, const string& strProductionPolicy,
+                 const double& dbEntryActionLikelihood,
+                 const double& dbExitActionLikelihood, const double& dbNoneActionLikelihood,
+                 const double& dbPercentThresholdForLossExitPolicy = 0.0,
+                 const int& iNumMacroStepsForLossExitPolicy = 0);
     std::vector<double> get_action_likelihood_vector() const;
     EntryPolicy get_enum_entry_policy() const;
     ExitPolicy get_enum_exit_policy() const;
@@ -45,6 +44,3 @@ private:
     double dbPercentThresholdForLossExitPolicy;
     int iNumMacroStepsForLossExitPolicy;
 };
-
-
-

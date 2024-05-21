@@ -7,6 +7,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <set>
 
 using std::map;
 using std::vector;
@@ -24,11 +25,11 @@ struct ProductionQuantityChange; struct PriceChange; struct MarketPresenceChange
 
 class SimulationHistory {
 public:
-    map<int,int>                     mapAgentToFirm;
-    map<int,string>                  mapFirmToAgentDescription;
-    map<int,double>                  mapFirmStartingCapital;
-    map<int,double>                  mapMarketMaximumEntryCost;
-    map<pair<int,int>,double>        mapFirmMarketComboToVarCost;
+    map<int, int>                     mapAgentToFirm;
+    map<int, string>                  mapFirmToAgentDescription;
+    map<int, double>                  mapFirmStartingCapital;
+    map<int, double>                  mapMarketMaximumEntryCost;
+    map<pair<int, int>, double>        mapFirmMarketComboToVarCost;
     vector<vector<double>>           vecOfVecMarketOverlapMatrix;
     vector<CapitalChange>            vecCapitalChanges;
     vector<RevenueChange>            vecRevenueChanges;
@@ -38,9 +39,9 @@ public:
     vector<PriceChange>              vecPriceChanges;
     vector<MarketPresenceChange>     vecMarketPresenceChanges;
 
-    SimulationHistory(const map<int,int> &mapAgentToFirm, const map<int,string> &mapFirmToAgentDescription,
-                      const map<int,double> &mapFirmStartingCapital,
-                      const map<int,double> &mapMarketMaximumEntryCost);
+    SimulationHistory(const map<int, int>& mapAgentToFirm, const map<int, string>& mapFirmToAgentDescription,
+                      const map<int, double>& mapFirmStartingCapital,
+                      const map<int, double>& mapMarketMaximumEntryCost);
 
     void record_market_presence_change(int iMicroTimeStep, bool bPresent, int iFirmID, int iMarketID);
     void record_capital_change(int iMicroTimeStep, int iFirmID, double dbNewCapitalQty);
@@ -49,6 +50,7 @@ public:
     void record_entry_cost_change(int iMicroTimeStep, double dbNewEntryCost, int iFirmID, int iMarketID);
     void record_production_quantity_change(int iMicroTimeStep, double dbNewProductionQty, int iFirmID, int iMarketID);
     void record_price_change(int iMicroTimeStep, double dbNewPrice, int iFirmID, int iMarketID);
+    void record_bankruptcy(int iMicroTimeStep, int iFirmID, std::set<int> setMarketPortfolio);
 };
 
 struct CapitalChange {

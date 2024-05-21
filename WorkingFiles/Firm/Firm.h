@@ -17,7 +17,7 @@ public:
     void reset(double dbStartingCapital);
     int getFirmID() const;
     double getDbCapital() const;
-    const vector<int> &getVecCapabilities() const;
+    const vector<int>& getVecCapabilities() const;
     void add_capital(double dbChangeInCapital);
     int add_market_to_portfolio(const int& iMarketID);
     int add_market_capabilities_to_firm_capabilities(const Market& market);
@@ -25,7 +25,7 @@ public:
     int remove_market_from_portfolio(const int& iMarketID);
     bool is_in_market(Market market);
     Market choose_market_with_highest_overlap(set<Market> setMarkets);
-    const set<int> &getSetMarketIDs() const;
+    const set<int>& getSetMarketIDs() const;
     void declare_bankruptcy();
 
 private:

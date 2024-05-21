@@ -4,14 +4,28 @@
 
 #include "SimulationHistory.h"
 
-SimulationHistory::SimulationHistory(const map<int, int> &mapAgentToFirm,
-                                     const map<int,string> &mapFirmToAgentDescription,
-                                     const map<int, double> &mapFirmStartingCapital,
-                                     const map<int, double> &mapMarketMaximumEntryCost) :
+SimulationHistory::SimulationHistory(const map<int, int>& mapAgentToFirm,
+                                     const map<int, string>& mapFirmToAgentDescription,
+                                     const map<int, double>& mapFirmStartingCapital,
+                                     const map<int, double>& mapMarketMaximumEntryCost) :
         mapAgentToFirm(mapAgentToFirm),
         mapFirmToAgentDescription(mapFirmToAgentDescription),
         mapFirmStartingCapital(mapFirmStartingCapital),
         mapMarketMaximumEntryCost(mapMarketMaximumEntryCost) {
+}
+
+void SimulationHistory::record_bankruptcy(int iMicroTimeStep, int iFirmID, std::set<int> setMarketPortfolio) {
+    // Record bankruptcy in the simulation history
+    for (int iMarketID : setMarketPortfolio) {
+        record_market_presence_change(iMicroTimeStep, false, iFirmID, iMarketID);
+        record_revenue_change(iMicroTimeStep, 0.0, iFirmID, iMarketID);
+        record_fixed_cost_change(iMicroTimeStep, 0.0, iFirmID, iMarketID);
+        record_entry_cost_change(iMicroTimeStep, 0.0, iFirmID, iMarketID);
+        record_production_quantity_change(iMicroTimeStep, 0.0, iFirmID, iMarketID);
+        record_price_change(iMicroTimeStep, 0.0, iFirmID, iMarketID);
+    }
+
+    record_capital_change(iMicroTimeStep, iFirmID, -1e-9);
 }
 
 void SimulationHistory::record_market_presence_change(int iMicroTimeStep, bool bPresent, int iFirmID, int iMarketID) {
@@ -40,7 +54,7 @@ void SimulationHistory::record_revenue_change(int iMicroTimeStep, double dbNewRe
     vecRevenueChanges.push_back(revenueChange);
 }
 
-void SimulationHistory::record_fixed_cost_change(int iMicroTimeStep, double dbNewFixedCost, int iFirmID, int iMarketID){
+void SimulationHistory::record_fixed_cost_change(int iMicroTimeStep, double dbNewFixedCost, int iFirmID, int iMarketID) {
     FixedCostChange fixedCostChange;
     fixedCostChange.iMicroTimeStep = iMicroTimeStep;
     fixedCostChange.dbNewFixedCost = dbNewFixedCost;
@@ -49,7 +63,7 @@ void SimulationHistory::record_fixed_cost_change(int iMicroTimeStep, double dbNe
     vecFixedCostChanges.push_back(fixedCostChange);
 }
 
-void SimulationHistory::record_entry_cost_change(int iMicroTimeStep, double dbNewEntryCost, int iFirmID, int iMarketID){
+void SimulationHistory::record_entry_cost_change(int iMicroTimeStep, double dbNewEntryCost, int iFirmID, int iMarketID) {
     EntryCostChange entryCostChange;
     entryCostChange.iMicroTimeStep = iMicroTimeStep;
     entryCostChange.dbNewEntryCost = dbNewEntryCost;

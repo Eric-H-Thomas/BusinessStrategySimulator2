@@ -24,7 +24,7 @@ using std::vector;
 class Simulator {
 public:
     Simulator();
-    int load_json_configs(const string &strConfigFilePath);
+    int load_json_configs(const string& strConfigFilePath);
     void init_master_history();
     void init_simulation_history();
     int init_data_cache(SimulationHistory* pCurrentSimulationHistory);
@@ -82,10 +82,13 @@ private:
     bool bRandomizeTurnOrderWithinEachMacroStep;
     bool bRandomizeAgentFirmAssignmentPerSimulation;
     bool bRandomizeVariableCostsPerSimulation;
+    bool bRandomizeEconomyPerSimulation;
+    bool bRandomizeMarketsPerSimulation;
+
 
     // Maps to track stats necessary for reward calculations
-    map<int,int> mapAIAgentIDToMicroTimeStepOfLastTurn;
-    map<int,double> mapAIAgentIDToCapitalAtLastTurn;
+    map<int, int> mapAIAgentIDToMicroTimeStepOfLastTurn;
+    map<int, double> mapAIAgentIDToCapitalAtLastTurn;
 
     // Helper variables for StableBaselines3 interface
     int iNumAIAgents = 0;
@@ -95,20 +98,22 @@ private:
     int init_AI_agents();
     int init_economy();
     int init_markets();
+    int reset_economy();
+    int reset_markets();
     int set_simulation_parameters();
     int init_firms_for_agents();
-    vector<int> create_market_capability_vector(const double &dbMean, const double &dbSD);
-    vector<Action> get_actions_for_all_agents_control_agent_turn(const int &iActingAgentID);
-    vector<Action> get_actions_for_all_agents_ai_agent_turn(const int &iActingAgentID, const int& iAIAgentActionID);
+    vector<int> create_market_capability_vector(const double& dbMean, const double& dbSD);
+    vector<Action> get_actions_for_all_agents_control_agent_turn(const int& iActingAgentID);
+    vector<Action> get_actions_for_all_agents_ai_agent_turn(const int& iActingAgentID, const int& iAIAgentActionID);
     Action convert_action_ID_to_action_object(const int& iActingAgentID, const int& iAIAgentActionID);
-    int execute_actions(const vector<Action> &vecActions, map<int,double>* pMapFirmIDToCapitalChange);
-    int execute_entry_action(const Action& action, map<int,double>* pMapFirmIDToCapitalChange);
-    int execute_exit_action(const Action& action, map<int,double>* pMapFirmIDToCapitalChange);
-    Action get_agent_action(const ControlAgent &agent);
-    ActionType get_action_type(const ControlAgent &agent);
-    Action get_entry_action(const ControlAgent &agent);
-    Action get_exit_action(const ControlAgent &agent);
-    int distribute_profits(map<int,double>* pMapFirmIDToCapitalChange);
+    int execute_actions(const vector<Action>& vecActions, map<int, double>* pMapFirmIDToCapitalChange);
+    int execute_entry_action(const Action& action, map<int, double>* pMapFirmIDToCapitalChange);
+    int execute_exit_action(const Action& action, map<int, double>* pMapFirmIDToCapitalChange);
+    Action get_agent_action(const ControlAgent& agent);
+    ActionType get_action_type(const ControlAgent& agent);
+    Action get_entry_action(const ControlAgent& agent);
+    Action get_exit_action(const ControlAgent& agent);
+    int distribute_profits(map<int, double>* pMapFirmIDToCapitalChange);
     Firm* get_firm_ptr_from_agent_ptr(BaseAgent* agentPtr);
     Firm* get_firm_ptr_from_agent_id(const int& iAgentID);
     BaseAgent* get_agent_ptr_from_firm_ID(int iFirmID);
@@ -117,8 +122,9 @@ private:
     set<int> get_set_market_IDs();
 
     set<int> get_firm_IDs_in_market(Market market);
-    map<int,double> get_map_firm_to_var_cost_for_market(Market market);
+    map<int, double> get_map_firm_to_var_cost_for_market(Market market);
     double get_average_var_cost_in_market(Market market);
     void add_profit_to_firm(double dbProfit, int iFirmID);
     void shuffle_agent_firm_assignments();
 };
+

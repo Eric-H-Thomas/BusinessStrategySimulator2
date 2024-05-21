@@ -1,17 +1,13 @@
-//
-// Created by Eric Thomas on 9/20/23.
-//
-
 #include "StringUtils.h"
 #include <algorithm>
 
-std::string StringUtils::toUpper(const std::string& str) {
-    std::string result = str;
+string StringUtils::toUpper(const string& str) {
+    string result = str;
     std::transform(result.begin(), result.end(), result.begin(), ::toupper);
     return result;
 }
 
-bool StringUtils::equalsIgnoreCase(const std::string& str1, const std::string& str2) {
+bool StringUtils::equalsIgnoreCase(const string& str1, const string& str2) {
     if (str1.size() != str2.size()) {
         return false;
     }
@@ -23,13 +19,22 @@ bool StringUtils::equalsIgnoreCase(const std::string& str1, const std::string& s
     return true;
 }
 
-bool StringUtils::equalsIgnoreCaseAndIgnoreUnderscores(const std::string& str1, const std::string& str2) {
+bool StringUtils::equalsIgnoreCaseAndIgnoreUnderscores(const string& str1, const string& str2) {
     // Remove underscores from both strings and then compare them case-insensitively
-    std::string str1NoUnderscores = str1;
+    string str1NoUnderscores = str1;
     str1NoUnderscores.erase(std::remove(str1NoUnderscores.begin(), str1NoUnderscores.end(), '_'), str1NoUnderscores.end());
 
-    std::string str2NoUnderscores = str2;
+    string str2NoUnderscores = str2;
     str2NoUnderscores.erase(std::remove(str2NoUnderscores.begin(), str2NoUnderscores.end(), '_'), str2NoUnderscores.end());
 
     return equalsIgnoreCase(str1NoUnderscores, str2NoUnderscores);
 }
+
+//string StringUtils::getTimeStampAsString() {
+//    std::time_t t = std::time(nullptr);
+//    std::tm* now = std::localtime(&t);
+//
+//    char buffer[128];
+//    strftime(buffer, sizeof(buffer), "%m-%d-%Y %X", now);
+//    return buffer;
+//}

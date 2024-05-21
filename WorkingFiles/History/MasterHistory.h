@@ -16,12 +16,18 @@ public:
     SimulationHistory* getCurrentSimulationHistoryPtr();
     void prepare_data_for_output();
     int generate_master_output();
+    int generate_market_overlap_file();
     vector<DataRow> vecDataRows;
 
     // Data needed to prepare the master output file
     int iMicroStepsPerSim;
     int iNumFirms;
     int iNumMarkets;
+
+    // Data need to help prepare the market overlap file
+    int iCapabilitiesPerMarket;
+
+    string strMasterHistoryOutputPath;
 
 private:
     int get_row_number(int iCurrentSim, int iCurrentFirm, int iCurrentMarket, int iCurrentMicroStep);
