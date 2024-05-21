@@ -13,3 +13,4 @@ cmake-build-debug/BusinessStrategy2_0
 *.o
 *.log
 *.csv
+*.log

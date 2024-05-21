@@ -797,6 +797,9 @@ int Simulator::execute_entry_action(const Action& action, map<int, double>* pMap
     auto pairFirmMarket = std::make_pair(firmPtr->getFirmID(), action.iMarketID);
     double dbEntryCost = dataCache.mapFirmMarketComboToEntryCost.at(pairFirmMarket);
 
+    // Update capital within the firm object
+    firmPtr->add_capital(-dbEntryCost);
+
     // Update the map of firm IDs to capital change with the entry cost of this action
     pMapFirmIDToCapitalChange->at(firmPtr->getFirmID()) -= dbEntryCost;
 
