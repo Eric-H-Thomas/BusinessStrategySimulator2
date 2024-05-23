@@ -15,9 +15,7 @@ using std::cerr;
 ControlAgent::ControlAgent(const int& iAgentID, const string& strEntryPolicy,
                            const string& strExitPolicy, const string& strProductionPolicy,
                            const double& dbEntryActionLikelihood,
-                           const double& dbExitActionLikelihood, const double& dbNoneActionLikelihood,
-                           const double& dbPercentThresholdForLossExitPolicy,
-                           const int& iNumMacroStepsForLossExitPolicy) {
+                           const double& dbExitActionLikelihood, const double& dbNoneActionLikelihood) {
     // Set the agent type
     this->enumAgentType = AgentType::Control;
 
@@ -32,8 +30,6 @@ ControlAgent::ControlAgent(const int& iAgentID, const string& strEntryPolicy,
         this->enumExitPolicy = ExitPolicy::All;
     if (StringUtils::equalsIgnoreCase(strExitPolicy, "loss")) {
         this->enumExitPolicy = ExitPolicy::Loss;
-        this->dbPercentThresholdForLossExitPolicy = dbPercentThresholdForLossExitPolicy;
-        this->iNumMacroStepsForLossExitPolicy = iNumMacroStepsForLossExitPolicy;
     }
 
     // Set the production policy
@@ -120,16 +116,6 @@ string ControlAgent::to_string() const {
     output += "__";
     output += "None action likelihood:";
     output += std::to_string(dbNoneActionLikelihood);
-
-    // Percent threshold for loss exit policy
-    output += "__";
-    output += "Percent threshold for loss exit policy:";
-    output += std::to_string(dbPercentThresholdForLossExitPolicy);
-
-    // Number of macro steps for exit loss policy
-    output += "__";
-    output += "Number of macro steps for exit loss policy:";
-    output += std::to_string(iNumMacroStepsForLossExitPolicy);
 
     return output;
 }

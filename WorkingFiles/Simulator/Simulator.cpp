@@ -45,7 +45,7 @@ int Simulator::run() {
                 // Create a state observation to show the AI agent the current economic situation
                 vector<double> stateObs = generate_state_observation(iAgentID);
 
-                // Convert the state observation fron a vector of doubles to a PyObject
+                // Convert the state observation from a vector of doubles to a PyObject
                 PyObject* pythonVector = PyTuple_New(stateObs.size());
                 for (int i = 0; i < stateObs.size(); i++) {
                     auto value = PyFloat_FromDouble(stateObs[i]);
@@ -294,9 +294,7 @@ int Simulator::init_control_agents() {
                                              agentData["production_policy"],
                                              agentData["entry_action_likelihood"],
                                              agentData["exit_action_likelihood"],
-                                             agentData["none_action_likelihood"],
-                                             agentData["percent_threshold_for_loss_exit_policy"],
-                                             agentData["num_macro_steps_for_loss_exit_policy"]);
+                                             agentData["none_action_likelihood"]);
 
             this->mapAgentIDToAgentPtr.insert(std::make_pair(agentData["agent_id"], agentPtr));
         }
@@ -1017,19 +1015,37 @@ Action Simulator::get_exit_action(const ControlAgent& agent) {
         return Action::generate_none_action(agent.get_agent_ID());
     }
 
-    // Choose a market to exit based on the exit policy
+    // If exit policy is ALL, randomly choose a market to exit
     if (agent.get_enum_exit_policy() == ExitPolicy::All) {
         iFinalChoiceMarketID = MiscUtils::choose_random_from_set(firmPtr->getSetMarketIDs());
     }
 
-        // TODO: Add functionality for ExitPolicy::Loss
-//    else if (agent.get_enum_exit_policy() == ExitPolicy::Loss) {
-//
-//    }
+    // If exit policy is LOSS, choose the market with the lowest profit in the most recent time step
+    else if (agent.get_enum_exit_policy() == ExitPolicy::Loss) {
+        // Find the market with the lowest profit from the most recent time step
+
+        double dbLowestProfit = 1e10; // TODO: Figure out how to make this double.maxvalue or something similar
+
+        int iFirmID = this->get_firm_ptr_from_agent(agent)->getFirmID();
+        for (int iMarketID : this->get_set_market_IDs()) {
+            auto pairFirmMarket = std::make_pair(iFirmID, iMarketID);
+            double dbRev = dataCache.mapFirmMarketComboToRevenue[pairFirmMarket];
+            double dbFixedCost = dataCache.mapFirmMarketComboToFixedCost[pairFirmMarket];
+            double dbVarCost = dataCache.mapFirmMarketComboToVarCost[pairFirmMarket];
+            double dbQty = dataCache.mapFirmMarketComboToQtyProduced[pairFirmMarket];
+            double dbPrice = dataCache.mapFirmMarketComboToPrice[pairFirmMarket];
+            double dbTotalCost = dbFixedCost + (dbVarCost * dbPrice);
+            double dbProfit = dbRev = dbTotalCost;
+
+            if (dbProfit < dbLowestProfit) {
+                iFinalChoiceMarketID = iMarketID;
+            }
+        }
+    }
 
     else {
         // Should never reach this part of the code
-        cerr << "Error getting action_type" << endl;
+        cerr << "Error getting exit action" << endl;
         throw std::exception();
     }
 

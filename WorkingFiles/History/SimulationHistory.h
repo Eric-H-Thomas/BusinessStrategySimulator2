@@ -29,15 +29,15 @@ public:
     map<int, string>                  mapFirmToAgentDescription;
     map<int, double>                  mapFirmStartingCapital;
     map<int, double>                  mapMarketMaximumEntryCost;
-    map<pair<int, int>, double>        mapFirmMarketComboToVarCost;
-    vector<vector<double>>           vecOfVecMarketOverlapMatrix;
-    vector<CapitalChange>            vecCapitalChanges;
-    vector<RevenueChange>            vecRevenueChanges;
-    vector<FixedCostChange>          vecFixedCostChanges;
-    vector<EntryCostChange>          vecEntryCostChanges;
-    vector<ProductionQuantityChange> vecProductionQtyChanges;
-    vector<PriceChange>              vecPriceChanges;
-    vector<MarketPresenceChange>     vecMarketPresenceChanges;
+    map<pair<int, int>, double>       mapFirmMarketComboToVarCost;
+    vector<vector<double>>            vecOfVecMarketOverlapMatrix;
+    vector<CapitalChange>             vecCapitalChanges;
+    vector<RevenueChange>             vecRevenueChanges;
+    vector<FixedCostChange>           vecFixedCostChanges;
+    vector<EntryCostChange>           vecEntryCostChanges;
+    vector<ProductionQuantityChange>  vecProductionQtyChanges;
+    vector<PriceChange>               vecPriceChanges;
+    vector<MarketPresenceChange>      vecMarketPresenceChanges;
 
     SimulationHistory(const map<int, int>& mapAgentToFirm, const map<int, string>& mapFirmToAgentDescription,
                       const map<int, double>& mapFirmStartingCapital,

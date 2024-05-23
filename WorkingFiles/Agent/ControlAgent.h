@@ -25,9 +25,7 @@ public:
     ControlAgent(const int& iAgentID, const string& strEntryPolicy,
                  const string& strExitPolicy, const string& strProductionPolicy,
                  const double& dbEntryActionLikelihood,
-                 const double& dbExitActionLikelihood, const double& dbNoneActionLikelihood,
-                 const double& dbPercentThresholdForLossExitPolicy = 0.0,
-                 const int& iNumMacroStepsForLossExitPolicy = 0);
+                 const double& dbExitActionLikelihood, const double& dbNoneActionLikelihood);
     std::vector<double> get_action_likelihood_vector() const;
     EntryPolicy get_enum_entry_policy() const;
     ExitPolicy get_enum_exit_policy() const;
@@ -41,6 +39,4 @@ private:
     double dbEntryActionLikelihood;
     double dbExitActionLikelihood;
     double dbNoneActionLikelihood;
-    double dbPercentThresholdForLossExitPolicy;
-    int iNumMacroStepsForLossExitPolicy;
 };
