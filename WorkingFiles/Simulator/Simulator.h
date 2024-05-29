@@ -8,6 +8,7 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <limits>
 #include "../Agent/ControlAgent.h"
 #include "../Agent/StableBaselines3Agent.h"
 #include "../Economy/Economy.h"

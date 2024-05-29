@@ -1024,7 +1024,7 @@ Action Simulator::get_exit_action(const ControlAgent& agent) {
     else if (agent.get_enum_exit_policy() == ExitPolicy::Loss) {
         // Find the market with the lowest profit from the most recent time step
 
-        double dbLowestProfit = 1e10; // TODO: Figure out how to make this double.maxvalue or something similar
+        double dbLowestProfit = std::numeric_limits<double>::infinity();
 
         int iFirmID = this->get_firm_ptr_from_agent(agent)->getFirmID();
         for (int iMarketID : this->get_set_market_IDs()) {
@@ -1038,6 +1038,7 @@ Action Simulator::get_exit_action(const ControlAgent& agent) {
             double dbProfit = dbRev = dbTotalCost;
 
             if (dbProfit < dbLowestProfit) {
+                dbLowestProfit = dbProfit;
                 iFinalChoiceMarketID = iMarketID;
             }
         }
