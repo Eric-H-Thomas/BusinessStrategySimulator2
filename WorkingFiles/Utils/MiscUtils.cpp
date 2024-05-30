@@ -45,7 +45,8 @@ int MiscUtils::choose_index_given_probabilities(const std::vector<double>& proba
 double MiscUtils::dot_product(const std::vector<double>& vector1, const std::vector<double>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
-        throw std::invalid_argument("Vectors must have the same dimension");
+        std::cerr << "Vectors must have the same dimension" << std::endl;
+        throw std::exception();
     }
 
     double result = 0.0;
@@ -61,7 +62,8 @@ double MiscUtils::dot_product(const std::vector<double>& vector1, const std::vec
 int MiscUtils::dot_product(const std::vector<int>& vector1, const std::vector<int>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
-        throw std::invalid_argument("Vectors must have the same dimension");
+        std::cerr << "Vectors must have the same dimension\"" << std::endl;
+        throw std::exception();
     }
 
     int result = 0;
@@ -77,7 +79,8 @@ int MiscUtils::dot_product(const std::vector<int>& vector1, const std::vector<in
 double MiscUtils::dot_product(const std::vector<int>& vector1, const std::vector<double>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
-        throw std::invalid_argument("Vectors must have the same dimension");
+        std::cerr << "Vectors must have the same dimension\"" << std::endl;
+        throw std::exception();
     }
 
     double result = 0.0;
@@ -93,7 +96,8 @@ double MiscUtils::dot_product(const std::vector<int>& vector1, const std::vector
 double MiscUtils::dot_product(const std::vector<double>& vector1, const std::vector<int>& vector2) {
     if (vector1.size() != vector2.size()) {
         // Ensure that both vectors have the same dimension.
-        throw std::invalid_argument("Vectors must have the same dimension");
+        std::cerr << "Vectors must have the same dimension\"" << std::endl;
+        throw std::exception();
     }
 
     double result = 0.0;
@@ -145,7 +149,8 @@ double MiscUtils::get_percentage_overlap(const std::vector<int>& vector1, const 
 vector<int> MiscUtils::element_wise_logical_and(const vector<int>& vector1, const vector<int>& vector2) {
     // Check that the vectors have the same size
     if (vector1.size() != vector2.size()) {
-        throw std::invalid_argument("Vector sizes must be the same for element-wise AND.");
+        std::cerr << "Vector sizes must be the same for element-wise AND." << std::endl;
+        throw std::exception();
     }
 
     std::vector<int> result;
@@ -162,7 +167,8 @@ vector<int> MiscUtils::element_wise_logical_and(const vector<int>& vector1, cons
 vector<int> MiscUtils::element_wise_logical_or(const vector<int>& vector1, const vector<int>& vector2) {
     // Check that the vectors have the same size
     if (vector1.size() != vector2.size()) {
-        throw std::invalid_argument("Vector sizes must be the same for element-wise AND.");
+        std::cerr << "Vector sizes must be the same for element-wise AND." << std::endl;
+        throw std::exception();
     }
 
     std::vector<int> result;
@@ -179,7 +185,8 @@ vector<int> MiscUtils::element_wise_logical_or(const vector<int>& vector1, const
 vector<int> MiscUtils::vector_addition(const vector<int>& vector1, const vector<int>& vector2) {
     // Check that the vectors have the same size
     if (vector1.size() != vector2.size()) {
-        throw std::invalid_argument("Vector sizes must be the same for vector addition.");
+        std::cerr << "Vector sizes must be the same for vector addition." << std::endl;
+        throw std::exception();
     }
 
     std::vector<int> result;
@@ -196,7 +203,8 @@ vector<int> MiscUtils::vector_addition(const vector<int>& vector1, const vector<
 vector<int> MiscUtils::vector_subtraction(const vector<int>& vector1, const vector<int>& vector2) {
     // Check that the vectors have the same size
     if (vector1.size() != vector2.size()) {
-        throw std::invalid_argument("Vector sizes must be the same for vector subtraction.");
+        std::cerr << "Vector sizes must be the same for vector subtraction." << std::endl;
+        throw std::exception();
     }
 
     std::vector<int> result;
