@@ -181,6 +181,7 @@ int Simulator::set_simulation_parameters() {
         this->dbSkippedTurnsPerRegularTurn = simulation_parameters["skipped_turns_per_regular_turn"];
         this->bVerbose = simulation_parameters["verbose"];
         this->bGenerateMasterOutput = simulation_parameters["generate_master_output"];
+        this->bTrainingMode = simulation_parameters["training_mode"];
         this->bRandomizeTurnOrderWithinEachMacroStep = simulation_parameters["randomize_turn_order_within_each_macro_step"];
         this->bRandomizeAgentFirmAssignmentPerSimulation = simulation_parameters["randomize_agent_firm_assignment_per_simulation"];
         this->bRandomizeVariableCostsPerSimulation = simulation_parameters["randomize_variable_costs_per_simulation"];
@@ -1090,7 +1091,10 @@ void Simulator::init_simulation_history() {
     // Initialize the simulation history using the above four maps
     currentSimulationHistoryPtr = new SimulationHistory(mapAgentToFirm, mapFirmIDToAgentDescriptions,
                                                         mapFirmStartingCapital, mapMarketMaximumEntryCosts);
-    masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
+
+    if (!bTrainingMode) {
+        masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
+    }
 }
 
 int Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {

@@ -80,6 +80,7 @@ private:
     int iNumSims;
     int iMacroStepsPerSim;
     double dbSkippedTurnsPerRegularTurn;
+    bool bTrainingMode;
     bool bRandomizeTurnOrderWithinEachMacroStep;
     bool bRandomizeAgentFirmAssignmentPerSimulation;
     bool bRandomizeVariableCostsPerSimulation;
