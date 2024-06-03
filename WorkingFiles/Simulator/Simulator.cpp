@@ -1092,9 +1092,11 @@ void Simulator::init_simulation_history() {
     currentSimulationHistoryPtr = new SimulationHistory(mapAgentToFirm, mapFirmIDToAgentDescriptions,
                                                         mapFirmStartingCapital, mapMarketMaximumEntryCosts);
 
-    if (!bTrainingMode) {
-        masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
+    if (bTrainingMode) {
+        masterHistory.vecSimulationHistoryPtrs.clear();
     }
+
+    masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
 }
 
 int Simulator::init_data_cache(SimulationHistory* pCurrentSimulationHistory) {
