@@ -1092,10 +1092,15 @@ void Simulator::init_simulation_history() {
     currentSimulationHistoryPtr = new SimulationHistory(mapAgentToFirm, mapFirmIDToAgentDescriptions,
                                                         mapFirmStartingCapital, mapMarketMaximumEntryCosts);
 
+    // Clear out the master history if in training mode
     if (bTrainingMode) {
+        for (auto pSimHistory : masterHistory.vecSimulationHistoryPtrs) {
+            delete pSimHistory;
+        }
         masterHistory.vecSimulationHistoryPtrs.clear();
     }
 
+    // Add the current simulation history to the master history
     masterHistory.vecSimulationHistoryPtrs.push_back(currentSimulationHistoryPtr);
 }
 
