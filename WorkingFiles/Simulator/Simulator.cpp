@@ -258,8 +258,6 @@ int Simulator::reset_economy() {
             vecMarketsPerCluster.push_back(numMarkets);
         }
 
-        // TO DO: Verify that this does not cause a memory leak.
-
         this->economy = Economy(economy_parameters["possible_capabilities"],
                                 economy_parameters["capabilities_per_market"],
                                 economy_parameters["num_market_clusters"],
@@ -915,15 +913,16 @@ int Simulator::execute_exit_action(const Action& action, map<int, double>* pMapF
         double dbCost = MiscUtils::dot_product(vecMissingCapabilities, economy.get_vec_capability_costs());
 
         // Update the data cache and the history if the entry cost has changed since it was last calculated
-        double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket];
+        auto pair = std::make_pair(firmPtr->getFirmID(), market.get_market_id());
+        double dbPriorCost = dataCache.mapFirmMarketComboToEntryCost[pair];
         if (dbCost != dbPriorCost) {
-            dataCache.mapFirmMarketComboToEntryCost[pairFirmMarket] = dbCost;
+            dataCache.mapFirmMarketComboToEntryCost[pair] = dbCost;
             currentSimulationHistoryPtr->record_entry_cost_change(iCurrentMicroTimeStep,
                                                                   dbCost, firmPtr->getFirmID(), market.get_market_id());
         }
     }
 
-    // Rrecord changes to revenue, price, and quantity
+    // Record changes to revenue, price, and quantity
     currentSimulationHistoryPtr->record_revenue_change(iCurrentMicroTimeStep, 0.0, firmPtr->getFirmID(), action.iMarketID);
     currentSimulationHistoryPtr->record_price_change(iCurrentMicroTimeStep, 0.0, firmPtr->getFirmID(), action.iMarketID);
     currentSimulationHistoryPtr->record_production_quantity_change(iCurrentMicroTimeStep, 0.0, firmPtr->getFirmID(), action.iMarketID);
