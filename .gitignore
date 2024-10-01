@@ -14,3 +14,10 @@ cmake-build-debug/BusinessStrategy2_0
 *.log
 *.csv
 *.log
+.DS_Store
+*.pyc
+*.so
+*.o
+*.zip
+*.so
+cmake-build-debug/BusinessStrategy2_0
