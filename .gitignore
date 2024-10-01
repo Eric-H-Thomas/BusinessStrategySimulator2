@@ -21,3 +21,4 @@ cmake-build-debug/BusinessStrategy2_0
 *.zip
 *.so
 cmake-build-debug/BusinessStrategy2_0
+.DS_Store
