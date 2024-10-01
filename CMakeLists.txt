@@ -52,6 +52,7 @@ set(COMMON_SOURCES
         WorkingFiles/PythonAPI/PythonAPI.h
         WorkingFiles/Agent/BaseAgent.cpp WorkingFiles/Agent/BaseAgent.h WorkingFiles/Agent/StableBaselines3Agent.cpp WorkingFiles/Agent/StableBaselines3Agent.h)
 
+
 # Executable target
 add_executable(BusinessStrategy2_0 WorkingFiles/main.cpp ${COMMON_SOURCES})
 target_link_libraries(BusinessStrategy2_0 PRIVATE pybind11::embed)

@@ -9,6 +9,7 @@
 #include <fstream>
 #include <random>
 #include <cmath>
+#include <pybind11/stl.h>
 
 using std::map;
 using std::vector;
@@ -21,13 +22,7 @@ Note that the run method should not be used while training AI agents! This metho
 involving heuristic agents and/or trained AI agents.
 */
 
-int Simulator::run() {
-
-    // Create Python Object method
-    PyObject* pName = PyUnicode_DecodeFSDefault("simulator");;
-    PyObject* myModule = PyImport_Import(pName);
-    PyObject* myFunction = PyObject_GetAttrString(myModule, (char*)"simulate");
-
+int Simulator::run(py::object simulate_function) {
     // Loop through the macro steps
     for (int iMacroStep = 0; iMacroStep < iMacroStepsPerSim; iMacroStep++) {
         if (bVerbose) cout << "Beginning macro step " << iMacroStep + 1 << " of " << iMacroStepsPerSim << endl;
@@ -44,26 +39,11 @@ int Simulator::run() {
 
                 // Create a state observation to show the AI agent the current economic situation
                 vector<double> stateObs = generate_state_observation(iAgentID);
+                py::tuple obs = py::tuple(py::cast(stateObs));
 
-                // Convert the state observation from a vector of doubles to a PyObject
-                PyObject* pythonVector = PyTuple_New(stateObs.size());
-                for (int i = 0; i < stateObs.size(); i++) {
-                    auto value = PyFloat_FromDouble(stateObs[i]);
-                    PyTuple_SetItem(pythonVector, i, value);
-                }
+                py::object result = simulate_function(mapAgentIDToAgentPtr[iAgentID]->get_path_to_agent().c_str(),obs);
 
-                // Create a new PyObject to store the parameters needed for the simulate method
-                PyObject* argsP = PyTuple_New(2);
-                PyObject* path = PyUnicode_FromString(mapAgentIDToAgentPtr[iAgentID]->get_path_to_agent().c_str());
-                PyTuple_SetItem(argsP, 0, path);
-                PyTuple_SetItem(argsP, 1, pythonVector);
-
-                // Call the simulate method
-                PyObject* myResult = PyObject_CallObject(myFunction, argsP);
-
-                // Cast the result of the simulate method to an int
-                double result = PyFloat_AsDouble(myResult);
-                int action = (int)result;
+                int action = result.cast<int>();
 
                 // Execute the micro step with the action chosen by the AI agent
                 if (perform_micro_step_ai_agent_turn(iAgentID, action)) {
@@ -175,13 +155,13 @@ int Simulator::set_simulation_parameters() {
     try {
         const auto& simulation_parameters = this->simulatorConfigs["simulation_parameters"];
         this->strRunName = simulation_parameters["run_name"];
-        this->strResultsDir = simulation_parameters["results_dir"];
+        //this->strResultsDir = simulation_parameters["results_dir"];
+        this->strResultsDir = "OutputFiles";
         this->iNumSims = simulation_parameters["num_sims"];
         this->iMacroStepsPerSim = simulation_parameters["macro_steps_per_sim"];
         this->dbSkippedTurnsPerRegularTurn = simulation_parameters["skipped_turns_per_regular_turn"];
         this->bVerbose = simulation_parameters["verbose"];
         this->bGenerateMasterOutput = simulation_parameters["generate_master_output"];
-        this->bTrainingMode = simulation_parameters["training_mode"];
         this->bRandomizeTurnOrderWithinEachMacroStep = simulation_parameters["randomize_turn_order_within_each_macro_step"];
         this->bRandomizeAgentFirmAssignmentPerSimulation = simulation_parameters["randomize_agent_firm_assignment_per_simulation"];
         this->bRandomizeVariableCostsPerSimulation = simulation_parameters["randomize_variable_costs_per_simulation"];
@@ -275,13 +255,6 @@ int Simulator::reset_economy() {
 
     return 0;
 }
-
-
-
-
-
-
-
 
 
 int Simulator::init_control_agents() {
@@ -380,21 +353,9 @@ void Simulator::init_master_history() {
     const auto& economy_parameters = this->simulatorConfigs["default_economy_parameters"];
     masterHistory.iCapabilitiesPerMarket = economy_parameters["capabilities_per_market"];
 
-
-    // Set the output path
-    /*masterHistory.strMasterHistoryOutputPath = this->simulatorConfigs["simulation_parameters"]["results_dir"] + "/"
-        + this->simulatorConfigs["simulation_parameters"]["run_name"] + '_' + StringUtils::getTimeStampAsString();*/
-
-    const auto& simulation_parameters = this->simulatorConfigs["simulation_parameters"];
-
-    string strResultsDir = simulation_parameters["results_dir"];
-    string strRunDir = simulation_parameters["run_name"];
-
-
-    /*masterHistory.strMasterHistoryOutputPath = strResultsDir + strRunDir;*/
-
-    masterHistory.strMasterHistoryOutputPath = strResultsDir;
-
+    // DEBUGGING
+    // masterHistory.strMasterHistoryOutputPath = this->strResultsDir;
+    masterHistory.strMasterHistoryOutputPath = "/Users/eric/CLionProjects/BusinessStrategy2.0/OutputFiles";
 }
 
 void Simulator::shuffle_agent_firm_assignments() {

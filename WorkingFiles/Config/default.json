@@ -1,18 +1,17 @@
 {
   "simulation_parameters": {
-    "run_name": "/BasicEconomyTwoAgents",
-    "results_dir": "MasterOutputFiles",
-    "num_sims": 10,
-    "macro_steps_per_sim": 100,
+    "run_name": "BasicEconomyTwoAgents",
+    "results_dir": "OutputFiles",
+    "num_sims": 5,
+    "macro_steps_per_sim": 10,
     "skipped_turns_per_regular_turn": 1,
     "generate_master_output": true,
     "verbose": false,
-    "training_mode": true,
     "randomize_turn_order_within_each_macro_step": true,
     "randomize_agent_firm_assignment_per_simulation": false,
     "randomize_variable_costs_per_simulation": true,
     "randomize_economy_per_simulation": true,
-    "randomize_markets_per_simulation":  true
+    "randomize_markets_per_simulation": true
   },
 
   "control_agents": [
@@ -23,9 +22,7 @@
       "production_policy": "Cournot",
       "entry_action_likelihood": 80,
       "exit_action_likelihood": 20,
-      "none_action_likelihood": 0,
-      "percent_threshold_for_loss_exit_policy": 80,
-      "num_macro_steps_for_loss_exit_policy": 3
+      "none_action_likelihood": 0
     },
     {
       "agent_id": 1,
@@ -34,20 +31,16 @@
       "production_policy": "Cournot",
       "entry_action_likelihood": 80,
       "exit_action_likelihood": 20,
-      "none_action_likelihood": 0,
-      "percent_threshold_for_loss_exit_policy": 80,
-      "num_macro_steps_for_loss_exit_policy": 3
+      "none_action_likelihood": 0
     },
     {
       "agent_id": 2,
-      "entry_policy": "highest_overlap",
-      "exit_policy": "loss",
+      "entry_policy": "all",
+      "exit_policy": "all",
       "production_policy": "Cournot",
       "entry_action_likelihood": 80,
       "exit_action_likelihood": 20,
-      "none_action_likelihood": 0,
-      "percent_threshold_for_loss_exit_policy": 80,
-      "num_macro_steps_for_loss_exit_policy": 3
+      "none_action_likelihood": 0
     },
     {
       "agent_id": 3,
@@ -56,64 +49,29 @@
       "production_policy": "Cournot",
       "entry_action_likelihood": 80,
       "exit_action_likelihood": 20,
-      "none_action_likelihood": 0,
-      "percent_threshold_for_loss_exit_policy": 80,
-      "num_macro_steps_for_loss_exit_policy": 3
-    },
-    {
-      "agent_id": 4,
-      "entry_policy": "all",
-      "exit_policy": "all",
-      "production_policy": "Cournot",
-      "entry_action_likelihood": 80,
-      "exit_action_likelihood": 20,
-      "none_action_likelihood": 0,
-      "percent_threshold_for_loss_exit_policy": 80,
-      "num_macro_steps_for_loss_exit_policy": 3
-    },
-    {
-      "agent_id": 5,
-      "entry_policy": "all",
-      "exit_policy": "all",
-      "production_policy": "Cournot",
-      "entry_action_likelihood": 80,
-      "exit_action_likelihood": 20,
-      "none_action_likelihood": 0,
-      "percent_threshold_for_loss_exit_policy": 80,
-      "num_macro_steps_for_loss_exit_policy": 3
-    },
-    {
-      "agent_id": 6,
-      "entry_policy": "all",
-      "exit_policy": "all",
-      "production_policy": "Cournot",
-      "entry_action_likelihood": 80,
-      "exit_action_likelihood": 20,
-      "none_action_likelihood": 0,
-      "percent_threshold_for_loss_exit_policy": 80,
-      "num_macro_steps_for_loss_exit_policy": 3
+      "none_action_likelihood": 0
     }
   ],
 
   "ai_agents": [
     {
-      "agent_id": 7,
+      "agent_id": 4,
       "agent_type": "stable_baselines_3",
       "production_policy": "Cournot",
-      "path_to_agent": "C:/Users/ARG/Desktop/BusinessStrategySimulator2Windows/BusinessStrategySimulator2Windows/agentFiles.zip",
+      "path_to_agent": "/Users/eric/CLionProjects/BusinessStrategy2.0/AgentFiles/Agent.zip",
       "RL_Algorithm": "PPO"
     }
   ],
 
   "default_economy_parameters": {
-    "possible_capabilities": 1000,
+    "possible_capabilities": 2000,
     "capabilities_per_market": 100,
-    "total_markets": 15,
+    "total_markets": 10,
 
     "num_market_clusters": 5,
-    "cluster_means": [ 100, 300, 500, 700, 900 ],
-    "cluster_SDs": [ 50, 50, 50, 50, 50 ],
-    "markets_per_cluster": [ 3, 3, 3, 3, 3 ]
+    "cluster_means": [600, 800, 1000, 1200, 1400],
+    "cluster_SDs": [50, 50, 50, 50, 50],
+    "markets_per_cluster": [2, 2, 2, 2, 2]
   },
 
   "default_firm_parameters": {

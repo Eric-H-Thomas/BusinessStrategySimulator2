@@ -73,6 +73,13 @@ class BusinessStrategyEnv(gym.Env):
 
 
 # Define and train an RL agent
+n_steps = 2048  # StableBaselines3 default value
+n_envs = 1  # StableBaselines3 default value
+num_updates = 1
+total_steps = n_steps * n_envs * num_updates
+
 path_to_default_config_file = '/Users/eric/CLionProjects/BusinessStrategy2.0/WorkingFiles/Config/default.json'
 env = BusinessStrategyEnv(path_to_default_config_file)
-model = PPO("MlpPolicy", env, verbose=1).learn(total_timesteps=1000000)
+model = PPO("MlpPolicy", env, verbose=1)
+model.learn(total_timesteps=total_steps)
+model.save("/Users/eric/CLionProjects/BusinessStrategy2.0/AgentFiles/Agent.zip")

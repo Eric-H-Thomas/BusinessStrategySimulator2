@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <pybind11/embed.h> // everything needed for embedding
 #include <vector>
 #include <map>
 #include <vector>
@@ -21,10 +22,13 @@
 
 using std::map;
 using std::vector;
+using std::string;
+namespace py = pybind11;
 
 class Simulator {
 public:
     Simulator();
+    bool bTrainingMode = false; // Only turn this on from within the Python API
     int load_json_configs(const string& strConfigFilePath);
     void init_master_history();
     void init_simulation_history();
@@ -33,7 +37,7 @@ public:
     void set_agent_turn_order();
     vector<int> get_agent_turn_order();
     int reset();
-    int run();
+    int run(py::object simulate_function);
     int get_num_sims() const;
     int get_macro_steps_per_sim() const;
     int iCurrentMacroTimeStep = 0;
@@ -64,6 +68,8 @@ public:
     int get_num_total_agents();
     bool at_beginning_of_macro_step();
     int get_num_markets();
+    string strRunName;
+    string strResultsDir;
 
 private:
     nlohmann::json simulatorConfigs;
@@ -75,12 +81,9 @@ private:
     vector<int> vecAgentTurnOrder;
 
     // Simulation parameters
-    string strRunName;
-    string strResultsDir;
     int iNumSims;
     int iMacroStepsPerSim;
     double dbSkippedTurnsPerRegularTurn;
-    bool bTrainingMode;
     bool bRandomizeTurnOrderWithinEachMacroStep;
     bool bRandomizeAgentFirmAssignmentPerSimulation;
     bool bRandomizeVariableCostsPerSimulation;

@@ -10,6 +10,8 @@ int PythonAPI::init_simulator(string strJsonConfigs) {
     if (simulator.load_json_configs(strJsonConfigs))
         return 1;
 
+    simulator.bTrainingMode = true;
+
     if (simulator.prepare_to_run())
         return 1;
 

@@ -4,12 +4,18 @@ Use business_strategy_gym_env.py or another Python script for training AI agents
 */
 
 #define PY_SSIZE_T_CLEAN
+
+#include <pybind11/embed.h> // everything needed for embedding
 #include <Python.h>
 #include <iostream>
 #include "Simulator/Simulator.h"
+#include <pybind11/pybind11.h>
+
 using std::cerr;
 using std::cout;
 using std::endl;
+
+namespace py = pybind11;
 
 int main(int argc, char* argv[]) {
 
@@ -19,9 +25,22 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    Py_Initialize();
-    PyRun_SimpleString("import sys");
-    PyRun_SimpleString("sys.path.append(\".\")");
+    py::scoped_interpreter guard{}; // start the interpreter and keep it alive
+    py::object simulate_function;
+    try {
+        // Add the directory containing the script to the Python path
+        py::module::import("sys").attr("path").attr("append")("/Users/eric/CLionProjects/BusinessStrategy2.0/");
+
+        // Import the script
+        py::module script = py::module::import("simulator");
+
+        // Set the simulate function py::object equal to the simulator.py simulate function
+        simulate_function = script.attr("simulate");
+    }
+    catch (const py::error_already_set &e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+
 
     // Create simulator instance
     Simulator simulator;
@@ -39,11 +58,9 @@ int main(int argc, char* argv[]) {
         if (simulator.reset())
             return 1;
 
-        if (simulator.run())
+        if (simulator.run(simulate_function))
             return 1;
     }
-
-    Py_Finalize();
 
     if (simulator.bGenerateMasterOutput) {
         if (simulator.masterHistory.generate_master_output()) {
