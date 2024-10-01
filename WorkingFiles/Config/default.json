@@ -1,8 +1,7 @@
 {
   "simulation_parameters": {
-    "run_name": "BasicEconomyTwoAgents",
-    "results_dir": "OutputFiles",
-    "num_sims": 5,
+    "results_dir":"/Users/eric/CLionProjects/BusinessStrategy2.0/OutputFiles",
+    "num_sims": 1,
     "macro_steps_per_sim": 10,
     "skipped_turns_per_regular_turn": 1,
     "generate_master_output": true,

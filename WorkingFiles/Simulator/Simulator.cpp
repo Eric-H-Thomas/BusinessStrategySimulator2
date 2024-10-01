@@ -154,9 +154,13 @@ int Simulator::reset() {
 int Simulator::set_simulation_parameters() {
     try {
         const auto& simulation_parameters = this->simulatorConfigs["simulation_parameters"];
-        this->strRunName = simulation_parameters["run_name"];
-        //this->strResultsDir = simulation_parameters["results_dir"];
-        this->strResultsDir = "OutputFiles";
+
+
+        this->strResultsDir = simulation_parameters["results_dir"];
+
+        std::cout << "strResultsDir: " << this->strResultsDir << std::endl;
+
+
         this->iNumSims = simulation_parameters["num_sims"];
         this->iMacroStepsPerSim = simulation_parameters["macro_steps_per_sim"];
         this->dbSkippedTurnsPerRegularTurn = simulation_parameters["skipped_turns_per_regular_turn"];
@@ -353,9 +357,7 @@ void Simulator::init_master_history() {
     const auto& economy_parameters = this->simulatorConfigs["default_economy_parameters"];
     masterHistory.iCapabilitiesPerMarket = economy_parameters["capabilities_per_market"];
 
-    // DEBUGGING
-    // masterHistory.strMasterHistoryOutputPath = this->strResultsDir;
-    masterHistory.strMasterHistoryOutputPath = "/Users/eric/CLionProjects/BusinessStrategy2.0/OutputFiles";
+    masterHistory.strMasterHistoryOutputPath = this->strResultsDir;
 }
 
 void Simulator::shuffle_agent_firm_assignments() {

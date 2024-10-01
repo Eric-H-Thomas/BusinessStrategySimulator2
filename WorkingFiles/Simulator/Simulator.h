@@ -68,7 +68,6 @@ public:
     int get_num_total_agents();
     bool at_beginning_of_macro_step();
     int get_num_markets();
-    string strRunName;
     string strResultsDir;
 
 private:
