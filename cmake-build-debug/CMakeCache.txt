@@ -328,6 +328,9 @@ ProcessorCount_cmd_sysctl:FILEPATH=/usr/sbin/sysctl
 //Value Computed by CMake
 pybind11_BINARY_DIR:STATIC=/Users/eric/CLionProjects/BusinessStrategy2.0/cmake-build-debug/external/pybind11
 
+//The directory containing a CMake configuration file for pybind11.
+pybind11_DIR:PATH=pybind11_DIR-NOTFOUND
+
 //Value Computed by CMake
 pybind11_SOURCE_DIR:STATIC=/Users/eric/CLionProjects/BusinessStrategy2.0/external/pybind11
 
@@ -513,6 +516,8 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding PYTHON
 FIND_PACKAGE_MESSAGE_DETAILS_PYTHON:INTERNAL=/Users/eric/opt/anaconda3/python.app/Contents/MacOS/python3.9.12
+//Details about finding Python
+FIND_PACKAGE_MESSAGE_DETAILS_Python:INTERNAL=[/Users/eric/opt/anaconda3/include/python3.9][/Users/eric/opt/anaconda3/lib/libpython3.9.dylib][cfound components: Development Development.Module Development.Embed ][v3.9.12()]
 //Details about finding PythonInterp
 FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/Users/eric/opt/anaconda3/python.app/Contents/MacOS/python][v3.9.12(3.6)]
 //Test HAS_FLTO
@@ -539,6 +544,14 @@ Python_ADDITIONAL_VERSIONS:INTERNAL=3.12;3.11;3.10;3.9;3.8;3.7;3.6
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
 _Python:INTERNAL=PYTHON
+//Path to a program.
+_Python_CONFIG:INTERNAL=/Users/eric/opt/anaconda3/bin/python3.9-config
+_Python_DEVELOPMENT_EMBED_SIGNATURE:INTERNAL=b3ba216a0d26031cee488c93c59def20
+_Python_DEVELOPMENT_MODULE_SIGNATURE:INTERNAL=53adbfded2d1ade8a15dc8ad49db7ed0
+//Path to a file.
+_Python_INCLUDE_DIR:INTERNAL=/Users/eric/opt/anaconda3/include/python3.9
+//Path to a library.
+_Python_LIBRARY_RELEASE:INTERNAL=/Users/eric/opt/anaconda3/lib/libpython3.9.dylib
 //True if pybind11 and all required components found on the system
 pybind11_FOUND:INTERNAL=TRUE
 //Directory where pybind11 headers are located
