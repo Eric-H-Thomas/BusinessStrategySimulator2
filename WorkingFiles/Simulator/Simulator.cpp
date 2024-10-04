@@ -106,6 +106,11 @@ int Simulator::prepare_to_run() {
     if (init_firms_for_agents())
         return 1;
 
+    if (bFixedCostForExistence) {
+        if (set_fixed_cost_for_existence())
+            return 1;
+    }
+
     init_master_history();
 
     return 0;
@@ -154,17 +159,12 @@ int Simulator::reset() {
 int Simulator::set_simulation_parameters() {
     try {
         const auto& simulation_parameters = this->simulatorConfigs["simulation_parameters"];
-
-
         this->strResultsDir = simulation_parameters["results_dir"];
-
-        std::cout << "strResultsDir: " << this->strResultsDir << std::endl;
-
-
         this->iNumSims = simulation_parameters["num_sims"];
         this->iMacroStepsPerSim = simulation_parameters["macro_steps_per_sim"];
         this->dbSkippedTurnsPerRegularTurn = simulation_parameters["skipped_turns_per_regular_turn"];
         this->bVerbose = simulation_parameters["verbose"];
+        this->bFixedCostForExistence = simulation_parameters["fixed_cost_for_existence"];
         this->bGenerateMasterOutput = simulation_parameters["generate_master_output"];
         this->bRandomizeTurnOrderWithinEachMacroStep = simulation_parameters["randomize_turn_order_within_each_macro_step"];
         this->bRandomizeAgentFirmAssignmentPerSimulation = simulation_parameters["randomize_agent_firm_assignment_per_simulation"];
@@ -341,6 +341,17 @@ int Simulator::init_firms_for_agents() {
     if (bRandomizeAgentFirmAssignmentPerSimulation) {
         shuffle_agent_firm_assignments();
     }
+
+    return 0;
+}
+
+int Simulator::set_fixed_cost_for_existence() {
+    int iMicroStepsPerSim = this->iMacroStepsPerSim * get_num_total_agents();
+
+    // Set the fixed cost for existence such that capital depletes linearly to zero over the course of the simulation
+    const auto& firm_parameters = this->simulatorConfigs["default_firm_parameters"];
+    double dbDefaultStartingCapital = firm_parameters["starting_capital"];
+    this->dbFixedCostForExistence = dbDefaultStartingCapital / iMicroStepsPerSim;
 
     return 0;
 }
@@ -599,6 +610,13 @@ int Simulator::perform_micro_step_helper(vector<Action> vecActions) {
     map<int, double> mapFirmIDToCapitalChange;
     for (auto firmID : get_set_firm_IDs()) {
         mapFirmIDToCapitalChange[firmID] = 0.0;
+    }
+
+    // Subtract the fixed existence cost from each firm
+    if (this->bFixedCostForExistence) {
+        for (auto firmID : get_set_firm_IDs()) {
+            mapFirmIDToCapitalChange.at(firmID) -= this->dbFixedCostForExistence;
+        }
     }
 
     // Execute actions and distribute profits

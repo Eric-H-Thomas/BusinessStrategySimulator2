@@ -41,7 +41,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error: " << e.what() << std::endl;
     }
 
-
     // Create simulator instance
     Simulator simulator;
 
