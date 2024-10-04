@@ -615,6 +615,8 @@ int Simulator::perform_micro_step_helper(vector<Action> vecActions) {
     // Subtract the fixed existence cost from each firm
     if (this->bFixedCostForExistence) {
         for (auto firmID : get_set_firm_IDs()) {
+            // Update capital within the firm object
+            add_profit_to_firm(-dbFixedCostForExistence, firmID);
             mapFirmIDToCapitalChange.at(firmID) -= this->dbFixedCostForExistence;
         }
     }
